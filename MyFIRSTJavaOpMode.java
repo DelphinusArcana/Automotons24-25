@@ -32,7 +32,7 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
     private int lrlDistance;
     private int rflDistance;
     private int rrlDistance;
-    private double maxChangePower = 0.6;
+    private double maxLiftPower = 0.6;
     private int maxPowerDistance = 50;
     private int liftTarget = 0;
     private boolean timeUpdated = true;
@@ -275,11 +275,11 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
     public void updateLiftMotorPower(DcMotor motor, int distance) {
         int error = distance - liftTarget;
         if (error > maxPowerDistance)
-            motor.setPower(maxChangePower);
+            motor.setPower(maxLiftPower);
         else if (error < (-1.0 * maxPowerDistance))
-            motor.setPower(-1.0 * maxChangePower);
+            motor.setPower(-1.0 * maxLiftPower);
         else
-            motor.setPower(((double) error/maxPowerDistance) * maxChangePower);
+            motor.setPower(((double) error/maxPowerDistance) * maxLiftPower);
     }
     public void launchPlane () {
         planeServo.setPosition(planeStart + planeDiff);
