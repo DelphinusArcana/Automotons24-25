@@ -39,7 +39,7 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
     // plane stuff
     private Servo planeServo;
     private double planeStart = 0.5;
-    private double planeDiff = 0.5;
+    private double planeDiff = -0.5;
     // claw stuff
     private Servo lClaw;
     private Servo rClaw;
@@ -48,7 +48,8 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
     private static double rightOpenPos = 0.296875;
     private static double rightDiff = (double) 3/8;
     // drum stuff
-
+    private DcMotor drumMotor;
+    private double drumPower = 0.3;
     @Override
     public void runOpMode() {
         lfd = hardwareMap.get(DcMotor.class, "leftFrontDrive");
@@ -80,12 +81,14 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
         lrlDistance = 0;
         rflDistance = 0;
         rrlDistance = 0;
-/*
+
         planeServo = hardwareMap.get(Servo.class, "planeServo");
         planeServo.setPosition(planeStart);
 
         lClaw = hardwareMap.get(Servo.class, "leftClaw");
         rClaw = hardwareMap.get(Servo.class, "rightClaw");
+/*
+        drumMotor = hardwareMap.get(DcMotor.class, "drumMotor");
 */
 
         boolean leftPressed = false;
@@ -107,13 +110,14 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             telemetry.addData("leftRearPosition", lrd.getCurrentPosition());
-            double leftX = gamepad1.left_stick_x * 0.1;
-            double leftY = gamepad1.left_stick_y * -0.1;
-            double rightY = gamepad1.right_stick_y * -0.3;
+            double leftX = gamepad1.left_stick_x * 1.0;
+            double leftY = gamepad1.left_stick_y * -1.0;
+            double rightY = gamepad1.right_stick_y * -1.0;
             telemetry.addData("leftX", "" + leftX);
             telemetry.addData("leftY", "" + leftY);
             telemetry.addData("rightY", "" + rightY);
-            /*if (leftX == 0.0 && leftY == 0.0) {
+            // drive stuff
+            if (leftX == 0.0 && leftY == 0.0) {
                 double rDepth = gamepad1.right_trigger;
                 double lDepth = gamepad1.left_trigger;
                 rotate(lDepth, rDepth);
@@ -121,12 +125,13 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
             } else {
                 translate(leftX, leftY);
                 telemetry.addData("", "translateCalled");
-            }*/
-            //addDriveTelemetry();
-            /*if (gamepad1.left_bumper && !leftPressed) {
+            }
+            addDriveTelemetry();
+            // claw stuff
+            if (gamepad1.left_bumper && !leftPressed) {
                 leftClosed = !leftClosed;
                 leftPressed = true;
-            } else if (!gamepad1.left_bumper){
+            } else if (!gamepad1.left_bumper) {
                 leftPressed = false;
             }
             setClaw(true, leftClosed);
@@ -136,7 +141,21 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
             } else if (!gamepad1.right_bumper){
                 rightPressed = false;
             }
-            setClaw(false, rightClosed);*/
+            setClaw(false, rightClosed);
+            addClawTelemetry();
+
+            // plane stuff
+            if (gamepad1.a)
+                launchPlane();
+
+            /*
+            // drum stuff
+            if (gamepad1.y)
+                drumOn();
+            else
+                drumOff();
+            */
+            // lift stuff
             int thisMillisecond = (int) runtime.milliseconds();
             boolean millisecondsChanged = lastMillisecond < thisMillisecond;
             if (millisecondsChanged) {
@@ -151,6 +170,7 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
             telemetry.addData("lm", lastMillisecond);
             telemetry.addData("tm", thisMillisecond);
             lift();
+
             addLiftTelemetry();
             telemetry.addData("Milliseconds", runtime.milliseconds());
             telemetry.addData("Up", gamepad1.dpad_up);
@@ -172,13 +192,17 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
         telemetry.addData("rrl power", rrl.getPower() + ", dist: " + rrlDistance);
         telemetry.addData("liftTarget", liftTarget);
     }
+    public void addClawTelemetry () {
+        telemetry.addData("lClawPos", lClaw.getPosition());
+        telemetry.addData("rClawPos", rClaw.getPosition());
+    }
     public static double pythag(double num1, double num2) {
         return Math.sqrt(Math.pow(num1, 2) + Math.pow(num2, 2));
     }
     public static void translate(double xVal, double yVal, DcMotor lfd, DcMotor lrd, DcMotor rfd, DcMotor rrd) {
         double totalPower = pythag(xVal, yVal);
         if (totalPower > 1) totalPower = 1;
-        if (totalPower < -1) totalPower = -1;
+        //if (totalPower < -1) totalPower = -1;
         if (xVal == 0.0 && yVal == 0.0) {
             lfd.setPower(0.0);
             lrd.setPower(0.0);
@@ -280,6 +304,12 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
             setClaw(true, closed, lClaw);
         else
             setClaw(false, closed, rClaw);
+    }
+    public void drumOn () {
+        drumMotor.setPower(drumPower);
+    }
+    public void drumOff () {
+        drumMotor.setPower(0.0);
     }
 }
 
