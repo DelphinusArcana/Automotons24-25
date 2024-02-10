@@ -141,7 +141,7 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
             addClawTelemetry();
 
             // plane stuff
-            if (gamepad1.a)
+            if (gamepad1.b)
                 launchPlane();
 
 
