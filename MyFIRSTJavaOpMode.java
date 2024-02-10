@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp(name="Template: 2024 Brie 3", group="Linear Opmode")
+@TeleOp(name="Template: 2024 Brie 4", group="Linear Opmode")
 public class MyFIRSTJavaOpMode extends LinearOpMode {
     // motor directions
     private DcMotorSimple.Direction forward = DcMotor.Direction.FORWARD;
@@ -32,9 +32,9 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
     private int lrlDistance;
     private int rflDistance;
     private int rrlDistance;
-    private double maxLiftPower = 0.6;
-    private int maxPowerDistance = 50;
-    private int liftTarget = 0;
+    private double maxLiftPower = 1.0;
+    private int maxPowerDistance = 40;
+    private double liftTarget = 0.0;
     private boolean timeUpdated = true;
     // plane stuff
     private Servo planeServo;
@@ -45,11 +45,11 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
     private Servo rClaw;
     private static double leftOpenPos = 0.703125;
     private static double leftDiff = (double) -3/8;
-    private static double rightOpenPos = 0.296875;
+    private static double rightOpenPos = 0.3515625;
     private static double rightDiff = (double) 3/8;
     // drum stuff
     private DcMotor drumMotor;
-    private double drumPower = 0.3;
+    private double drumPower = -0.3;
     @Override
     public void runOpMode() {
         lfd = hardwareMap.get(DcMotor.class, "leftFrontDrive");
@@ -87,14 +87,15 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
 
         lClaw = hardwareMap.get(Servo.class, "leftClaw");
         rClaw = hardwareMap.get(Servo.class, "rightClaw");
-/*
+
         drumMotor = hardwareMap.get(DcMotor.class, "drumMotor");
-*/
 
         boolean leftPressed = false;
         boolean rightPressed = false;
         boolean leftClosed = false;
         boolean rightClosed = false;
+        boolean downPressed = false;
+        boolean upPressed = false;
 
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
@@ -117,58 +118,61 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
             telemetry.addData("leftY", "" + leftY);
             telemetry.addData("rightY", "" + rightY);
             // drive stuff
-            if (leftX == 0.0 && leftY == 0.0) {
-                double rDepth = gamepad1.right_trigger;
-                double lDepth = gamepad1.left_trigger;
-                rotate(lDepth, rDepth);
-                telemetry.addData("", "rotate called");
-            } else {
-                translate(leftX, leftY);
-                telemetry.addData("", "translateCalled");
-            }
+            double rDepth = gamepad1.right_trigger;
+            double lDepth = gamepad1.left_trigger;
+            translate(leftX, leftY);
+            rotate(lDepth, rDepth);
             addDriveTelemetry();
             // claw stuff
             if (gamepad1.left_bumper && !leftPressed) {
                 leftClosed = !leftClosed;
+                setClaw(true, leftClosed);
                 leftPressed = true;
             } else if (!gamepad1.left_bumper) {
                 leftPressed = false;
             }
-            setClaw(true, leftClosed);
             if (gamepad1.right_bumper && !rightPressed) {
                 rightClosed = !rightClosed;
+                setClaw(false, rightClosed);
                 rightPressed = true;
             } else if (!gamepad1.right_bumper){
                 rightPressed = false;
             }
-            setClaw(false, rightClosed);
             addClawTelemetry();
 
             // plane stuff
             if (gamepad1.a)
                 launchPlane();
 
-            /*
+
             // drum stuff
             if (gamepad1.y)
                 drumOn();
             else
                 drumOff();
-            */
+
             // lift stuff
             int thisMillisecond = (int) runtime.milliseconds();
             boolean millisecondsChanged = lastMillisecond < thisMillisecond;
             if (millisecondsChanged) {
-                if (gamepad1.dpad_up) {
-                    liftTarget += 1;
-                } else if (gamepad1.dpad_down) {
-                    liftTarget -= 1;
-                }
+                liftTarget += gamepad1.right_stick_y * -3.0;
                 lastMillisecond = thisMillisecond;
             }
             telemetry.addData("millisecondsChanged", millisecondsChanged);
             telemetry.addData("lm", lastMillisecond);
             telemetry.addData("tm", thisMillisecond);
+            if (gamepad1.dpad_up && !upPressed) {
+                upPressed = true;
+                maxLiftPower += 0.05;
+            } else if (!gamepad1.dpad_up) {
+                upPressed = false;
+            }
+            if (gamepad1.dpad_down && !downPressed) {
+                downPressed = true;
+                maxLiftPower -= 0.05;
+            } else if (!gamepad1.dpad_down) {
+                downPressed = false;
+            }
             lift();
 
             addLiftTelemetry();
@@ -191,6 +195,7 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
         telemetry.addData("rfl power", rfl.getPower() + ", dist: " + rflDistance);
         telemetry.addData("rrl power", rrl.getPower() + ", dist: " + rrlDistance);
         telemetry.addData("liftTarget", liftTarget);
+        telemetry.addData("maxLiftPower", maxLiftPower);
     }
     public void addClawTelemetry () {
         telemetry.addData("lClawPos", lClaw.getPosition());
@@ -239,20 +244,15 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
     }
     public void rotate(double lDepth, double rDepth) {
         if (rDepth > 0) {
-            lfd.setPower(rDepth);
-            lrd.setPower(rDepth);
-            rfd.setPower(-1 * rDepth);
-            rrd.setPower(-1 * rDepth);
+            lfd.setPower(lfd.getPower() + rDepth);
+            lrd.setPower(lrd.getPower() + rDepth);
+            rfd.setPower(rfd.getPower() + (-1 * rDepth));
+            rrd.setPower(rrd.getPower() + (-1 * rDepth));
         } else if (lDepth > 0){
-            lfd.setPower(-1 * lDepth);
-            lrd.setPower(-1 * lDepth);
-            rfd.setPower(lDepth);
-            rrd.setPower(lDepth);
-        } else {
-            lfd.setPower(0.0);
-            lrd.setPower(0.0);
-            rfd.setPower(0.0);
-            rrd.setPower(0.0);
+            lfd.setPower(lfd.getPower() + (-1 * lDepth));
+            lrd.setPower(lrd.getPower() + (-1 * lDepth));
+            rfd.setPower(rfd.getPower() + lDepth);
+            rrd.setPower(rrd.getPower() + lDepth);
         }
     }
     public void lift() {
@@ -273,7 +273,7 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
         return (lflDistance + lrlDistance + rflDistance + rrlDistance)/4;
     }
     public void updateLiftMotorPower(DcMotor motor, int distance) {
-        int error = distance - liftTarget;
+        int error = distance - (int) liftTarget;
         if (error > maxPowerDistance)
             motor.setPower(maxLiftPower);
         else if (error < (-1.0 * maxPowerDistance))
