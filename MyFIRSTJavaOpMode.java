@@ -49,7 +49,7 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
     private static double rightDiff = (double) 3/8;
     // drum stuff
     private DcMotor drumMotor;
-    private double drumPower = -0.3;
+    private double drumPower = -0.5;
     @Override
     public void runOpMode() {
         lfd = hardwareMap.get(DcMotor.class, "leftFrontDrive");
