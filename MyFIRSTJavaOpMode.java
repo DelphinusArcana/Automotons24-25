@@ -35,7 +35,7 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
     private double maxLiftPower = 1.0;
     private int maxPowerDistance = 40;
     private double liftTarget = 0.0;
-    private boolean timeUpdated = true;
+    private double maxTargetSinceUp = liftTarget;
     // plane stuff
     private Servo planeServo;
     private double planeStart = 0.5;
@@ -96,11 +96,11 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
         boolean rightClosed = false;
         boolean downPressed = false;
         boolean upPressed = false;
+        boolean doSmartClaw = true;
 
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
         int lastMillisecond = (int) runtime.milliseconds();
-        timeUpdated = true;
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -123,21 +123,31 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
             translate(leftX, leftY);
             rotate(lDepth, rDepth);
             addDriveTelemetry();
+            if (doSmartClaw) {
+                if (liftTarget < maxTargetSinceUp - 250.0) {
+                    leftClosed = true;
+                    rightClosed = true;
+                }
+            }
             // claw stuff
             if (gamepad1.left_bumper && !leftPressed) {
                 leftClosed = !leftClosed;
-                setClaw(true, leftClosed);
+                if (doSmartClaw)
+                    maxTargetSinceUp = liftTarget;
                 leftPressed = true;
             } else if (!gamepad1.left_bumper) {
                 leftPressed = false;
             }
+            setClaw(true, leftClosed);
             if (gamepad1.right_bumper && !rightPressed) {
                 rightClosed = !rightClosed;
-                setClaw(false, rightClosed);
+                if (doSmartClaw)
+                    maxTargetSinceUp = liftTarget;
                 rightPressed = true;
             } else if (!gamepad1.right_bumper){
                 rightPressed = false;
             }
+            setClaw(false, rightClosed);
             addClawTelemetry();
 
             // plane stuff
@@ -156,6 +166,11 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
             boolean millisecondsChanged = lastMillisecond < thisMillisecond;
             if (millisecondsChanged) {
                 liftTarget += gamepad1.right_stick_y * -3.0;
+                if (doSmartClaw) {
+                    if (gamepad1.right_stick_y < 0) {
+                        maxTargetSinceUp = liftTarget;
+                    }
+                }
                 lastMillisecond = thisMillisecond;
             }
             telemetry.addData("millisecondsChanged", millisecondsChanged);
@@ -196,6 +211,7 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
         telemetry.addData("rrl power", rrl.getPower() + ", dist: " + rrlDistance);
         telemetry.addData("liftTarget", liftTarget);
         telemetry.addData("maxLiftPower", maxLiftPower);
+        telemetry.addData("maxTargetSinceUp", maxTargetSinceUp);
     }
     public void addClawTelemetry () {
         telemetry.addData("lClawPos", lClaw.getPosition());
