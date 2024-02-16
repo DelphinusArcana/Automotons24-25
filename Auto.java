@@ -1,4 +1,3 @@
-
 package org.firstinspires.ftc.Automotons;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -23,7 +22,6 @@ public class Auto extends LinearOpMode {
     private Servo lClaw;
     private Servo rClaw;
     // movement variables
-    private int driveTarget = 2000;
     private double maxDrivePower = 0.8;
     private int maxPowerDistance = 500;
     private int lfdStart;
@@ -34,20 +32,25 @@ public class Auto extends LinearOpMode {
     private int lrdDistance;
     private int rfdDistance;
     private int rrdDistance;
-    // whether the pixel has been dropped yet
-    private boolean dropPixel = false;
+
+    private static double wheelDiameterM =75./1000.;
+    private static double wheelCircumM = wheelDiameterM*3.14159;
+    private static double ticksPerRotation = 28*5*4;
+    private static double ticksPerMeter = 0.91/wheelCircumM * ticksPerRotation;
+
 
     @Override
     public void runOpMode() {
+        boolean didDrop = false;
         lfd = hardwareMap.get(DcMotor.class, "leftFrontDrive");
         lrd = hardwareMap.get(DcMotor.class, "leftRearDrive");
         rfd = hardwareMap.get(DcMotor.class, "rightFrontDrive");
         rrd = hardwareMap.get(DcMotor.class, "rightRearDrive");
 
-        lfd.setDirection(forward);
-        lrd.setDirection(forward);
+        lfd.setDirection(reverse);
+        lrd.setDirection(reverse);
         rfd.setDirection(forward);
-        rrd.setDirection(reverse);
+        rrd.setDirection(forward);
 
         lfdStart = lfd.getCurrentPosition();
         lrdStart = lrd.getCurrentPosition();
@@ -64,42 +67,31 @@ public class Auto extends LinearOpMode {
 
         waitForStart();
 
-        while (opModeIsActive() && !dropPixel) {
-            MyFIRSTJavaOpMode.setClaw(false, true, rClaw);
-
+        MyFIRSTJavaOpMode.setClaw(false, true, rClaw);
+        while (opModeIsActive() && !didDrop) {
             updateDriveDistances();
 
-            updateDriveMotorPower(lfd, lfdDistance);
-            updateDriveMotorPower(lrd, lrdDistance);
-            updateDriveMotorPower(rfd, rfdDistance);
-            updateDriveMotorPower(rrd, rrdDistance);
+            updateDriveMotorPower(lfd, 1.1 * ticksPerMeter);
+            updateDriveMotorPower(lrd, 1.1 * ticksPerMeter);
+            updateDriveMotorPower(rfd, 1.1 * ticksPerMeter);
+            updateDriveMotorPower(rrd, 1.1 * ticksPerMeter);
 
-            if (averageDriveDistance() >= driveTarget * 0.5)
-                dropPixel = true;
+            if (averageDriveTicks() > 1 * ticksPerMeter) {
+                if (!didDrop) {
+                    MyFIRSTJavaOpMode.setClaw(false, false, rClaw);
+                }
+                didDrop = true;
+            }
 
-            telemetry.addData("loop", "first");
-            telemetry.addData("avgDistance", averageDriveDistance());
-            addDriveTelemetry();
-            telemetry.update();
-        }
-        while (opModeIsActive()) {
-            MyFIRSTJavaOpMode.setClaw(false, false, rClaw);
-
-            updateDriveDistances();
-
-            updateDriveMotorPower(lfd, lfdDistance);
-            updateDriveMotorPower(lrd, lrdDistance);
-            updateDriveMotorPower(rfd, rfdDistance);
-            updateDriveMotorPower(rrd, rrdDistance);
-
-            telemetry.addData("loop", "second");
-            telemetry.addData("avgDistance", averageDriveDistance());
+            telemetry.addData("DROP", didDrop);
+            telemetry.addData("DROP", ticksPerMeter);
+            telemetry.addData("avgDistance", averageDriveTicks());
             addDriveTelemetry();
             telemetry.update();
         }
     }
-    public void updateDriveMotorPower(DcMotor motor, int distance) {
-        int error = distance - driveTarget;
+    public void updateDriveMotorPower(DcMotor motor, double targetTicks) {
+        double error = motor.getCurrentPosition()-targetTicks;
         if (error > maxPowerDistance)
             motor.setPower(maxDrivePower);
         else if (error < (-1.0 * maxPowerDistance))
@@ -111,12 +103,12 @@ public class Auto extends LinearOpMode {
         MyFIRSTJavaOpMode.translate(xVal, yVal, lfd, lrd, rfd, rrd);
     }
     public void updateDriveDistances() {
-        lfdDistance = lfd.getCurrentPosition() - lfdStart;
+        lfdDistance = (lfd.getCurrentPosition() - lfdStart) * -1;
         lrdDistance = (lrd.getCurrentPosition() - lrdStart) * -1;
         rfdDistance = (rfd.getCurrentPosition() - rfdStart) * -1;
         rrdDistance = (rrd.getCurrentPosition() - rrdStart) * -1;
     }
-    public int averageDriveDistance() {
+    public int averageDriveTicks() {
         return (lfdDistance + lrdDistance + rfdDistance + rrdDistance) / 4;
     }
     public void addDriveTelemetry () {
