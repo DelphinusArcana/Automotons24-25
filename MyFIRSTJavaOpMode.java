@@ -280,6 +280,14 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
         updateLiftMotorPower(rfl, rflDistance);
         updateLiftMotorPower(rrl, rrlDistance);
     }
+    public void lift() {
+        updateLiftDistances();
+
+        updateLiftMotorPower(lfl, lflDistance);
+        updateLiftMotorPower(lrl, lrlDistance);
+        updateLiftMotorPower(rfl, rflDistance);
+        updateLiftMotorPower(rrl, rrlDistance);
+    }
     public void updateLiftDistances() {
         lflDistance = lfl.getCurrentPosition() - lflStart;
         lrlDistance = (lrl.getCurrentPosition() - lrlStart) * -1;
