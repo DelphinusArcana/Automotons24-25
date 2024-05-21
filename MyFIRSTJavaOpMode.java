@@ -40,7 +40,7 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
     // plane stuff
     private Servo planeServo;
     private double planeStart = 0.5;
-    private double planeDiff = -0.5;
+    private double planeDiff = -0.5;*/
     // claw stuff
     private Servo lClaw;
     private Servo rClaw;
@@ -49,7 +49,7 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
     private static double rightOpenPos = 0.3515625;
     private static double rightDiff = (double) 3/8;
     // drum stuff
-    private DcMotor drumMotor;
+    /*private DcMotor drumMotor;
     private double drumPower = -0.8;*/
     @Override
     public void runOpMode() {
@@ -58,10 +58,10 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
         rfd = hardwareMap.get(DcMotor.class, "rightFrontDrive");
         rrd = hardwareMap.get(DcMotor.class, "rightRearDrive");
 
-        lfd.setDirection(forward);
-        lrd.setDirection(forward);
+        lfd.setDirection(reverse);
+        lrd.setDirection(reverse);
         rfd.setDirection(reverse);
-        rrd.setDirection(reverse);
+        rrd.setDirection(forward);
 /*
         lfl = hardwareMap.get(DcMotor.class, "leftFrontLift");
         lrl = hardwareMap.get(DcMotor.class, "leftRearLift");
@@ -112,7 +112,7 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             telemetry.addData("leftRearPosition", lrd.getCurrentPosition());
-            double leftX = gamepad1.left_stick_x * 1.0;
+            double leftX = gamepad1.left_stick_x * -1.0;
             double leftY = gamepad1.left_stick_y * -1.0;
             double rightY = gamepad1.right_stick_y * -1.0;
             telemetry.addData("leftX", "" + leftX);
@@ -308,7 +308,7 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
     }
     public void launchPlane () {
         planeServo.setPosition(planeStart + planeDiff);
-    }
+    }*/
     public static void setClaw (boolean settingLeft, boolean closed, Servo claw) {
         if (settingLeft) {
             if (closed) {
@@ -323,7 +323,7 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
                 claw.setPosition(rightOpenPos);
             }
         }
-    }
+    }/*
     public void setClaw (boolean settingLeft, boolean closed) {
         if (settingLeft)
             setClaw(true, closed, lClaw);
