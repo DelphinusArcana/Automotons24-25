@@ -59,8 +59,8 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
         rrd = hardwareMap.get(DcMotor.class, "rightRearDrive");
 
         lfd.setDirection(reverse);
-        lrd.setDirection(reverse);
-        rfd.setDirection(reverse);
+        lrd.setDirection(forward);
+        rfd.setDirection(forward);
         rrd.setDirection(forward);
 /*
         lfl = hardwareMap.get(DcMotor.class, "leftFrontLift");
@@ -218,11 +218,8 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
         telemetry.addData("lClawPos", lClaw.getPosition());
         telemetry.addData("rClawPos", rClaw.getPosition());
     }*/
-    public static double pythag(double num1, double num2) {
-        return Math.sqrt(Math.pow(num1, 2) + Math.pow(num2, 2));
-    }
     public static void translate(double xVal, double yVal, DcMotor lfd, DcMotor lrd, DcMotor rfd, DcMotor rrd) {
-        double totalPower = pythag(xVal, yVal);
+        double totalPower = Math.hypot(xVal, yVal);
         if (totalPower > 1) totalPower = 1;
         //if (totalPower < -1) totalPower = -1;
         if (xVal == 0.0 && yVal == 0.0) {
