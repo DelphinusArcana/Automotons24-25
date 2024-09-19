@@ -1,3 +1,3 @@
 # Automotons
-AHS FTC 23-24
-https://github.com/IanBelanger1/Automotons.git
+AHS FTC 24-25
+https://github.com/DelphinusArcana/Automotons24-25
