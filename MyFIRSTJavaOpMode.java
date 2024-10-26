@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.Automotons;
+package org.firstinspires.ftc.teamcode.Automotons2425;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+// Testing git with this comment
 @TeleOp(name="Template: 2024 Brie 4", group="Linear Opmode")
 public class MyFIRSTJavaOpMode extends LinearOpMode {
     // motor directions
