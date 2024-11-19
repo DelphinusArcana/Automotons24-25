@@ -1,9 +1,7 @@
 package org.firstinspires.ftc.teamcode.Automotons2425;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Gyroscope;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class DriveTrain25 {
     /** A 1x4 Array assigned to 4 different wheels.
