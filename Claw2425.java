@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.Automotons2425;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
-public class Claw25 {
+public class Claw2425 {
     /** The target open position of the servo */
     private double openPosition;
     /** The target closed position of the servo */
@@ -14,7 +14,7 @@ public class Claw25 {
     private Servo claw;
     /** CONSTRUCTOR
      * Sets all instance variables */
-    public Claw25 (double openPos, double closedPos, Servo claw) {
+    public Claw2425 (double openPos, double closedPos, Servo claw) {
         this.claw = claw;
         this.openPosition = openPos;
         this.closedPosition = closedPos;

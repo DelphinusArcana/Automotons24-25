@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.Automotons2425;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-public class DriveTrain25 {
+public class DriveTrain2425 {
     /** A 1x4 Array assigned to 4 different wheels.
      * Left Front is index 0
      * Left Rear is index 1
@@ -14,7 +14,7 @@ public class DriveTrain25 {
     /** CONSTRUCTOR sets all instance variables
      * @param wheels the motors that control the wheels
      * */
-    public DriveTrain25(DcMotor[] wheels) {
+    public DriveTrain2425(DcMotor[] wheels) {
         this.wheels = wheels;
     }
     /** Moves the robot on the x/y axes.
