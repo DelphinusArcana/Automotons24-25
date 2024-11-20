@@ -18,6 +18,7 @@ public class Claw2425 {
         this.claw = claw;
         this.openPosition = openPos;
         this.closedPosition = closedPos;
+        open();
     }
     /** Sets openPosition */
     private void setOpenPosition (double position) {
