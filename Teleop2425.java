@@ -12,24 +12,29 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @TeleOp(name = "teleop2425", group = "Liniar Opmode")
 public class Teleop2425 extends LinearOpMode {
     //variable declaration
-
     private DriveTrain2425 driveTrain;
     private Lift2425 liftKit;
     private ClawArm2425 clawArm;
     private Claw2425 claw;
-
-
-
     @Override
     public void runOpMode(){
-
         //variable initialize
         driveTrain = new DriveTrain2425(new DcMotor[]{
                 hardwareMap.get(DcMotor.class,"leftFrontDrive"),
                 hardwareMap.get(DcMotor.class,"leftRearDrive"),
-                hardwareMap.get(DcMotor.class,"rightRearDrive")
+                hardwareMap.get(DcMotor.class,"rightRearDrive"),
                 hardwareMap.get(DcMotor.class,"rightFrontDrive")
         });
+        liftKit = new Lift2425(new DcMotor[]{
+                hardwareMap.get(DcMotor.class, "leftFrontLift"),
+                hardwareMap.get(DcMotor.class, "leftRearLift"),
+                hardwareMap.get(DcMotor.class, "rightRearLift"),
+                hardwareMap.get(DcMotor.class, "rightFrontLift")
+        });
+        clawArm = new ClawArm2425(hardwareMap.get(DcMotor.class, "armMotor"));
+        //TODO: find openPos and closedPos
+        claw = new Claw2425(0, 0, hardwareMap.get(Servo.class, "clawServo"));
+
         // Tells the driver that the robot is ready
         telemetry.addData("Status", "Initialized");
         telemetry.update();
