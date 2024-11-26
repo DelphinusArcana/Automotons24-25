@@ -21,7 +21,7 @@ public class DriveTrain2425 {
      * @param xVal the amount to move in the x direction (left and right)
      * @param yVal the amount to move in the y direction (forward and backward)
      */
-    public void translate (int xVal, int yVal) {
+    public void translate (double xVal, double yVal) {
         double totalPower = Math.hypot(xVal, yVal);
         if (totalPower > 1) totalPower = 1;
         //if (totalPower < -1) totalPower = -1;
