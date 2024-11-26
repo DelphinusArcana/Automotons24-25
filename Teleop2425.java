@@ -84,9 +84,9 @@ public class Teleop2425 extends LinearOpMode {
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,drive train control
             double leftX = gamepad1.left_stick_x;
             double leftY = gamepad1.left_stick_y;
-            //might want to lower move speed so we never translate move than 1
             driveTrain.translate((leftX*(1-minTranslatePower)+Math.signum(leftX)*minTranslatePower)*moveSpeed,(leftY*(1-minTranslatePower)+Math.signum(leftY)*minTranslatePower)*moveSpeed);
 
+            telemetry.update();
         }
     }
 }
