@@ -11,6 +11,7 @@ public class Lift2425 {
     /** Array of 4 motors that control the lift kit
      * Indexes: 0 is front left motor, counting counterclockwise */
     private DcMotor[] motors;
+    // For an explanation on the below two variables, see this desmos: https://www.desmos.com/calculator/lnqlulrxwq
     /** The distance from target at which to send the maximum power to the motors */
     private int maxPowerError;
     /** The maximum power to send to the motors */
@@ -47,7 +48,7 @@ public class Lift2425 {
         }
     }
     /** Calculates the power of a motor based on the difference between current position and target height */
-    public double calculatePower (int motorIndex) {
+    private double calculatePower (int motorIndex) {
         int error = getCurrentOffset(motorIndex);
         if (error >= maxPowerError) {
             return maxPower;

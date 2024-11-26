@@ -20,7 +20,9 @@ public class Teleop2425 extends LinearOpMode {
     private int liftSpeed; //coefficient to adjust how much lift target moves each loop
     private int liftMaxHeight; //upperbound of liftkit position
     private int liftMinimumHeight; //lower bound of liftkit position- might be unneeded if equals 0
+    private int moveSpeed; //coefficient that changes driveTrain translation values
     private int saveElapsedMilli; //used for equations like: elapesed time = total time - time since I set this variable
+    private double minTranslatePower; //minimum move speed
 
     @Override
     public void runOpMode(){
@@ -44,7 +46,8 @@ public class Teleop2425 extends LinearOpMode {
         liftSpeed = 5;
         liftMaxHeight = 100000;
         liftMinimumHeight = 0;
-
+        moveSpeed = 1;
+        minTranslatePower = 0.25;
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
 
@@ -61,6 +64,7 @@ public class Teleop2425 extends LinearOpMode {
             //get time since loop was last looped
             int timeCoef = (int) runtime.milliseconds()-saveElapsedMilli;
             saveElapsedMilli = (int) runtime.milliseconds();
+            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<liftkit controll
             //change lift kit target
             double rightY = gamepad1.right_stick_y;
 
@@ -75,8 +79,14 @@ public class Teleop2425 extends LinearOpMode {
                 liftKit.changeTargetHeight(rightY * liftSpeed * timeCoef);
             }
             //lift kit calibration
-
             liftKit.powerMotors();
+
+            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,drive train control
+            double leftX = gamepad1.left_stick_x;
+            double leftY = gamepad1.left_stick_y;
+            driveTrain.translate((leftX*(1-minTranslatePower)+Math.signum(leftX)*minTranslatePower)*moveSpeed,(leftY*(1-minTranslatePower)+Math.signum(leftY)*minTranslatePower)*moveSpeed);
+
+            telemetry.update();
         }
     }
 }
