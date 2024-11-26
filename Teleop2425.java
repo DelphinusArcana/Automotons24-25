@@ -63,14 +63,16 @@ public class Teleop2425 extends LinearOpMode {
             saveElapsedMilli = (int) runtime.milliseconds();
             //change lift kit target
             double rightY = gamepad1.right_stick_y;
-            if (liftKit.getAverageHeight() + (int) Math.round(rightY * liftSpeed * tCoef)>liftMaxHeight){
+
+            //might be added to liftkit class
+            if (liftKit.getAverageHeight() + (rightY * liftSpeed * tCoef)>liftMaxHeight){
                 liftKit.setTargetHeight(liftMaxHeight);
             }
-            else if (liftKit.getAverageHeight() + (int) Math.round(rightY * liftSpeed * tCoef)<liftMinimumHeight){
+            else if (liftKit.getAverageHeight() + (rightY * liftSpeed * tCoef)<liftMinimumHeight){
                 liftKit.setTargetHeight(liftMinimumHeight);
             }
             else {
-                liftKit.changeTargetHeight((int) Math.round(rightY * liftSpeed * tCoef));
+                liftKit.changeTargetHeight(rightY * liftSpeed * tCoef);
             }
             //lift kit calibration
 
