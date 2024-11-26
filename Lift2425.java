@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 /** PLEASE NOTE: if you are using this class, you MUST call powerMotors() each time through your code (such as the while(opModeIsActive()) loop in a TeleOp)*/
 public class Lift2425 {
     /** The height at which the lift should be */
-    private int targetHeight;
+    private double targetHeight;
     /** Array of 4 start positions used to calculate the currentHeight. 0 is front left motor, counting counter clockwise from there*/
     private int[] startPositions;
     /** Array of 4 motors that control the lift kit
@@ -32,12 +32,12 @@ public class Lift2425 {
     /** Sets the target height
      * param height the lift should be
      */
-    public void setTargetHeight (int height) {
+    public void setTargetHeight (double height) {
         targetHeight = height;
     }
     /** Incrementally sets the distance for the lift to go amount
      * @param increase the amount the target height should change */
-    public void changeTargetHeight (int increase) {
+    public void changeTargetHeight (double increase) {
         targetHeight += increase;
     }
     /** Powers the motors based on current power and updates the current height */
@@ -60,7 +60,7 @@ public class Lift2425 {
     }
     /** Calculates the difference between the current height and the target height */
     private int getCurrentOffset (int motorIndex) {
-        return getCurrentPosition(motorIndex) - targetHeight;
+        return getCurrentPosition(motorIndex) - (int) targetHeight;
     }
     /** Calculates the current position of a motor relative to its start position */
     private int getCurrentPosition (int motorIndex) {
