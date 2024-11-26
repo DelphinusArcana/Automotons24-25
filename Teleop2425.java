@@ -41,7 +41,7 @@ public class Teleop2425 extends LinearOpMode {
         //TODO: find openPos and closedPos
         claw = new Claw2425(0, 0, hardwareMap.get(Servo.class, "clawServo"));
         //variable initialize - variables
-        liftSpeed = 500;
+        liftSpeed = 5;
         liftMaxHeight = 100000;
         liftMinimumHeight = 0;
 
@@ -59,20 +59,20 @@ public class Teleop2425 extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             //get time since loop was last looped
-            int tCoef = (int) runtime.milliseconds()-saveElapsedMilli;
+            int timeCoef = (int) runtime.milliseconds()-saveElapsedMilli;
             saveElapsedMilli = (int) runtime.milliseconds();
             //change lift kit target
             double rightY = gamepad1.right_stick_y;
 
             //might be added to liftkit class
-            if (liftKit.getAverageHeight() + (rightY * liftSpeed * tCoef)>liftMaxHeight){
+            if (liftKit.getAverageHeight() + (rightY * liftSpeed * timeCoef)>liftMaxHeight){
                 liftKit.setTargetHeight(liftMaxHeight);
             }
-            else if (liftKit.getAverageHeight() + (rightY * liftSpeed * tCoef)<liftMinimumHeight){
+            else if (liftKit.getAverageHeight() + (rightY * liftSpeed * timeCoef)<liftMinimumHeight){
                 liftKit.setTargetHeight(liftMinimumHeight);
             }
             else {
-                liftKit.changeTargetHeight(rightY * liftSpeed * tCoef);
+                liftKit.changeTargetHeight(rightY * liftSpeed * timeCoef);
             }
             //lift kit calibration
 
