@@ -1,14 +1,6 @@
 package org.firstinspires.ftc.teamcode.Automotons2425;
 
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Gyroscope;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 /** PLEASE NOTE: if you are using this class, you MUST call powerMotors() each time through your code (such as the while(opModeIsActive()) loop in a TeleOp)*/
 public class Lift2425 {
@@ -19,6 +11,10 @@ public class Lift2425 {
     /** Array of 4 motors that control the lift kit
      * Indexes: 0 is front left motor, counting counterclockwise */
     private DcMotor[] motors;
+    /** The distance from target at which to send the maximum power to the motors */
+    private int maxPowerError;
+    /** The maximum power to send to the motors */
+    private double maxPower;
     /** CONSTRUCTOR
      * Initializes motors
      * motors.length == 4
@@ -30,6 +26,8 @@ public class Lift2425 {
         for (int i = 0; i < motors.length; i++) {
             startPositions[i] = motors[i].getCurrentPosition();
         }
+        maxPowerError = 500;
+        maxPower = 0.5;
     }
     /** Sets the target height
      * param height the lift should be
@@ -44,19 +42,33 @@ public class Lift2425 {
     }
     /** Powers the motors based on current power and updates the current height */
     public void powerMotors () {
-
+        for (int i = 0; i < motors.length; i++) {
+            motors[i].setPower(calculatePower(i));
+        }
     }
     /** Calculates the power of a motor based on the difference between current position and target height */
-    public double calculatePower (DcMotor motor) {
-
+    public double calculatePower (int motorIndex) {
+        int error = getCurrentOffset(motorIndex);
+        if (error >= maxPowerError) {
+            return maxPower;
+        } else if (error <= -1 * maxPowerError) {
+            return -1 * maxPower;
+        } else {
+            double portionOfMaxDistance = error/(double) maxPowerError;
+            return maxPower * portionOfMaxDistance;
+        }
     }
     /** Calculates the difference between the current height and the target height */
     private int getCurrentOffset (int motorIndex) {
+        return getCurrentPosition(motorIndex) - targetHeight;
+    }
+    /** Calculates the current position of a motor relative to its start position */
+    private int getCurrentPosition (int motorIndex) {
         return motors[motorIndex].getCurrentPosition() - startPositions[motorIndex];
     }
     /** Powers the motors such that they are in the same position */
     public void syncMotors () {
-
+        setTargetHeight(getAverageHeight());
     }
     /** Sets zero position of a motor */
     public void updateMotorStartPosition (int motorIndex, int newStartposition) {
@@ -70,6 +82,32 @@ public class Lift2425 {
     }
     /** Average distance from the motors’ starting position and current position */
     public int getAverageHeight () {
-
+        int sum = 0;
+        for (int i = 0; i < motors.length; i++) {
+            sum += getCurrentPosition(i);
+        }
+        return sum/motors.length;
+    }
+    /** Sets the maximum power to send to the motors */
+    public void setMaxPower (double power) {
+        maxPower = power;
+    }
+    /** Changes the maximum power to send to the motors by a given amount */
+    public void changeMaxPower (double change) {
+        maxPower += change;
+    }
+    public double getMaxPower () {return maxPower;}
+    /** Sets the distance from the target at which the motors get the maximum power */
+    public void setMaxPowerError (int distance) {
+        maxPowerError = distance;
+    }
+    /** Changes the distance from the target at which the motors get the maximum power  */
+    public void changeMaxPowerError (int change) {
+        maxPowerError += change;
+    }
+    public double getMaxPowerError () {return maxPowerError;}
+    /** Runs a bunch of test cases */
+    public static void main (String[] args) {
+        //TODO: make this
     }
 }
