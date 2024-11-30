@@ -32,13 +32,17 @@ public class Teleop2425 extends LinearOpMode {
                 hardwareMap.get(DcMotor.class,"leftRearDrive"),
                 hardwareMap.get(DcMotor.class,"rightRearDrive"),
                 hardwareMap.get(DcMotor.class,"rightFrontDrive")
-        });
+                }, //TODO: make something that can find/update the directions
+                new boolean[] {true,true,true,true}
+        );
         liftKit = new Lift2425(new DcMotor[]{
                 hardwareMap.get(DcMotor.class, "leftFrontLift"),
                 hardwareMap.get(DcMotor.class, "leftRearLift"),
                 hardwareMap.get(DcMotor.class, "rightRearLift"),
                 hardwareMap.get(DcMotor.class, "rightFrontLift")
-        });
+                }, //TODO: make something that can find/update the directions
+                new boolean[] {true,true,true,true}
+                );
         clawArm = new ClawArm2425(hardwareMap.get(DcMotor.class, "armMotor"));
         //TODO: find openPos and closedPos
         claw = new Claw2425(0, 0, hardwareMap.get(Servo.class, "clawServo"));

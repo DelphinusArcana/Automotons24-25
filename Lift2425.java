@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Automotons2425;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 /** PLEASE NOTE: if you are using this class, you MUST call powerMotors() each time through your code (such as the while(opModeIsActive()) loop in a TeleOp)*/
 public class Lift2425 {
@@ -11,6 +12,11 @@ public class Lift2425 {
     /** Array of 4 motors that control the lift kit
      * Indexes: 0 is front left motor, counting counterclockwise */
     private DcMotor[] motors;
+    /** The directions of the motors
+     * true is forward. */
+    private boolean[] directions;
+    private static final DcMotorSimple.Direction forward = DcMotorSimple.Direction.FORWARD;
+    private static final DcMotorSimple.Direction reverse = DcMotorSimple.Direction.REVERSE;
     // For an explanation on the below two variables, see this desmos: https://www.desmos.com/calculator/lnqlulrxwq
     /** The distance from target at which to send the maximum power to the motors */
     private int maxPowerError;
@@ -19,9 +25,12 @@ public class Lift2425 {
     /** CONSTRUCTOR
      * Initializes motors
      * motors.length == 4
+     * direction is positive if forward
      */
-    public Lift2425 (DcMotor[] motors) {
+    public Lift2425 (DcMotor[] motors, boolean[] directions) {
         this.motors = motors;
+        this.directions = directions;
+        updateDirections();
         targetHeight = 0;
         startPositions = new int[motors.length];
         for (int i = 0; i < motors.length; i++) {
@@ -29,6 +38,15 @@ public class Lift2425 {
         }
         maxPowerError = 500;
         maxPower = 0.5;
+    }
+    /** Sets the directions of each motor to what directions says it should be */
+    public void updateDirections() {
+        for (int i = 0; i < motors.length; i++) {
+            if (directions[i])
+                motors[i].setDirection(forward);
+            else
+                motors[i].setDirection(reverse);
+        }
     }
     /** Sets the target height
      * param height the lift should be
@@ -107,6 +125,17 @@ public class Lift2425 {
         maxPowerError += change;
     }
     public double getMaxPowerError () {return maxPowerError;}
+    public boolean getDirection(int motorIndex){return directions[motorIndex];}
+    /** toggles the direction of one motor */
+    public void switchDirection(int motorIndex){
+        directions[motorIndex] = !directions[motorIndex];
+        updateDirections();
+    }
+    /** sets the direction of one motor */
+    public void setDirection (int motorIndex, boolean direction) {
+        directions[motorIndex] = direction;
+        updateDirections();
+    }
     /** Runs a bunch of test cases */
     public static void main (String[] args) {
         //TODO: make this

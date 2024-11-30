@@ -11,11 +11,27 @@ public class DriveTrain2425 {
      * Right Front is index 3
      */
     private DcMotor[] wheels;
+    /** The directions of the motors
+     * true is forward. */
+    private boolean[] directions;
+    private static final DcMotorSimple.Direction forward = DcMotorSimple.Direction.FORWARD;
+    private static final DcMotorSimple.Direction reverse = DcMotorSimple.Direction.REVERSE;
     /** CONSTRUCTOR sets all instance variables
      * @param wheels the motors that control the wheels
      * */
-    public DriveTrain2425(DcMotor[] wheels) {
+    public DriveTrain2425(DcMotor[] wheels, boolean[] directions) {
         this.wheels = wheels;
+        this.directions = directions;
+        updateDirections();
+    }
+    /** Sets the directions of each motor to what directions says it should be */
+    public void updateDirections() {
+        for (int i = 0; i < wheels.length; i++) {
+            if (directions[i])
+                wheels[i].setDirection(forward);
+            else
+                wheels[i].setDirection(reverse);
+        }
     }
     /** Moves the robot on the x/y axes.
      * @param xVal the amount to move in the x direction (left and right)
@@ -64,5 +80,18 @@ public class DriveTrain2425 {
         wheels[1].setPower(-1 * lPower);
         wheels[2].setPower(lPower);
         wheels[3].setPower(lPower);
+    }
+    public boolean getDirection(int motorIndex){
+        return directions[motorIndex];
+    }
+    /** toggles the direction of one motor */
+    public void switchDirection(int motorIndex){
+        directions[motorIndex] = !directions[motorIndex];
+        updateDirections();
+    }
+    /** sets the direction of one motor */
+    public void setDirection (int motorIndex, boolean direction) {
+        directions[motorIndex] = direction;
+        updateDirections();
     }
 }
