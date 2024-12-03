@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Automotons2425;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 //I'm wondering whether we'll need to be applying constant power to the motor just to keep the arm up. If so, it might look closer to the lift kit. If not, this will probably just use the DcMotor.setPosition() function.
 //TODO: make this
 public class ClawArm2425 {
@@ -26,6 +27,7 @@ public class ClawArm2425 {
     private int maxPowerError;
     /** The maximum power to send to the motors */
     private double maxPower;
+    private boolean direction;
     /**
      * CONSTRUCTOR
      Sets all instance variables
@@ -106,5 +108,25 @@ public class ClawArm2425 {
      */
     public void setRangeOfMotionDistance (int distance) {
         rangeOfMotionDistance = distance;
+    }
+
+    /**
+     * Updates the motor direction based off of instance direction
+     */
+    public void updateDirection () {
+        if (direction) {
+            motor.setDirection(DcMotorSimple.Direction.FORWARD);
+        } else
+            motor.setDirection(DcMotorSimple.Direction.REVERSE);
+    }
+    /** toggles the direction of the motor */
+    public void switchDirection (){
+        direction = !direction;
+        updateDirection();
+    }
+    /** sets the direction of the motor */
+    public void setDirection (boolean direction) {
+        this.direction = direction;
+        updateDirection();
     }
 }
