@@ -22,7 +22,7 @@ public class ClawArm2425 {
     /**
      * The height at which the arm should be
      */
-    private int targetPosition;
+    private double targetPosition;
     /** The distance from target at which to send the maximum power to the motors */
     private int maxPowerError;
     /** The maximum power to send to the motors */
@@ -34,30 +34,37 @@ public class ClawArm2425 {
      */
     public ClawArm2425 (DcMotor motor) {
         this.motor = motor;
-        zeroPosition = 0;
+        //TODO: make sure this works
+        motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        zeroPosition = motor.getCurrentPosition();
         uprightPosition = 0;
-        targetPosition = 0;
-        maxPowerError = 0;
-        maxPower = 0;
+        targetPosition = zeroPosition;
+        maxPowerError = 500;
+        maxPower = 0.5;
+        direction = true;
+        updateDirection();
     }
     /**
      * Mutator method to set the arm’s target position
      */
-    public void setTargetPosition (int position) {
+    public void setTargetPosition (double position) {
         targetPosition = position;
     }
     /**
      * Changes the target height by specified amount
      * Allows for incremental changes to arm height
      * @param increase the amount the target height should change */
-    public void changeTargetPosition (int increase) {
+    public void changeTargetPosition (double increase) {
         targetPosition += increase;
     }
     /**
      * Gives power to the motor to maintain or increase arm power.
      */
     public void powerArm () {
-        int error = motor.getCurrentPosition() - targetPosition;
+        motor.setTargetPosition((int) targetPosition);
+        motor.setPower(maxPower);
+        /*
+        double error = motor.getCurrentPosition() - targetPosition;
         double power = 0;
         if (error >= maxPowerError) {
             power = maxPower;
@@ -67,7 +74,7 @@ public class ClawArm2425 {
             double portionOfMaxDistance = error/(double) maxPowerError;
             power = maxPower * portionOfMaxDistance;
         }
-        motor.setPower(power);
+        motor.setPower(power);*/
     }
 
     /**
