@@ -9,41 +9,27 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp(name = "teleop2425", group = "Liniar Opmode")
-public class Teleop2425 extends LinearOpMode {
+@TeleOp(name = "LiftOnly2425", group = "Liniar Opmode")
+public class LiftTest2425 extends LinearOpMode {
     //variable declaration - classes
-    private DriveTrain2425 driveTrain;
     private Lift2425 liftKit;
-    private ClawArm2425 clawArm;
-    private Claw2425 claw;
     //variable declaration - variable
     private double liftSpeed; //coefficient to adjust how much lift target moves each loop
     private int liftMaxHeight; //upperbound of liftkit position
     private int liftMinimumHeight; //lower bound of liftkit position- might be unneeded if equals 0
-    private int moveSpeed; //coefficient that changes driveTrain translation values
     private int saveElapsedMilli; //used for equations like: elapesed time = total time - time since I set this variable
-    private double minTranslatePower; //minimum move speed
-    private double clawArmSpeed;
 
     @Override
     public void runOpMode(){
         //variable initialize -classes
-        driveTrain = new DriveTrain2425(new DcMotor[]{
-                hardwareMap.get(DcMotor.class,"leftFrontDrive"),
-                hardwareMap.get(DcMotor.class,"leftRearDrive"),
-                hardwareMap.get(DcMotor.class,"rightRearDrive"),
-                hardwareMap.get(DcMotor.class,"rightFrontDrive")
-                }, //TODO: make something that can find/update the directions
-                new boolean[] {true,true,true,true}
-        );
         liftKit = new Lift2425(new DcMotor[]{
                 hardwareMap.get(DcMotor.class, "leftFrontLift"),
                 hardwareMap.get(DcMotor.class, "leftRearLift"),
                 hardwareMap.get(DcMotor.class, "rightRearLift"),
                 hardwareMap.get(DcMotor.class, "rightFrontLift")
-                }, //TODO: make something that can find/update the directions
+        }, //TODO: make something that can find/update the directions
                 new boolean[] {true,true,true,true}
-                );
+        );
         clawArm = new ClawArm2425(hardwareMap.get(DcMotor.class, "armMotor"));
         //TODO: find openPos and closedPos
         claw = new Claw2425(0, 0, hardwareMap.get(Servo.class, "clawServo"));
