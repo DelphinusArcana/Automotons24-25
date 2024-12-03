@@ -18,7 +18,7 @@ public class ButtonWatcher {
     // }
     public boolean WasPressed(boolean val) {
         boolean output = false;
-        if (lastValue == false && val == true) {
+        if (!lastValue && val) {
             output = true;
         }
         lastValue = val;
