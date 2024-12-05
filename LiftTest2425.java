@@ -18,12 +18,18 @@ public class LiftTest2425 extends LinearOpMode {
     private int liftMaxHeight; //upperbound of liftkit position
     private int liftMinimumHeight; //lower bound of liftkit position- might be unneeded if equals 0
     private int saveElapsedMilli; //used for equations like: elapesed time = total time - time since I set this variable
+    private double liftMaxPower;
+    private int liftMaxPowerError;
     private boolean dPadUpPressed;
     private boolean dPadDownPressed;
     private boolean dPadLeftPressed;
     private boolean dPadRightPressed;
     private boolean aPressed;
     private boolean yPressed;
+    private boolean dPadUpPressed2;
+    private boolean dPadDownPressed2;
+    private boolean aPressed2;
+    private boolean yPressed2;
 
     @Override
     public void runOpMode(){
@@ -40,6 +46,9 @@ public class LiftTest2425 extends LinearOpMode {
         liftSpeed = 0.5;
         liftMaxHeight = 100000;
         liftMinimumHeight = 0;
+        liftMaxPower = 1;
+        liftMaxPowerError = 5;
+
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
         // Tells the driver that the robot is ready
@@ -96,30 +105,61 @@ public class LiftTest2425 extends LinearOpMode {
             }
             if (gamepad1.dpad_left && !dPadLeftPressed){
                 dPadLeftPressed = true;
-                liftMaxHeight +=1000;
+                liftMaxHeight -=1000;
             }else if (!gamepad1.dpad_left){
                 dPadLeftPressed = false;
             }
 
-
-
             if (gamepad1.a && !aPressed){
                 aPressed = true;
-                liftMinimumHeight +=1000;
+                liftMinimumHeight+=1000;
             }else if (!gamepad1.a){
                 aPressed = false;
-            }
-            if (gamepad1.y && !yPressed){
+            }if (gamepad1.y && !yPressed){
                 yPressed = true;
                 liftMinimumHeight+=1000;
             }else if (!gamepad1.y){
                 yPressed = false;
             }
 
+            if (gamepad2.a && !aPressed2){
+                aPressed2 = true;
+                liftMaxPower -=0.1;
+            }else if (!gamepad2.a){
+                aPressed2 = false;
+            }
+            if (gamepad2.y && !yPressed2){
+                yPressed2 = true;
+                liftMaxPower+=0.1;
+            }else if (!gamepad2.y){
+                yPressed2 = false;
+            }
+            liftKit.setMaxPower(liftMaxPower);
+
+
+            if (gamepad2.dpad_up && !dPadUpPressed2){
+                dPadUpPressed2 = true;
+                liftMaxPowerError+=2;
+            }else if (!gamepad2.dpad_up){
+                dPadUpPressed2 = false;
+            }if (gamepad2.dpad_down && !dPadDownPressed2){
+                dPadDownPressed2 = true;
+                liftMaxPowerError+=2;
+            }else if (!gamepad2.dpad_down){
+                dPadDownPressed2 = false;
+            }
+            liftKit.setMaxPowerError(liftMaxPowerError);
+
 
             liftKit.powerMotors();
 
+            telemetry.addData("max height", liftMaxHeight);
+            telemetry.addData("min height", liftMinimumHeight);
+            telemetry.addData("speed", liftSpeed);
+            telemetry.addData("max Power", liftMaxPower);
+            telemetry.addData("max Power Error", liftMaxPowerError);
 
+            telemetry.update();
         }
     }
 }
