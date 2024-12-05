@@ -139,12 +139,12 @@ public class LiftTest2425 extends LinearOpMode {
 
             if (gamepad2.dpad_up && !dPadUpPressed2){
                 dPadUpPressed2 = true;
-                liftMaxPowerError+=2;
+                liftMaxPowerError+=10;
             }else if (!gamepad2.dpad_up){
                 dPadUpPressed2 = false;
             }if (gamepad2.dpad_down && !dPadDownPressed2){
                 dPadDownPressed2 = true;
-                liftMaxPowerError-=2;
+                liftMaxPowerError-=10;
             }else if (!gamepad2.dpad_down){
                 dPadDownPressed2 = false;
             }
