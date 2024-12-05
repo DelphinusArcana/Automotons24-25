@@ -46,8 +46,8 @@ public class LiftTest2425 extends LinearOpMode {
         liftSpeed = 0.5;
         liftMaxHeight = 100000;
         liftMinimumHeight = 0;
-        liftMaxPower = 1;
-        liftMaxPowerError = 5;
+        liftMaxPower = 0.5;
+        liftMaxPowerError = 500;
 
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
@@ -124,13 +124,13 @@ public class LiftTest2425 extends LinearOpMode {
 
             if (gamepad2.a && !aPressed2){
                 aPressed2 = true;
-                liftMaxPower -=0.1;
+                liftMaxPower -=0.02;
             }else if (!gamepad2.a){
                 aPressed2 = false;
             }
             if (gamepad2.y && !yPressed2){
                 yPressed2 = true;
-                liftMaxPower+=0.1;
+                liftMaxPower+=0.02;
             }else if (!gamepad2.y){
                 yPressed2 = false;
             }
@@ -144,7 +144,7 @@ public class LiftTest2425 extends LinearOpMode {
                 dPadUpPressed2 = false;
             }if (gamepad2.dpad_down && !dPadDownPressed2){
                 dPadDownPressed2 = true;
-                liftMaxPowerError+=2;
+                liftMaxPowerError-=2;
             }else if (!gamepad2.dpad_down){
                 dPadDownPressed2 = false;
             }
