@@ -12,60 +12,41 @@ import com.qualcomm.robotcore.hardware.Servo;
 @TeleOp(name="ClawTest2425", group="Linear Opmode")
 public class ClawTest2425 extends LinearOpMode {
     private Servo claw;
-    private double leftOpenPos = 0.703125;
-    private double leftDiff = (double) -3/8;
+    private double openPos = 0.703125;
+    private double diff = (double) -3/8;
     @Override
     public void runOpMode () {
-        claw = hardwareMap.get(Servo.class, "leftClaw");
+        claw = hardwareMap.get(Servo.class, "claw");
+        
+        boolean upPressed = false;
+        boolean downPressed = false;
+        boolean yPressed = false;
+        boolean bumpPressed = false;
+        boolean clawClosed = false;
+        boolean changingDiff = true;
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        boolean upPressed = false;
-        boolean downPressed = false;
-        boolean xPressed = false;
-        boolean yPressed = false;
-        boolean leftPressed = false;
-        boolean rightPressed = false;
-        boolean leftClosed = false;
-        boolean rightClosed = false;
-        boolean changingLeft = true;
-        boolean changingDiff = true;
 
 
         while (opModeIsActive()) {
-            telemetry.addData("leftOpenPos", leftOpenPos);
-            telemetry.addData("leftDiff", leftDiff);
-            telemetry.addData("rightOpenPos", rightOpenPos);
-            telemetry.addData("rightDiff", rightDiff);
-            telemetry.addData("changingLeft", changingLeft);
+            telemetry.addData("openPos", openPos);
+            telemetry.addData("diff", diff);
             telemetry.addData("changingDiff", changingDiff);
-            telemetry.addData("leftPos", claw.getPosition());
-            telemetry.addData("rightPos", rClaw.getPosition());
+            telemetry.addData("pos", claw.getPosition());
+
             // claws toggle
-            if (gamepad1.left_bumper && !leftPressed) {
-                leftClosed = !leftClosed;
-                leftPressed = true;
-            } else if (!gamepad1.left_bumper){
-                leftPressed = false;
-            }
-            setClaw(true, leftClosed);
-            if (gamepad1.right_bumper && !rightPressed) {
-                rightClosed = !rightClosed;
-                rightPressed = true;
+            if (gamepad1.right_bumper && !bumpPressed) {
+                clawClosed = !clawClosed;
+                bumpPressed = true;
             } else if (!gamepad1.right_bumper){
-                rightPressed = false;
+                bumpPressed = false;
             }
-            setClaw(false, rightClosed);
+            setClaw(clawClosed);
 
             // find angles
-            if (gamepad1.x && !xPressed) {
-                changingLeft = !changingLeft;
-                xPressed = true;
-            } else if (!gamepad1.x){
-                xPressed = false;
-            }
             if (gamepad1.y && !yPressed) {
                 changingDiff = !changingDiff;
                 yPressed = true;
@@ -73,27 +54,19 @@ public class ClawTest2425 extends LinearOpMode {
                 yPressed = false;
             }
             if (gamepad1.dpad_up && !upPressed) {
-                if (changingLeft && changingDiff)
-                    leftDiff += (double) 1/128;
-                else if (changingLeft)
-                    leftOpenPos += (double) 1/128;
-                else if (changingDiff)
-                    rightDiff += (double) 1/128;
+                if (changingDiff)
+                    diff += (double) 1/128;
                 else
-                    rightOpenPos += (double) 1/128;
+                    openPos += (double) 1/128;
                 upPressed = true;
             } else if (!gamepad1.dpad_up){
                 upPressed = false;
             }
             if (gamepad1.dpad_down && !downPressed) {
-                if (changingLeft && changingDiff)
-                    leftDiff -= (double) 1/128;
-                else if (changingLeft)
-                    leftOpenPos -= (double) 1/128;
-                else if (changingDiff)
-                    rightDiff -= (double) 1/128;
+                if (changingDiff)
+                    diff -= (double) 1/128;
                 else
-                    rightOpenPos -= (double) 1/128;
+                    openPos -= (double) 1/128;
                 downPressed = true;
             } else if (!gamepad1.dpad_down){
                 downPressed = false;
@@ -101,22 +74,12 @@ public class ClawTest2425 extends LinearOpMode {
             telemetry.update();
         }
     }
-    private void setClaw (boolean settingLeft, boolean closed) {
-        if (settingLeft) {
-            if (closed) {
-                claw.setPosition(leftOpenPos + leftDiff);
-
-            } else {
-                claw.setPosition(leftOpenPos);
-            }
+    private void setClaw (boolean closed) {
+        if (closed) {
+            claw.setPosition(openPos + diff);
         } else {
-            if (closed) {
-                rClaw.setPosition(rightOpenPos + rightDiff);
-            } else {
-                rClaw.setPosition(rightOpenPos);
-            }
+            claw.setPosition(openPos);
         }
     }
-
 }
 
