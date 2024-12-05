@@ -19,6 +19,11 @@ public class Position {
         this.bPos = bPos;
         this.facingDirection = facingDirection;
     }
+    public Position (Position position) {
+        this.aPos = position.aPos;
+        this.bPos = position.bPos;
+        this.facingDirection = position.facingDirection;
+    }
     /** The distance between this point and another point
      * @param other the other point to compare this one to
      * @return the between this point and other */
@@ -90,7 +95,7 @@ public class Position {
         double facingDirection = Math.atan2(sinSum / positions.size(), cosSum / positions.size());
         return new Position (aSum / positions.size(), bSum / positions.size(), facingDirection);
     }
-    /** Note: changes the angles in positions*/
+    /** Note: changes the angles in positions. CHECK IF THIS IS STILL TRUE */
     public static Position medianPos (ArrayList<Position> positions) {
         ArrayList<Double> aPoses = new ArrayList<>();
         ArrayList<Double> bPoses = new ArrayList<>();
@@ -107,14 +112,15 @@ public class Position {
         }
         return new Position (medianNum(aPoses), medianNum(bPoses), medianNum(facings));
     }
-    /** Note: destroys the nums list */
-    public static double medianNum (ArrayList<Double> nums) {
+    /** Note: destroys the nums list. */
+    private static double medianNum (ArrayList<Double> nums) {
+        ArrayList<Double> numsCopy = new ArrayList<Double>(nums);
         for (int count = 1; count < nums.size() / 2; count ++) {
-            nums.remove(lowestNumIndex(nums));
+            numsCopy.remove(lowestNumIndex(nums));
         }
-        return nums.get(lowestNumIndex(nums));
+        return numsCopy.get(lowestNumIndex(nums));
     }
-    public static int lowestNumIndex (ArrayList<Double> nums) {
+    private static int lowestNumIndex (ArrayList<Double> nums) {
         int index = 0;
         double lowest = nums.get(0);
         for (int i = 1; i < nums.size(); i++) {
