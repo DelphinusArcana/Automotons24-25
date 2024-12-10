@@ -75,80 +75,80 @@ public class LiftTest2425 extends LinearOpMode {
             double rightY = gamepad1.right_stick_y;
 
             //might be added to liftkit class
-            if (liftKit.getAverageHeight() + (rightY * liftSpeed * timeCoef)>liftMaxHeight && doMinMaxLimit){
+            if (liftKit.getAverageHeight() + (rightY * liftSpeed * timeCoef)>liftMaxHeight && doMinMaxLimit) {
                 liftKit.setTargetHeight(liftMaxHeight);
-            }
-            else if (liftKit.getAverageHeight() + (rightY * liftSpeed * timeCoef)<liftMinimumHeight && doMinMaxLimit){
+            } else if (liftKit.getAverageHeight() + (rightY * liftSpeed * timeCoef)<liftMinimumHeight && doMinMaxLimit){
                 liftKit.setTargetHeight(liftMinimumHeight);
-            }
-            else {
+            } else {
                 liftKit.changeTargetHeight(rightY * liftSpeed * timeCoef);
             }
             //lift kit calibration
             //liftSpeed liftMaxHeight liftMinHeight
-            if (gamepad1.dpad_up && !dPadUpPressed){
+            if (gamepad1.dpad_up && !dPadUpPressed) {
                 dPadUpPressed = true;
                 liftSpeed+= 0.025;
-            }else if (!gamepad1.dpad_up){
+            } else if (!gamepad1.dpad_up) {
                 dPadUpPressed = false;
             }
-            if (gamepad1.dpad_down && !dPadDownPressed){
+            if (gamepad1.dpad_down && !dPadDownPressed) {
                 dPadDownPressed = true;
                 liftSpeed-=0.025;
-            }else if (!gamepad1.dpad_down){
+            } else if (!gamepad1.dpad_down) {
                 dPadDownPressed = false;
             }
 
 
-            if (gamepad1.dpad_right && !dPadRightPressed){
+            if (gamepad1.dpad_right && !dPadRightPressed) {
                 dPadRightPressed = true;
                 liftMaxHeight +=1000;
-            }else if (!gamepad1.dpad_right){
+            } else if (!gamepad1.dpad_right){
                 dPadRightPressed = false;
             }
-            if (gamepad1.dpad_left && !dPadLeftPressed){
+            if (gamepad1.dpad_left && !dPadLeftPressed) {
                 dPadLeftPressed = true;
                 liftMaxHeight -=1000;
-            }else if (!gamepad1.dpad_left){
+            } else if (!gamepad1.dpad_left) {
                 dPadLeftPressed = false;
             }
 
-            if (gamepad1.a && !aPressed){
+            if (gamepad1.a && !aPressed) {
                 aPressed = true;
                 liftMinimumHeight+=1000;
-            }else if (!gamepad1.a){
+            } else if (!gamepad1.a) {
                 aPressed = false;
-            }if (gamepad1.y && !yPressed){
+            }
+            if (gamepad1.y && !yPressed) {
                 yPressed = true;
                 liftMinimumHeight+=1000;
-            }else if (!gamepad1.y){
+            } else if (!gamepad1.y) {
                 yPressed = false;
             }
 
-            if (gamepad2.a && !aPressed2){
+            if (gamepad2.a && !aPressed2) {
                 aPressed2 = true;
                 liftMaxPower -=0.02;
-            }else if (!gamepad2.a){
+            } else if (!gamepad2.a) {
                 aPressed2 = false;
             }
-            if (gamepad2.y && !yPressed2){
+            if (gamepad2.y && !yPressed2) {
                 yPressed2 = true;
                 liftMaxPower+=0.02;
-            }else if (!gamepad2.y){
+            } else if (!gamepad2.y) {
                 yPressed2 = false;
             }
             liftKit.setMaxPower(liftMaxPower);
 
 
-            if (gamepad2.dpad_up && !dPadUpPressed2){
+            if (gamepad2.dpad_up && !dPadUpPressed2) {
                 dPadUpPressed2 = true;
                 liftMaxPowerError+=10;
-            }else if (!gamepad2.dpad_up){
+            } else if (!gamepad2.dpad_up) {
                 dPadUpPressed2 = false;
-            }if (gamepad2.dpad_down && !dPadDownPressed2){
+            }
+            if (gamepad2.dpad_down && !dPadDownPressed2) {
                 dPadDownPressed2 = true;
                 liftMaxPowerError-=10;
-            }else if (!gamepad2.dpad_down){
+            } else if (!gamepad2.dpad_down) {
                 dPadDownPressed2 = false;
             }
 
@@ -164,7 +164,9 @@ public class LiftTest2425 extends LinearOpMode {
 
             liftKit.powerMotors();
 
-            telemetry.addData("do lift height limits is", doMinMaxLimit);
+            telemetry.addData("do lift height limits is", doMinMaxLimit);=======
+            telemetry.addData("Current height", liftKit.getAverageHeight());
+            telemetry.addData("Target height", liftKit.getTargetHeight());
             telemetry.addData("max height", liftMaxHeight);
             telemetry.addData("min height", liftMinimumHeight);
             telemetry.addData("speed", liftSpeed);

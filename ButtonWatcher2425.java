@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.Automotons;
 
-public class ButtonWatcher {
+public class ButtonWatcher2425 {
     private boolean lastValue;
 
-    public ButtonWatcher() {
+    public ButtonWatcher2425() {
         lastValue = false;
     }
     // Use this as a button watcher:

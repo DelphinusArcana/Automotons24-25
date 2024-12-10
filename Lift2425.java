@@ -59,6 +59,9 @@ public class Lift2425 {
     public void changeTargetHeight (double increase) {
         targetHeight += increase;
     }
+    public double getTargetHeight() {
+        return targetHeight;
+    }
     /** Powers the motors based on current power and updates the current height */
     public void powerMotors () {
         for (int i = 0; i < motors.length; i++) {
