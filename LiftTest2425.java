@@ -30,6 +30,8 @@ public class LiftTest2425 extends LinearOpMode {
     private boolean dPadDownPressed2;
     private boolean aPressed2;
     private boolean yPressed2;
+    private boolean leftTriggerPressed;
+    private boolean doMinMaxLimit;
 
     @Override
     public void runOpMode(){
@@ -48,6 +50,7 @@ public class LiftTest2425 extends LinearOpMode {
         liftMinimumHeight = 0;
         liftMaxPower = 0.5;
         liftMaxPowerError = 500;
+        doMinMaxLimit = false;
 
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
@@ -72,10 +75,10 @@ public class LiftTest2425 extends LinearOpMode {
             double rightY = gamepad1.right_stick_y;
 
             //might be added to liftkit class
-            if (liftKit.getAverageHeight() + (rightY * liftSpeed * timeCoef)>liftMaxHeight){
+            if (liftKit.getAverageHeight() + (rightY * liftSpeed * timeCoef)>liftMaxHeight && doMinMaxLimit){
                 liftKit.setTargetHeight(liftMaxHeight);
             }
-            else if (liftKit.getAverageHeight() + (rightY * liftSpeed * timeCoef)<liftMinimumHeight){
+            else if (liftKit.getAverageHeight() + (rightY * liftSpeed * timeCoef)<liftMinimumHeight && doMinMaxLimit){
                 liftKit.setTargetHeight(liftMinimumHeight);
             }
             else {
@@ -148,11 +151,20 @@ public class LiftTest2425 extends LinearOpMode {
             }else if (!gamepad2.dpad_down){
                 dPadDownPressed2 = false;
             }
+
+            if (gamepad1.left_trigger> 0.50 && !leftTriggerPressed){
+                leftTriggerPressed = true;
+                doMinMaxLimit = !doMinMaxLimit;
+
+            }else if (gamepad1.left_trigger<0.30){
+                leftTriggerPressed = false;
+            }
             liftKit.setMaxPowerError(liftMaxPowerError);
 
 
             liftKit.powerMotors();
 
+            telemetry.addData("do lift height limits is", doMinMaxLimit);
             telemetry.addData("max height", liftMaxHeight);
             telemetry.addData("min height", liftMinimumHeight);
             telemetry.addData("speed", liftSpeed);
