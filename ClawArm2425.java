@@ -50,6 +50,9 @@ public class ClawArm2425 {
     public void setTargetPosition (double position) {
         targetPosition = position;
     }
+    public double getCurrentPosition () {
+        return motor.getCurrentPosition() - zeroPosition;
+    }
     /**
      * Changes the target height by specified amount
      * Allows for incremental changes to arm height
