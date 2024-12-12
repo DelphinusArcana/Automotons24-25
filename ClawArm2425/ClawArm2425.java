@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Automotons2425;
+package org.firstinspires.ftc.teamcode.Automotons2425.ClawArm2425;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 //I'm wondering whether we'll need to be applying constant power to the motor just to keep the arm up. If so, it might look closer to the lift kit. If not, this will probably just use the DcMotor.setPosition() function.

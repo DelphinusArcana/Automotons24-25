@@ -1,12 +1,7 @@
-package org.firstinspires.ftc.teamcode.Automotons2425;
+package org.firstinspires.ftc.teamcode.Automotons2425.LiftKit2425;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Gyroscope;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name = "LiftOnly2425", group = "Liniar Opmode")
@@ -164,7 +159,7 @@ public class LiftTest2425 extends LinearOpMode {
 
             liftKit.powerMotors();
 
-            telemetry.addData("do lift height limits is", doMinMaxLimit);=======
+            telemetry.addData("do lift height limits is", doMinMaxLimit);
             telemetry.addData("Current height", liftKit.getAverageHeight());
             telemetry.addData("Target height", liftKit.getTargetHeight());
             telemetry.addData("max height", liftMaxHeight);

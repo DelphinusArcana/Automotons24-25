@@ -1,14 +1,15 @@
-package org.firstinspires.ftc.teamcode.Automotons2425;
+package org.firstinspires.ftc.teamcode.Automotons2425.OldCode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.ExposureControl;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.GainControl;
+import org.firstinspires.ftc.teamcode.Automotons2425.AprilTag;
+import org.firstinspires.ftc.teamcode.Automotons2425.Position;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
@@ -17,12 +18,50 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-// It seems to think 12 real inches is 13 inches -- probably because the tags are a little larger than 2"
-// The play area is about 94" across.
-// The tags are 3.5" in from the edges
+/*
+ * This OpMode illustrates using a camera to locate and drive towards a specific AprilTag.
+ * The code assumes a Holonomic (Mecanum or X Drive) Robot.
+ *
+ * For an introduction to AprilTags, see the ftc-docs link below:
+ * https://ftc-docs.firstinspires.org/en/latest/apriltag/vision_portal/apriltag_intro/apriltag-intro.html
+ *
+ * When an AprilTag in the TagLibrary is detected, the SDK provides location and orientation of the tag, relative to the camera.
+ * This information is provided in the "ftcPose" member of the returned "detection", and is explained in the ftc-docs page linked below.
+ * https://ftc-docs.firstinspires.org/apriltag-detection-values
+ *
+ * The drive goal is to rotate to keep the Tag centered in the camera, while strafing to be directly in front of the tag, and
+ * driving towards the tag to achieve the desired distance.
+ * To reduce any motion blur (which will interrupt the detection process) the Camera exposure is reduced to a very low value (5mS)
+ * You can determine the best Exposure and Gain values by using the ConceptAprilTagOptimizeExposure OpMode in this Samples folder.
+ *
+ * The code assumes a Robot Configuration with motors named: leftFrontDrive and rightFrontDrive, leftRearDrive and rightRearDrive.
+ * The motor directions must be set so a positive power goes forward on all wheels.
+ * This sample assumes that the current game AprilTag Library (usually for the current season) is being loaded by default,
+ * so you should choose to approach a valid tag ID (usually starting at 0)
+ *
+ * Under manual control, the left stick will move forward/back & left/right.  The right stick will rotate the robot.
+ * Manually drive the robot until it displays Target data on the Driver Station.
+ *
+ * Press and hold the *Left Bumper* to enable the automatic "Drive to target" mode.
+ * Release the Left Bumper to return to manual driving mode.
+ *
+ * Under "Drive To Target" mode, the robot has three goals:
+ * 1) Turn the robot to always keep the Tag centered on the camera frame. (Use the Target Bearing to turn the robot.)
+ * 2) Strafe the robot towards the centerline of the Tag, so it approaches directly in front  of the tag.  (Use the Target Yaw to strafe the robot)
+ * 3) Drive towards the Tag to get to the desired distance.  (Use Tag Range to drive the robot forward/backward)
+ *
+ * Use DESIRED_DISTANCE to set how close you want the robot to get to the target.
+ * Speed and Turn sensitivity can be adjusted using the SPEED_GAIN, STRAFE_GAIN and TURN_GAIN constants.
+ *
+ * Use Android Studio to Copy this Class, and Paste it into the TeamCode/src/main/java/org/firstinspires/ftc/teamcode folder.
+ * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
+ *
+ */
 
-@Autonomous(name = "MotorControl")
-public class AprilTagNavWithMotorControl extends LinearOpMode
+// It seems to think 12 real inches is 13 inches -- probably because the tags are a little larger than 2"
+
+@Autonomous(name = "AprilTagCheese")
+public class AprilTagNav extends LinearOpMode
 {
     /** What the program uses to interact with the webcam */
     private VisionPortal visionPortal;
@@ -30,7 +69,6 @@ public class AprilTagNavWithMotorControl extends LinearOpMode
     private AprilTagProcessor aprilTag;
     /** The robot's believed position */
     private Position position;
-    private ArrayList<Position> last10Poses;
     /** The the tags that the robot will interact with */
     private ArrayList<AprilTag> tags;
     /** Whether or not the camera currently sees any april tags from tags */
@@ -38,13 +76,29 @@ public class AprilTagNavWithMotorControl extends LinearOpMode
     /** Multiply by this to convert from degrees (fake) to radians (real) */
     private static final double DEG_TO_RAD = Math.PI / 180.0;
     /** The motor that powers the left front drive wheel */
-    private MotorControl leftFrontDrive;
+    private DcMotor leftFrontDrive;
     /** The motor that powers the left rear drive wheel */
-    private MotorControl leftRearDrive;
+    private DcMotor leftRearDrive;
     /** The motor that powers the right rear drive wheel */
-    private MotorControl rightRearDrive;
+    private DcMotor rightRearDrive;
     /** The motor that powers the right front drive wheel */
-    private MotorControl rightFrontDrive;
+    private DcMotor rightFrontDrive;
+    /** The current position of the left front drive motor */
+    private int leftFrontPos;
+    /** The current position of the left rear drive motor */
+    private int leftRearPos;
+    /** The current position of the right rear drive motor */
+    private int rightRearPos;
+    /** The current position of the right front drive motor */
+    private int rightFrontPos;
+    /** The position of the left front drive motor the last time it was checked */
+    private int leftFrontLastPos;
+    /** The position of the left rear drive motor the last time it was checked */
+    private int leftRearLastPos;
+    /** The position of the right rear drive motor the last time it was checked */
+    private int rightRearLastPos;
+    /** The position of the right front drive motor the last time it was checked */
+    private int rightFrontLastPos;
     /** The position of the left front drive motor when the opMode began */
     private int leftFrontFirstPos;
     /** The position of the left rear drive motor when the opMode began */
@@ -53,6 +107,7 @@ public class AprilTagNavWithMotorControl extends LinearOpMode
     private int rightRearFirstPos;
     /** The position of the right front drive motor when the opMode began */
     private int rightFrontFirstPos;
+    /** The approximate number of inches the robot moves for every unit of motor position */
     public static final double INCHES_PER_MOTOR_POS = 1.0 / 25.0;
     /** The approximate angle (in radians because degrees are fake) the robot moves for every unit of motor position*/
     public static final double RADIANS_PER_MOTOR_POS = Math.PI / 1000.0;
@@ -80,17 +135,16 @@ public class AprilTagNavWithMotorControl extends LinearOpMode
     public static final DcMotorSimple.Direction reverse = DcMotorSimple.Direction.REVERSE;
     /** The position at the origin of the coordinate system */
     public static final Position origin = new Position (0.0, 0.0, 0.0);
-    public static final double distanceMod = 1.0;
+    public static final double distanceMod = 12.0 / 13.0;
     /** Initializes all instance variables. Carries out the robot's actions. */
     @Override
     public void runOpMode() {
+        // TODO: document the start of this
         position = new Position (0.0, 0.0, 0.0);
-        last10Poses = new ArrayList<Position>();
-        last10Poses.add(position);
         minPower = 0.25;
         maxPower = 0.5;
         maxPowerDistance = 24.0;
-        rotatePowerMod = 1.5;
+        rotatePowerMod = 1.8;
         goodEnoughAngle = Math.PI / 30;
         goodEnoughDistance = 3.0;
         goodTagsSeen = false;
@@ -101,25 +155,37 @@ public class AprilTagNavWithMotorControl extends LinearOpMode
         boolean aPressed = false;
         boolean bPressed = false;
 
-        leftFrontDrive = new MotorControl(hardwareMap.get(DcMotor.class, "leftFrontDrive"), reverse);
-        leftRearDrive = new MotorControl(hardwareMap.get(DcMotor.class, "leftRearDrive"), forward);
-        rightRearDrive = new MotorControl(hardwareMap.get(DcMotor.class, "rightRearDrive"), forward);
-        rightFrontDrive = new MotorControl(hardwareMap.get(DcMotor.class, "rightFrontDrive"),forward);
+        leftFrontDrive = hardwareMap.get(DcMotor.class, "leftFrontDrive");
+        leftRearDrive = hardwareMap.get(DcMotor.class, "leftRearDrive");
+        rightRearDrive = hardwareMap.get(DcMotor.class, "rightRearDrive");
+        rightFrontDrive = hardwareMap.get(DcMotor.class, "rightFrontDrive");
+
+        leftFrontDrive.setDirection(reverse);
+        leftRearDrive.setDirection(forward);
+        rightRearDrive.setDirection(forward);
+        rightFrontDrive.setDirection(forward);
+
+        leftFrontPos = leftFrontDrive.getCurrentPosition();
+        leftRearPos = leftRearDrive.getCurrentPosition();
+        rightRearPos = rightRearDrive.getCurrentPosition();
+        rightFrontPos = rightFrontDrive.getCurrentPosition();
+
+        leftFrontLastPos = leftFrontDrive.getCurrentPosition();
+        leftRearLastPos = leftRearDrive.getCurrentPosition();
+        rightRearLastPos = rightRearDrive.getCurrentPosition();
+        rightFrontLastPos = rightFrontDrive.getCurrentPosition();
 
         // Initialize the Apriltag Detection process
         initAprilTag();
 
         tags = new ArrayList<AprilTag>();
-        tags.add(new AprilTag(2, 0.0, 43.5, Math.PI));
-        tags.add(new AprilTag(4, -43.5, 0.0, 3 * Math.PI / 2));
-        tags.add(new AprilTag(5, 43.5, 0.0, Math.PI / 2));
-        tags.add(new AprilTag(8, 0.0, -43.5, 0.0));
-        tags.add(new AprilTag(1, -43.5, 43.5, 5 * Math.PI / 4));
-        tags.add(new AprilTag(3, 43.5, 43.5, 3 * Math.PI / 4));
-        tags.add(new AprilTag(6, -43.5, -43.5, 7 * Math.PI / 4));
-        tags.add(new AprilTag(9, 43.5, -43.5, Math.PI / 4));
+        tags.add(new AprilTag(6, new Position(0.0, 0.0, 0.0)));
+        tags.add(new AprilTag(8, new Position(8.0, 0.0, 3 * Math.PI / 2)));
+        tags.add(new AprilTag(9, new Position(24.0, 0.0, 0.0)));
+        tags.add(new AprilTag(4, new Position(0.0, -6.0, 0.0)));
+        tags.add(new AprilTag(5, new Position(0.0, -60.0, 0.0)));
 
-        setManualExposure(20, 4000);  // Use low exposure time to reduce motion blur
+        setManualExposure(6, 250);  // Use low exposure time to reduce motion blur
 
         // Wait for driver to press start
         telemetry.addData("Camera preview on/off", "3 dots, Camera Stream");
@@ -127,11 +193,10 @@ public class AprilTagNavWithMotorControl extends LinearOpMode
         telemetry.update();
         waitForStart();
 
-        updateMotors();
-        leftFrontFirstPos = leftFrontDrive.getPos();
-        leftRearFirstPos = leftRearDrive.getPos();
-        rightRearFirstPos = rightRearDrive.getPos();
-        rightFrontFirstPos = rightFrontDrive.getPos();
+        leftFrontFirstPos = leftFrontDrive.getCurrentPosition();
+        leftRearFirstPos = leftRearDrive.getCurrentPosition();
+        rightRearFirstPos = rightRearDrive.getCurrentPosition();
+        rightFrontFirstPos = rightFrontDrive.getCurrentPosition();
 
         while (opModeIsActive()) {
             updatePosition();
@@ -151,6 +216,7 @@ public class AprilTagNavWithMotorControl extends LinearOpMode
             move();
 
             telemetry.update();
+            sleep(10);
         }
     }
     /** Updates the believed position of the robot. If there are april tags in view, uses them to determine the position.
@@ -165,42 +231,18 @@ public class AprilTagNavWithMotorControl extends LinearOpMode
                 seenTags.append(", ");
                 for (AprilTag tag : tags) {
                     if (detection.id == tag.getId()) {
-                        last10Poses.add(tag.robotPosition(detection.ftcPose.x * distanceMod, detection.ftcPose.y * distanceMod, detection.ftcPose.yaw * DEG_TO_RAD));
-                        if (last10Poses.size() > 10)
-                            last10Poses.remove(0);
+                        position = tag.robotPosition(detection.ftcPose.x * distanceMod, detection.ftcPose.y * distanceMod, detection.ftcPose.yaw * DEG_TO_RAD);
                         goodTagsSeen = true;
-                        //telemetry.addData("Used tag", detection.id);
+                        telemetry.addData("Used tag", detection.id);
                     }
                 }
             } else {
-                //telemetry.addLine("null metadata");
+                telemetry.addLine("null metadata");
             }
         }
-
+        telemetry.addData("Believed Position", position);
         telemetry.addData("Number of tags in view", currentDetections.size());
         telemetry.addData("Tags", seenTags);
-
-        updateMotors();
-
-        if (!goodTagsSeen){
-            double radsTurned = rotateDistance();
-            double avgDirection = position.facingDirection + radsTurned / 2;
-            double forwardDist = forwardDistance();
-            for (Position pos : last10Poses) {
-                pos.aPos += forwardDist * Math.cos(avgDirection);
-                pos.bPos += forwardDist * Math.sin(avgDirection);
-                pos.facingDirection += radsTurned;
-            }
-        }
-        position = Position.medianPos(last10Poses);
-        totalRotateDistance += rotateDistance() / RADIANS_PER_MOTOR_POS;
-
-        telemetry.addData("Believed Position", position);
-        telemetry.addData("Size", last10Poses.size());
-        telemetry.addData("Poses", last10Poses);
-        telemetry.addData("total rotate distance", totalRotateDistance);
-        telemetry.addData("better total", rotateDistSinceStart());
-
 
         for (AprilTagDetection tag : currentDetections){
             if (tag.metadata != null) {
@@ -210,23 +252,39 @@ public class AprilTagNavWithMotorControl extends LinearOpMode
                 telemetry.addData("Yaw","%3.0f degrees", tag.ftcPose.yaw);
             }
         }
-    }
-    /** Updates each of the drive motors */
-    public void updateMotors () {
-        leftFrontDrive.update();
-        leftRearDrive.update();
-        rightRearDrive.update();
-        rightFrontDrive.update();
+
+        if (!goodTagsSeen) {
+            leftFrontPos = leftFrontDrive.getCurrentPosition();
+            leftRearPos = leftRearDrive.getCurrentPosition();
+            rightRearPos = rightRearDrive.getCurrentPosition();
+            rightFrontPos = rightFrontDrive.getCurrentPosition();
+
+            double radsTurned = rotateDistance();
+            double avgDirection = position.facingDirection + radsTurned / 2;
+            double forwardDist = forwardDistance();
+            position.aPos += forwardDist * Math.cos(avgDirection);
+            position.bPos += forwardDist * Math.sin(avgDirection);
+            position.facingDirection += radsTurned;
+            totalRotateDistance += radsTurned / RADIANS_PER_MOTOR_POS;
+
+            leftFrontLastPos = leftFrontPos;
+            leftRearLastPos = leftRearPos;
+            rightRearLastPos = rightRearPos;
+            rightFrontLastPos = rightFrontPos;
+        }
+
+        telemetry.addData("total rotate distance", totalRotateDistance);
+        telemetry.addData("better total", rotateDistSinceStart());
     }
     // in inches
     /** Determines how far forward the robot has moved (in inches) since the last time updatePosition() was called
      * @return the forward distance the robot has moved (in inches) since the last time updatePosition() was called */
     public double forwardDistance () {
         double dist = 0;
-        dist += leftFrontDrive.distanceTraveled();
-        dist += leftRearDrive.distanceTraveled();
-        dist += rightRearDrive.distanceTraveled();
-        dist += rightFrontDrive.distanceTraveled();
+        dist += leftFrontPos - leftFrontLastPos;
+        dist += leftRearPos - leftRearLastPos;
+        dist += rightRearPos - rightRearLastPos;
+        dist += rightFrontPos - rightFrontLastPos;
         dist /= 4.0; // average of the distances
         return dist * INCHES_PER_MOTOR_POS;
     }
@@ -234,10 +292,10 @@ public class AprilTagNavWithMotorControl extends LinearOpMode
      * @return the angle the robot has turned (in radians because degrees are fake) since the last time updatePosition() was called */
     public double rotateDistance () {
         double dist = 0;
-        dist -= leftFrontDrive.distanceTraveled();
-        dist -= leftRearDrive.distanceTraveled();
-        dist += rightRearDrive.distanceTraveled();
-        dist += rightFrontDrive.distanceTraveled();
+        dist -= leftFrontPos - leftFrontLastPos;
+        dist -= leftRearPos - leftRearLastPos;
+        dist += rightRearPos - rightRearLastPos;
+        dist += rightFrontPos - rightFrontLastPos;
         dist /= 4.0; // average of the distances
         return dist * RADIANS_PER_MOTOR_POS;
     }
@@ -245,15 +303,20 @@ public class AprilTagNavWithMotorControl extends LinearOpMode
      * @return the angle the robot has turned (in radians) since the start */
     public double rotateDistSinceStart () {
         double dist = 0;
-        dist -= leftFrontDrive.getPos() - leftFrontFirstPos;
-        dist -= leftRearDrive.getPos() - leftRearFirstPos;
-        dist += rightRearDrive.getPos() - rightRearFirstPos;
-        dist += rightFrontDrive.getPos() - rightFrontFirstPos;
+        dist -= leftFrontDrive.getCurrentPosition() - leftFrontFirstPos;
+        dist -= leftRearDrive.getCurrentPosition() - leftRearFirstPos;
+        dist += rightRearDrive.getCurrentPosition() - rightRearFirstPos;
+        dist += rightFrontDrive.getCurrentPosition() - rightFrontFirstPos;
         dist /= 4.0; // average of the distances
         return dist;
     }
     /** Turns and moves the robot toward the origin */
     public void move () {
+        leftFrontDrive.setPower(0.0);
+        leftRearDrive.setPower(0.0);
+        rightRearDrive.setPower(0.0);
+        rightFrontDrive.setPower(0.0);
+
         double desiredAngle = position.angleTo(origin);
         telemetry.addData("Angle to origin", desiredAngle);
         double diff = position.angleDiff(origin);
@@ -288,10 +351,10 @@ public class AprilTagNavWithMotorControl extends LinearOpMode
             power = Math.signum(power) * (maxPower - maxAbsDrivePower());
         }
         telemetry.addData("power", power);
-        leftFrontDrive.addPower(-1 * power);
-        leftRearDrive.addPower(-1 * power);
-        rightRearDrive.addPower(power);
-        rightFrontDrive.addPower(power);
+        addPower(leftFrontDrive, -1 * power);
+        addPower(leftRearDrive, -1 * power);
+        addPower(rightRearDrive, power);
+        addPower(rightFrontDrive, power);
     }
     /** Moves the robot forward.
      * @param power the power to send to the wheels.
@@ -300,10 +363,16 @@ public class AprilTagNavWithMotorControl extends LinearOpMode
         if (Math.abs(power) + maxAbsDrivePower() > maxPower) {
             power = Math.signum(power) * (maxPower - maxAbsDrivePower());
         }
-        leftFrontDrive.addPower(power);
-        leftRearDrive.addPower(power);
-        rightRearDrive.addPower(power);
-        rightFrontDrive.addPower(power);
+        addPower(leftFrontDrive, power);
+        addPower(leftRearDrive, power);
+        addPower(rightRearDrive, power);
+        addPower(rightFrontDrive, power);
+    }
+    /** Changes the power sent to a given motor by a given amount
+     * @param motor the motor whose power to change
+     * @param power the amount to change the power by*/
+    public void addPower (DcMotor motor, double power) {
+        motor.setPower(motor.getPower() + power);
     }
     /** Calculates the maximum absolute value of the power sent to each motor
      * @return the maximum absolute value of the power sent to each motor*/
@@ -330,15 +399,15 @@ public class AprilTagNavWithMotorControl extends LinearOpMode
 
         // Create the vision portal by using a builder.e
         visionPortal = new VisionPortal.Builder()
-                .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
-                .addProcessor(aprilTag)
-                .build();
+                    .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
+                    .addProcessor(aprilTag)
+                    .build();
     }
 
     /** Manually sets the camera gain and exposure.
      * This can only be called AFTER calling initAprilTag(), and only works for Webcams
      * Note: this code comes from the examples provided by FTC
-     */
+    */
     private void setManualExposure(int exposureMS, int gain) {
         // Wait for the camera to be open, then use the controls
 

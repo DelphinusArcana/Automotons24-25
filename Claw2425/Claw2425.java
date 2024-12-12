@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Automotons2425;
+package org.firstinspires.ftc.teamcode.Automotons2425.Claw2425;
 
 import com.qualcomm.robotcore.hardware.Servo;
 

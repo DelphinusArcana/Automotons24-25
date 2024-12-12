@@ -3,12 +3,12 @@ package org.firstinspires.ftc.teamcode.Automotons2425;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Gyroscope;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.Automotons2425.Claw2425.Claw2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.ClawArm2425.ClawArm2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425.DriveTrain2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.LiftKit2425.Lift2425;
 
 @Autonomous(name="Autonomous2425")
 public class Autonomous2425 extends LinearOpMode {
