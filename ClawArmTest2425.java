@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name = "teleop2425", group = "Liniar Opmode")
-public class Teleop2425 extends LinearOpMode {
+public class ClawArmTest2425 extends LinearOpMode {
     //variable declaration
     private ClawArm2425 clawArm;//minimum move speed
     private double clawArmSpeed;
@@ -98,10 +98,12 @@ public class Teleop2425 extends LinearOpMode {
                 clawArmSpeed +=0.004;
             }
 
-
-
-
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< telemetry
+            telemetry.addData("claw Arm Speed", clawArmSpeed);
+            telemetry.addData("Max Power Error", maxPowerError);
+            telemetry.addData("Max Power",maxPower);
+            telemetry.addData("Zero position", zeroPosition);
+            telemetry.addData("Upright Position", uprightPosition);
             telemetry.update();
         }
     }
