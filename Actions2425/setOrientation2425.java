@@ -36,15 +36,20 @@ public class setOrientation2425 {
     public void doAction() {
         Position currentPosition = positionFinder.getPosition();
         double diff = currentPosition.angleDiff(new Position(0, 0, orientation));
+        double power = calculatePower(diff);
+        if (power < 0)
+            driveTrain.rotate(0, power);
+        else
+            driveTrain.rotate(power,0);
     }
     private double calculatePower (double error) {
         if (error >= maxPowerError) {
-            return maxPower;
-        } else if (error <= -1 * maxPowerError) {
             return -1 * maxPower;
+        } else if (error <= -1 * maxPowerError) {
+            return maxPower;
         } else {
             double portionOfMaxDistance = error/maxPowerError;
-            return maxPower * portionOfMaxDistance;
+            return -1 * maxPower * portionOfMaxDistance;
         }
     }
 }
