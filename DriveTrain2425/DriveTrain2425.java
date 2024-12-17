@@ -40,14 +40,24 @@ public class DriveTrain2425 {
     /** Determines how far forward the robot has moved (in inches) since the last time updatePosition() was called
      * @return the forward distance the robot has moved (in inches) since the last time updatePosition() was called */
 
-    public double forwardDistance () {
-        double dist = 0;
+    public double[] translateDistance () {
+        double[] dist = {0,0};
+        dist[0] = INCHES_PER_MOTOR_POS/4*(
+                  (wheelsPastPositionTranslate[0] - wheels[0].getCurrentPosition())
+                - (wheelsPastPositionTranslate[1] - wheels[1].getCurrentPosition())
+                - (wheelsPastPositionTranslate[2] - wheels[2].getCurrentPosition())
+                + (wheelsPastPositionTranslate[3] - wheels[3].getCurrentPosition())
+        );
+        dist[1] = INCHES_PER_MOTOR_POS/4*(
+                  (wheelsPastPositionTranslate[0] - wheels[0].getCurrentPosition())
+                + (wheelsPastPositionTranslate[1] - wheels[1].getCurrentPosition())
+                + (wheelsPastPositionTranslate[2] - wheels[2].getCurrentPosition())
+                + (wheelsPastPositionTranslate[3] - wheels[3].getCurrentPosition())
+        );
         for (int i = 0; i < wheels.length; i++) {
-            dist += wheelsPastPositionTranslate[i] - wheels[0].getCurrentPosition();
             wheelsPastPositionTranslate[i] = wheels[0].getCurrentPosition();
         }
-        dist /= 4.0; // average of the distances
-        return dist * INCHES_PER_MOTOR_POS;
+        return dist;
     }
     /** Determines how far the robot has turned (in radians because degrees are fake) since the last time updatePosition() was called
      * @return the angle the robot has turned (in radians because degrees are fake) since the last time updatePosition() was called */
