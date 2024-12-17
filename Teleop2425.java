@@ -39,7 +39,7 @@ public class Teleop2425 extends LinearOpMode {
         );
         liftKit = new Lift2425(new DcMotor[]{
                 hardwareMap.get(DcMotor.class, "leftLift"),
-                hardwareMap.get(DcMotor.class, "rightLift"),
+                hardwareMap.get(DcMotor.class, "rightLift")
                 }, //TODO: make something that can find/update the directions
                 new boolean[] {true,true}
                 );
