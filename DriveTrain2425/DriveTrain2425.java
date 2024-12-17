@@ -14,15 +14,54 @@ public class DriveTrain2425 {
     /** The directions of the motors
      * true is forward. */
     private boolean[] directions;
+    private double[] wheelsPastPositionRotate;
+    private double[] wheelsPastPositionTranslate;
+
     private static final DcMotorSimple.Direction forward = DcMotorSimple.Direction.FORWARD;
     private static final DcMotorSimple.Direction reverse = DcMotorSimple.Direction.REVERSE;
     /** CONSTRUCTOR sets all instance variables
      * @param wheels the motors that control the wheels
      * */
+    /** The approximate number of inches the robot moves for every unit of motor position */
+    public static final double INCHES_PER_MOTOR_POS = 1.0 / 25.0;
+    /** The approximate angle (in radians because degrees are fake) the robot moves for every unit of motor position*/
+    public static final double RADIANS_PER_MOTOR_POS = Math.PI / 1000.0;
+
+
     public DriveTrain2425(DcMotor[] wheels, boolean[] directions) {
         this.wheels = wheels;
         this.directions = directions;
         updateDirections();
+        for (int i = 0; i < wheels.length; i++) {
+            wheelsPastPositionRotate[i] = 0;
+            wheelsPastPositionTranslate[i] = 0;
+        }
+    }
+    /** Determines how far forward the robot has moved (in inches) since the last time updatePosition() was called
+     * @return the forward distance the robot has moved (in inches) since the last time updatePosition() was called */
+
+    public double forwardDistance () {
+        double dist = 0;
+        for (int i = 0; i < wheels.length; i++) {
+            dist += wheelsPastPositionTranslate[i] - wheels[0].getCurrentPosition();
+            wheelsPastPositionTranslate[i] = wheels[0].getCurrentPosition();
+        }
+        dist /= 4.0; // average of the distances
+        return dist * INCHES_PER_MOTOR_POS;
+    }
+    /** Determines how far the robot has turned (in radians because degrees are fake) since the last time updatePosition() was called
+     * @return the angle the robot has turned (in radians because degrees are fake) since the last time updatePosition() was called */
+    public double rotateDistance () {
+        double dist = 0;
+        dist -= wheelsPastPositionRotate[0] - wheels[0].getCurrentPosition();
+        dist -= wheelsPastPositionRotate[1] - wheels[1].getCurrentPosition();
+        dist += wheelsPastPositionRotate[2] - wheels[2].getCurrentPosition();
+        dist += wheelsPastPositionRotate[3] - wheels[3].getCurrentPosition();
+        for (int i = 0; i < wheels.length; i++) {
+            wheelsPastPositionRotate[i] = wheels[0].getCurrentPosition();
+        }
+        dist /= 4.0; // average of the distances
+        return dist * RADIANS_PER_MOTOR_POS;
     }
     /** Sets the directions of each motor to what directions says it should be */
     public void updateDirections() {
