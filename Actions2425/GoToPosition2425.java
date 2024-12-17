@@ -33,7 +33,8 @@ public class GoToPosition2425 {
         Position currentPosition = positionFinder.getPosition();
         double power = calculatePower(currentPosition.distanceTo(desiredPosition));
         double angleToTarget = currentPosition.angleTo(desiredPosition);
-        
+        double angleBetween = angleToTarget - currentPosition.facingDirection;
+        driveTrain.translate(power * Math.sin(angleBetween), power * Math.cos(angleBetween));
     }
     private double calculatePower (double error) {
         if (error >= maxPowerError) {

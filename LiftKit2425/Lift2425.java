@@ -82,7 +82,7 @@ public class Lift2425 {
     }
     /** Calculates the difference between the current height and the target height */
     private int getCurrentOffset (int motorIndex) {
-        return getCurrentPosition(motorIndex) - (int) targetHeight;
+        return (int) targetHeight - getCurrentPosition(motorIndex);
     }
     /** Calculates the current position of a motor relative to its start position */
     private int getCurrentPosition (int motorIndex) {

@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp(name = "LiftOnly2425", group = "Liniar Opmode")
+@TeleOp(name = "LiftTest2425", group = "Liniar Opmode")
 public class LiftTest2425 extends LinearOpMode {
     //variable declaration - classes
     private Lift2425 liftKit;
@@ -68,13 +68,14 @@ public class LiftTest2425 extends LinearOpMode {
             double rightY = gamepad1.right_stick_y;
 
             //might be added to liftkit class
-            if (liftKit.getAverageHeight() + (rightY * liftSpeed * timeCoef)>liftMaxHeight && doMinMaxLimit) {
+            liftKit.changeTargetHeight(rightY * liftSpeed * timeCoef);
+            /*if (liftKit.getAverageHeight() + (rightY * liftSpeed * timeCoef)>liftMaxHeight && doMinMaxLimit) {
                 liftKit.setTargetHeight(liftMaxHeight);
             } else if (liftKit.getAverageHeight() + (rightY * liftSpeed * timeCoef)<liftMinimumHeight && doMinMaxLimit){
                 liftKit.setTargetHeight(liftMinimumHeight);
             } else {
                 liftKit.changeTargetHeight(rightY * liftSpeed * timeCoef);
-            }
+            }*/
             //lift kit calibration
             //liftSpeed liftMaxHeight liftMinHeight
             if (gamepad1.dpad_up && !dPadUpPressed) {
