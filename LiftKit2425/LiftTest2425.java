@@ -32,12 +32,10 @@ public class LiftTest2425 extends LinearOpMode {
     public void runOpMode(){
         //variable initialize -classes
         liftKit = new Lift2425(new DcMotor[]{
-                hardwareMap.get(DcMotor.class, "leftFrontLift"),
-                hardwareMap.get(DcMotor.class, "leftRearLift"),
-                hardwareMap.get(DcMotor.class, "rightRearLift"),
-                hardwareMap.get(DcMotor.class, "rightFrontLift")
+                hardwareMap.get(DcMotor.class, "leftLift"),
+                hardwareMap.get(DcMotor.class, "rightLift"),
         }, //TODO: make something that can find/update the directions
-                new boolean[] {true,true,true,true}
+                new boolean[] {true,true}
         );
         //variable initialize - variables
         liftSpeed = 0.5;
