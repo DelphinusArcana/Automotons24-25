@@ -131,8 +131,7 @@ public class LiftTest2425 extends LinearOpMode {
                 yPressed2 = false;
             }
             liftKit.setMaxPower(liftMaxPower);
-
-
+            
             if (gamepad2.dpad_up && !dPadUpPressed2) {
                 dPadUpPressed2 = true;
                 liftMaxPowerError+=10;
