@@ -85,7 +85,7 @@ public class Lift2425 {
         return (int) targetHeight - getCurrentPosition(motorIndex);
     }
     /** Calculates the current position of a motor relative to its start position */
-    private int getCurrentPosition (int motorIndex) {
+    public int getCurrentPosition (int motorIndex) {
         return motors[motorIndex].getCurrentPosition() - startPositions[motorIndex];
     }
     /** Powers the motors such that they are in the same position */

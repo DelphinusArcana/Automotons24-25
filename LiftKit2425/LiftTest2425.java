@@ -160,6 +160,7 @@ public class LiftTest2425 extends LinearOpMode {
 
             telemetry.addData("do lift height limits is", doMinMaxLimit);
             telemetry.addData("Current height", liftKit.getAverageHeight());
+            telemetry.addData("First motor height", liftKit.getCurrentPosition(0));
             telemetry.addData("Target height", liftKit.getTargetHeight());
             telemetry.addData("max height", liftMaxHeight);
             telemetry.addData("min height", liftMinimumHeight);
