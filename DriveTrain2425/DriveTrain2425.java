@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import org.firstinspires.ftc.teamcode.Automotons2425.Position;
+
 
 public class DriveTrain2425 {
     /** A 1x4 Array assigned to 4 different wheels.
@@ -40,7 +42,7 @@ public class DriveTrain2425 {
     /** Determines how far forward the robot has moved (in inches) since the last time updatePosition() was called
      * @return the forward distance the robot has moved (in inches) since the last time updatePosition() was called */
 
-    public double[] translateDistance () {
+    public Position positionChange () {
         double[] dist = {0,0};
         dist[0] = INCHES_PER_MOTOR_POS/4*(
                   (wheelsPastPositionTranslate[0] - wheels[0].getCurrentPosition())
@@ -57,21 +59,22 @@ public class DriveTrain2425 {
         for (int i = 0; i < wheels.length; i++) {
             wheelsPastPositionTranslate[i] = wheels[0].getCurrentPosition();
         }
-        return dist;
-    }
+
     /** Determines how far the robot has turned (in radians because degrees are fake) since the last time updatePosition() was called
      * @return the angle the robot has turned (in radians because degrees are fake) since the last time updatePosition() was called */
-    public double rotateDistance () {
-        double dist = 0;
-        dist -= wheelsPastPositionRotate[0] - wheels[0].getCurrentPosition();
-        dist -= wheelsPastPositionRotate[1] - wheels[1].getCurrentPosition();
-        dist += wheelsPastPositionRotate[2] - wheels[2].getCurrentPosition();
-        dist += wheelsPastPositionRotate[3] - wheels[3].getCurrentPosition();
+        double rotation = 0;
+        rotation = (
+                - wheelsPastPositionRotate[0] - wheels[0].getCurrentPosition()
+                - wheelsPastPositionRotate[1] - wheels[1].getCurrentPosition()
+                + wheelsPastPositionRotate[2] - wheels[2].getCurrentPosition()
+                + wheelsPastPositionRotate[3] - wheels[3].getCurrentPosition()
+        );
         for (int i = 0; i < wheels.length; i++) {
             wheelsPastPositionRotate[i] = wheels[0].getCurrentPosition();
         }
-        dist /= 4.0; // average of the distances
-        return dist * RADIANS_PER_MOTOR_POS;
+        rotation /= 4.0; // average of the distances
+        rotation *= RADIANS_PER_MOTOR_POS
+        return new Position(dist[0], dist[1], rotation);
     }
     /** Sets the directions of each motor to what directions says it should be */
     public void updateDirections() {
