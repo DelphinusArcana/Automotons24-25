@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.Automotons2425.Actions2425;
 
-interface Action2425 {
+public interface Action2425 {
     /**
      * True if the action has been finished (possibly within reasonable error), false otherwise
      * May stop relevant motors when the action is complete

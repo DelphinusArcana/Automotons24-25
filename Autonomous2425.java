@@ -5,10 +5,13 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.*;
 import org.firstinspires.ftc.teamcode.Automotons2425.Claw2425.Claw2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.ClawArm2425.ClawArm2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425.DriveTrain2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.LiftKit2425.Lift2425;
+
+import java.util.ArrayList;
 
 @Autonomous(name="Autonomous2425")
 public class Autonomous2425 extends LinearOpMode {
@@ -38,8 +41,14 @@ public class Autonomous2425 extends LinearOpMode {
         //TODO: find openPos and closedPos
         claw = new Claw2425(0, 0, hardwareMap.get(Servo.class, "clawServo"));
 
-        while(opModeIsActive()) {
+        ArrayList<Action2425> toDoList = new ArrayList<>();
+        toDoList.add(new SetArm2425(clawArm,0.5,0.0001));
 
+        while(opModeIsActive()) {
+            if (toDoList.get(0).isComplete())
+                toDoList.remove(0);
+            else
+                toDoList.get(0).doAction();
         }
     }
 }
