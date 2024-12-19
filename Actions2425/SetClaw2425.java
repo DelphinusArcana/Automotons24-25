@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.Automotons2425.Actions2425;
 
 import org.firstinspires.ftc.teamcode.Automotons2425.Claw2425.Claw2425;
 
-public class SetClaw2425 {
+public class SetClaw2425 implements Action2425 {
     private Claw2425 claw;
     private boolean setOpen;
 
@@ -18,12 +18,14 @@ public class SetClaw2425 {
     /**
      * True if the action has been finished (possibly within reasonable error), false otherwise
      */
+    @Override
     public boolean isComplete() {
         return true;
     }
     /**
      * Tells the robot to work towards achieving the action
      */
+    @Override
     public void doAction() {
         if (setOpen)
             claw.open();
