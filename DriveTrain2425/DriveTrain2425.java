@@ -16,8 +16,8 @@ public class DriveTrain2425 {
     /** The directions of the motors
      * true is forward. */
     private boolean[] directions;
-    private double[] wheelsPastPositionRotate;
-    private double[] wheelsPastPositionTranslate;
+    private double[] wheelsPastPosition;
+    private double[] wheelsPastPosition;
 
     private static final DcMotorSimple.Direction forward = DcMotorSimple.Direction.FORWARD;
     private static final DcMotorSimple.Direction reverse = DcMotorSimple.Direction.REVERSE;
@@ -35,45 +35,46 @@ public class DriveTrain2425 {
         this.directions = directions;
         updateDirections();
         for (int i = 0; i < wheels.length; i++) {
-            wheelsPastPositionRotate[i] = 0;
-            wheelsPastPositionTranslate[i] = 0;
+            wheelsPastPosition[i] = 0;
+            wheelsPastPosition[i] = 0;
         }
     }
     /** Determines how far forward the robot has moved (in inches) since the last time updatePosition() was called
      * @return the forward distance the robot has moved (in inches) since the last time updatePosition() was called */
 
     public Position positionChange () {
-        double[] dist = {0,0};
-        dist[0] = INCHES_PER_MOTOR_POS/4*(
-                  (wheelsPastPositionTranslate[0] - wheels[0].getCurrentPosition())
-                - (wheelsPastPositionTranslate[1] - wheels[1].getCurrentPosition())
-                - (wheelsPastPositionTranslate[2] - wheels[2].getCurrentPosition())
-                + (wheelsPastPositionTranslate[3] - wheels[3].getCurrentPosition())
-        );
-        dist[1] = INCHES_PER_MOTOR_POS/4*(
-                  (wheelsPastPositionTranslate[0] - wheels[0].getCurrentPosition())
-                + (wheelsPastPositionTranslate[1] - wheels[1].getCurrentPosition())
-                + (wheelsPastPositionTranslate[2] - wheels[2].getCurrentPosition())
-                + (wheelsPastPositionTranslate[3] - wheels[3].getCurrentPosition())
-        );
+        double[] wheelsCurrentPosition = {0,0,0,0};
         for (int i = 0; i < wheels.length; i++) {
-            wheelsPastPositionTranslate[i] = wheels[0].getCurrentPosition();
+            wheelsCurrentPosition[i] = wheels[i].getCurrentPosition();
         }
+        double[] dist = {0,0};
+        dist[0] = INCHES_PER_MOTOR_POS*0.25*(
+                  (wheelsPastPosition[0] - wheelsCurrentPosition[0])
+                - (wheelsPastPosition[1] - wheelsCurrentPosition[1])
+                - (wheelsPastPosition[2] - wheelsCurrentPosition[2])
+                + (wheelsPastPosition[3] - wheelsCurrentPosition[3])
+        );
+        dist[1] = INCHES_PER_MOTOR_POS*0.25*(
+                  (wheelsPastPosition[0] - wheelsCurrentPosition[0])
+                + (wheelsPastPosition[1] - wheelsCurrentPosition[1])
+                + (wheelsPastPosition[2] - wheelsCurrentPosition[2])
+                + (wheelsPastPosition[3] - wheelsCurrentPosition[3])
+        );
 
     /** Determines how far the robot has turned (in radians because degrees are fake) since the last time updatePosition() was called
      * @return the angle the robot has turned (in radians because degrees are fake) since the last time updatePosition() was called */
         double rotation = 0;
         rotation = (
-                - wheelsPastPositionRotate[0] - wheels[0].getCurrentPosition()
-                - wheelsPastPositionRotate[1] - wheels[1].getCurrentPosition()
-                + wheelsPastPositionRotate[2] - wheels[2].getCurrentPosition()
-                + wheelsPastPositionRotate[3] - wheels[3].getCurrentPosition()
+                - (wheelsPastPosition[0] - wheelsCurrentPosition[0])
+                - (wheelsPastPosition[1] - wheelsCurrentPosition[1])
+                + (wheelsPastPosition[2] - wheelsCurrentPosition[2])
+                + (wheelsPastPosition[3] - wheelsCurrentPosition[3])
         );
         for (int i = 0; i < wheels.length; i++) {
-            wheelsPastPositionRotate[i] = wheels[0].getCurrentPosition();
+            wheelsPastPosition[i] =  wheelsCurrentPosition[i];
         }
-        rotation /= 4.0; // average of the distances
-        rotation *= RADIANS_PER_MOTOR_POS
+        rotation *= 0.25; // average of the distances
+        rotation *= RADIANS_PER_MOTOR_POS;
         return new Position(dist[0], dist[1], rotation);
     }
     /** Sets the directions of each motor to what directions says it should be */
