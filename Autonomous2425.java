@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.Automotons2425.Claw2425.Claw2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.ClawArm2425.ClawArm2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425.DriveTrain2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.LiftKit2425.Lift2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425.PositionFinder2425;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,7 @@ public class Autonomous2425 extends LinearOpMode {
     private Lift2425 liftKit;
     private ClawArm2425 clawArm;
     private Claw2425 claw;
+    private PositionFinder2425 positionFinder;
     @Override
     public void runOpMode() {
         driveTrain = new DriveTrain2425(new DcMotor[]{
@@ -42,8 +44,8 @@ public class Autonomous2425 extends LinearOpMode {
         claw = new Claw2425(0, 0, hardwareMap.get(Servo.class, "clawServo"));
 
         ArrayList<Action2425> toDoList = new ArrayList<>();
-        toDoList.add(new SetArm2425(clawArm,0.5,0.0001));
-
+        toDoList.add(new SetArm2425(clawArm,0,0.0001)); // Lowers the claw arm
+        toDoList.add(new SetClaw2425(claw, true)); // Opens the claw
         while(opModeIsActive()) {
             if (toDoList.get(0).isComplete())
                 toDoList.remove(0);
