@@ -38,11 +38,11 @@ public class LiftTest2425 extends LinearOpMode {
                 new boolean[] {true,true}
         );
         //variable initialize - variables
-        liftSpeed = 0.5;
+        liftSpeed = 0.8;
         liftMaxHeight = 100000;
         liftMinimumHeight = 0;
         liftMaxPower = 0.5;
-        liftMaxPowerError = 500;
+        liftMaxPowerError = 100;
         doMinMaxLimit = false;
 
         ElapsedTime runtime = new ElapsedTime();
