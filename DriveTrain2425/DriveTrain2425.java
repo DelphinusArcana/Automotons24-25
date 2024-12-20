@@ -17,19 +17,19 @@ public class DriveTrain2425 {
      * true is forward. */
     private boolean[] directions;
     private double[] wheelsPastPosition;
-    private double[] wheelsPastPosition;
 
     private static final DcMotorSimple.Direction forward = DcMotorSimple.Direction.FORWARD;
     private static final DcMotorSimple.Direction reverse = DcMotorSimple.Direction.REVERSE;
-    /** CONSTRUCTOR sets all instance variables
-     * @param wheels the motors that control the wheels
-     * */
+
+    // TODO: find these two numbers
     /** The approximate number of inches the robot moves for every unit of motor position */
+    // TODO: figure out if this works the same for left-right and front-back
     public static final double INCHES_PER_MOTOR_POS = 1.0 / 25.0;
     /** The approximate angle (in radians because degrees are fake) the robot moves for every unit of motor position*/
     public static final double RADIANS_PER_MOTOR_POS = Math.PI / 1000.0;
-
-
+    /** CONSTRUCTOR sets all instance variables
+     * @param wheels the motors that control the wheels
+     * */
     public DriveTrain2425(DcMotor[] wheels, boolean[] directions) {
         this.wheels = wheels;
         this.directions = directions;
@@ -48,21 +48,20 @@ public class DriveTrain2425 {
             wheelsCurrentPosition[i] = wheels[i].getCurrentPosition();
         }
         double[] dist = {0,0};
-        dist[0] = INCHES_PER_MOTOR_POS*0.25*(
+        dist[0] = INCHES_PER_MOTOR_POS*0.25*( // left-right distance with respect to robot
                   (wheelsPastPosition[0] - wheelsCurrentPosition[0])
                 - (wheelsPastPosition[1] - wheelsCurrentPosition[1])
                 - (wheelsPastPosition[2] - wheelsCurrentPosition[2])
                 + (wheelsPastPosition[3] - wheelsCurrentPosition[3])
         );
-        dist[1] = INCHES_PER_MOTOR_POS*0.25*(
+        dist[1] = INCHES_PER_MOTOR_POS*0.25*( // front-back distance with respect to robot
                   (wheelsPastPosition[0] - wheelsCurrentPosition[0])
                 + (wheelsPastPosition[1] - wheelsCurrentPosition[1])
                 + (wheelsPastPosition[2] - wheelsCurrentPosition[2])
                 + (wheelsPastPosition[3] - wheelsCurrentPosition[3])
         );
 
-    /** Determines how far the robot has turned (in radians because degrees are fake) since the last time updatePosition() was called
-     * @return the angle the robot has turned (in radians because degrees are fake) since the last time updatePosition() was called */
+    // Determine how far the robot has turned (in radians because degrees are fake) since the last time updatePosition() was called
         double rotation = 0;
         rotation = (
                 - (wheelsPastPosition[0] - wheelsCurrentPosition[0])
