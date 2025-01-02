@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Automotons2425.ButtonWatcher2425;
 
-@TeleOp(name = "teleop2425", group = "Liniar Opmode")
+@TeleOp(name = "ClawArmTest2425", group = "Linear Opmode")
 public class ClawArmTest2425 extends LinearOpMode {
     //variable declaration
     private ClawArm2425 clawArm;//minimum move speed
