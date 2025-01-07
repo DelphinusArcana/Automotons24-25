@@ -4,7 +4,7 @@ import org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425.DriveTrain24
 import org.firstinspires.ftc.teamcode.Automotons2425.Position;
 import org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425.PositionFinder2425;
 
-public class setOrientation2425 {
+public class setOrientation2425 implements Action2425 {
     private DriveTrain2425 driveTrain;
     private double orientation;
     private double tolerance;
