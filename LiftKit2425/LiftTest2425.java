@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp(name = "LiftTest2425", group = "Liniar Opmode")
+@TeleOp(name = "LiftTest2425 test", group = "Linear Opmode")
 public class LiftTest2425 extends LinearOpMode {
     //variable declaration - classes
     private Lift2425 liftKit;
@@ -35,7 +35,7 @@ public class LiftTest2425 extends LinearOpMode {
                 hardwareMap.get(DcMotor.class, "leftLift"),
                 hardwareMap.get(DcMotor.class, "rightLift")
         }, //TODO: make something that can find/update the directions
-                new boolean[] {false,false}
+                new boolean[] {false,true}
         );
         //variable initialize - variables
         liftSpeed = 0.8;
@@ -145,11 +145,11 @@ public class LiftTest2425 extends LinearOpMode {
                 dPadDownPressed2 = false;
             }
 
-            if (gamepad1.left_trigger> 0.50 && !leftTriggerPressed){
+            if (gamepad1.left_trigger > 0.50 && !leftTriggerPressed){
                 leftTriggerPressed = true;
                 doMinMaxLimit = !doMinMaxLimit;
 
-            }else if (gamepad1.left_trigger<0.30){
+            }else if (gamepad1.left_trigger < 0.50){
                 leftTriggerPressed = false;
             }
             liftKit.setMaxPowerError(liftMaxPowerError);

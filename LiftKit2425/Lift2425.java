@@ -36,7 +36,8 @@ public class Lift2425 {
         for (int i = 0; i < motors.length; i++) {
             startPositions[i] = motors[i].getCurrentPosition();
         }
-        maxPowerError = 500;
+        //TODO: get these
+        maxPowerError = 100;
         maxPower = 0.5;
     }
     /** Sets the directions of each motor to what directions says it should be */
