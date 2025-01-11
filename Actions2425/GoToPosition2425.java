@@ -27,6 +27,19 @@ public class GoToPosition2425 implements Action2425{
         double distance = currentPosition.distanceTo(desiredPosition);
         return distance <= tolerance;
     }
+
+    /**
+     * sets new tollerance value
+     * @param newTolerance
+     */
+    public void setTolerance(double newTolerance){tolerance = newTolerance;}
+
+    /**
+     * returns tolerance
+     * @return tolernace
+     */
+    public double getTolerance(){return  tolerance;}
+
     /**
      * Tells the robot to work towards achieving the action
      */
