@@ -46,7 +46,7 @@ public class SetOrientationTest2425 extends LinearOpMode {
 
         while (opModeIsActive()) {
             targetAngle += gamepad1.left_trigger/Math.PI;
-            targetAngle -= gamepad1.left_trigger/Math.PI;
+            targetAngle -= gamepad1.right_trigger/Math.PI;
             if (gamepad1.dpad_up) {
                 tolerance += 1;
             } if (gamepad1.dpad_down) {
