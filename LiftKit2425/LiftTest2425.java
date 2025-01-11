@@ -43,7 +43,7 @@ public class LiftTest2425 extends LinearOpMode {
         liftMinimumHeight = 0;
         liftMaxPower = 0.5;
         liftMaxPowerError = 100;
-        doMinMaxLimit = false;
+        doMinMaxLimit = true;
 
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
