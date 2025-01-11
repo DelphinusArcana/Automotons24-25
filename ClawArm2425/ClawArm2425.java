@@ -64,8 +64,8 @@ public class ClawArm2425 {
      * Gives power to the motor to maintain or increase arm power.
      */
     public void powerArm () {
-        motor.setTargetPosition((int) targetPosition);
         motor.setPower(maxPower);
+        motor.setTargetPosition((int) targetPosition);
         /*
         double error = motor.getCurrentPosition() - targetPosition;
         double power = 0;

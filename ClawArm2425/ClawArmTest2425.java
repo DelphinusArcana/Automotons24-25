@@ -53,8 +53,6 @@ public class ClawArmTest2425 extends LinearOpMode {
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
 
-        boolean rBumpPressed = false;
-
         // Tells the driver that the robot is ready
         telemetry.addData("Status", "Initialized");
         telemetry.update();
