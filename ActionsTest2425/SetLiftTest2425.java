@@ -37,8 +37,8 @@ public class SetLiftTest2425 extends LinearOpMode {
 
         //TODO: find these values
         liftSpeed = 0.5;
-        liftMaxHeight = 100000;
-        liftMinimumHeight = 0;
+        liftMaxHeight = 0;
+        liftMinimumHeight = -3600;
 
         dpadUp = new ButtonWatcher2425();
         dpadDown = new ButtonWatcher2425();

@@ -39,8 +39,8 @@ public class LiftTest2425 extends LinearOpMode {
         );
         //variable initialize - variables
         liftSpeed = 0.8;
-        liftMaxHeight = 100000;
-        liftMinimumHeight = 0;
+        liftMaxHeight = 0;
+        liftMinimumHeight = -3600;
         liftMaxPower = 0.5;
         liftMaxPowerError = 100;
         doMinMaxLimit = true;
@@ -67,13 +67,14 @@ public class LiftTest2425 extends LinearOpMode {
             //change lift kit target
             double rightY = gamepad1.right_stick_y;
 
+            liftKit.changeTargetHeight(rightY * liftSpeed * timeCoef);
+
             //might be added to liftkit class
-            if (liftKit.getAverageHeight() + (rightY * liftSpeed * timeCoef)>liftMaxHeight && doMinMaxLimit) {
+            if (liftKit.getTargetHeight() > liftMaxHeight && rightY > 0 && doMinMaxLimit) {
                 liftKit.setTargetHeight(liftMaxHeight);
-            } else if (liftKit.getAverageHeight() + (rightY * liftSpeed * timeCoef)<liftMinimumHeight && doMinMaxLimit){
+            }
+            if (liftKit.getAverageHeight() < liftMinimumHeight && rightY < 0 && doMinMaxLimit){
                 liftKit.setTargetHeight(liftMinimumHeight);
-            } else {
-                liftKit.changeTargetHeight(rightY * liftSpeed * timeCoef);
             }
             //lift kit calibration
             //liftSpeed liftMaxHeight liftMinHeight
