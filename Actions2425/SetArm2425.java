@@ -26,4 +26,5 @@ public class SetArm2425 implements Action2425 {
         arm.setTargetPosition(position);
         arm.powerArm();
     }
+    public double getDesiredPosition() {return position;}
 }

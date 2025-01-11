@@ -68,14 +68,13 @@ public class LiftTest2425 extends LinearOpMode {
             double rightY = gamepad1.right_stick_y;
 
             //might be added to liftkit class
-            liftKit.changeTargetHeight(rightY * liftSpeed * timeCoef);
-            /*if (liftKit.getAverageHeight() + (rightY * liftSpeed * timeCoef)>liftMaxHeight && doMinMaxLimit) {
+            if (liftKit.getAverageHeight() + (rightY * liftSpeed * timeCoef)>liftMaxHeight && doMinMaxLimit) {
                 liftKit.setTargetHeight(liftMaxHeight);
             } else if (liftKit.getAverageHeight() + (rightY * liftSpeed * timeCoef)<liftMinimumHeight && doMinMaxLimit){
                 liftKit.setTargetHeight(liftMinimumHeight);
             } else {
                 liftKit.changeTargetHeight(rightY * liftSpeed * timeCoef);
-            }*/
+            }
             //lift kit calibration
             //liftSpeed liftMaxHeight liftMinHeight
             if (gamepad1.dpad_up && !dPadUpPressed) {
