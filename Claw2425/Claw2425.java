@@ -46,4 +46,16 @@ public class Claw2425 {
         isOpen = false;
     }
 
+    /**
+     * Incrementally recalibrates the positions based on user input
+     * @param amount The amount open and close positions should be adjusted. Small amount recommended.
+     */
+    public void shiftPositions (double amount) {
+        openPosition += amount;
+        closedPosition += amount;
+        if (isOpen)
+            open();
+        else
+            close();
+    }
 }
