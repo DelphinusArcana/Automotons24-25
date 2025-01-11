@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Automotons2425.ActionsTest2425;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -11,7 +12,7 @@ import org.firstinspires.ftc.teamcode.Automotons2425.Claw2425.Claw2425;
 import java.util.ArrayList;
 
 
-@TeleOp(name = "SetClawTest2425", group = "Linear OpMode")
+@Autonomous(name = "SetClawTest2425")
 public class SetClawTest2425 extends LinearOpMode  {
     Claw2425 Claw;
     double saveElapsedMilli;
@@ -49,10 +50,9 @@ public class SetClawTest2425 extends LinearOpMode  {
                     actionList.remove(0);
                     telemetry.speak("Toggling claw");
                     clawState = !clawState;
-                    telemetry.addData("Claw action is",clawState);
                 }
             }
-
+            telemetry.addData("Claw action is",clawState);
             telemetry.update();
         }
     }
