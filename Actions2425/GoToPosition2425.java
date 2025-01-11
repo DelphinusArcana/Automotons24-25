@@ -21,6 +21,7 @@ public class GoToPosition2425 implements Action2425{
     /**
      * True if the action has been finished (possibly within reasonable error), false otherwise
      */
+    @Override
     public boolean isComplete() {
         Position currentPosition = positionFinder.getPosition();
         double distance = currentPosition.distanceTo(desiredPosition);
@@ -29,6 +30,7 @@ public class GoToPosition2425 implements Action2425{
     /**
      * Tells the robot to work towards achieving the action
      */
+    @Override
     public void doAction() {
         Position currentPosition = positionFinder.getPosition();
         double power = calculatePower(currentPosition.distanceTo(desiredPosition));

@@ -9,7 +9,8 @@ import org.firstinspires.ftc.teamcode.Automotons2425.ButtonWatcher2425;
 @TeleOp(name = "ClawArmTest2425", group = "Linear Opmode")
 public class ClawArmTest2425 extends LinearOpMode {
     //variable declaration
-    private ClawArm2425 clawArm;//minimum move speed
+    private ClawArm2425 clawArm;
+    //move speed
     private double clawArmSpeed;
     private int saveElapsedMilli;
     private ButtonWatcher2425 dpadUp2;
@@ -37,6 +38,18 @@ public class ClawArmTest2425 extends LinearOpMode {
         maxPowerError = 500;
         maxPower = 0.5;
         uprightPosition = 0;
+
+        dpadDown2 = new ButtonWatcher2425();
+        dpadUp2 = new ButtonWatcher2425();
+        dpadLeft2 = new ButtonWatcher2425();
+        dpadRight2 = new ButtonWatcher2425();
+        a2 = new ButtonWatcher2425();
+        y2 = new ButtonWatcher2425();
+        b2 = new ButtonWatcher2425();
+        x2 = new ButtonWatcher2425();
+        leftBumper2 = new ButtonWatcher2425();
+        rightBumper2 = new ButtonWatcher2425();
+
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
 
@@ -65,33 +78,33 @@ public class ClawArmTest2425 extends LinearOpMode {
             }
             clawArm.powerArm();
 
-            if (dpadUp2.Pressed(gamepad2.dpad_up)){
+            if (dpadUp2.pressed(gamepad2.dpad_up)){
                 uprightPosition +=5;
                 clawArm.setUprightPosition(uprightPosition);
-            }if (dpadDown2.Pressed(gamepad2.dpad_down)){
+            }if (dpadDown2.pressed(gamepad2.dpad_down)){
                 uprightPosition-=5;
                 clawArm.setUprightPosition(uprightPosition);
-            }if (dpadLeft2.Pressed(gamepad2.dpad_left)){
+            }if (dpadLeft2.pressed(gamepad2.dpad_left)){
                 zeroPosition-=5;
                 clawArm.setZeroPosition(zeroPosition);
-            }if (dpadRight2.Pressed(gamepad2.dpad_right)){
+            }if (dpadRight2.pressed(gamepad2.dpad_right)){
                 zeroPosition+=5;
                 clawArm.setZeroPosition(zeroPosition);
-            }if (a2.Pressed(gamepad2.a)){
+            }if (a2.pressed(gamepad2.a)){
                 maxPower-=0.001;
                 clawArm.setMaxPower(maxPower);
-            }if (y2.Pressed(gamepad2.y)){
+            }if (y2.pressed(gamepad2.y)){
                 maxPower+=0.001;
                 clawArm.setMaxPower(maxPower);
-            }if (b2.Pressed(gamepad2.b)){
+            }if (b2.pressed(gamepad2.b)){
                 maxPowerError-=5;
                 clawArm.setMaxPowerError(maxPowerError);
-            }if (x2.Pressed(gamepad2.x)){
+            }if (x2.pressed(gamepad2.x)){
                 maxPowerError+=5;
                 clawArm.setMaxPowerError(maxPowerError);
-            }if (leftBumper2.Pressed(gamepad2.left_bumper)){
+            }if (leftBumper2.pressed(gamepad2.left_bumper)){
                 clawArmSpeed -=0.004;
-            }if (rightBumper2.Pressed(gamepad2.right_bumper)){
+            }if (rightBumper2.pressed(gamepad2.right_bumper)){
                 clawArmSpeed +=0.004;
             }
 

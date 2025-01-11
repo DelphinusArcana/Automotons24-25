@@ -13,10 +13,10 @@ public class ButtonWatcher2425 {
     //    etc...
     // };
     // and usage:
-    // if (upArrow.WasPressed(gamepad.UP_ARROW)) {
+    // if (upArrow.pressed(gamepad.UP_ARROW)) {
     //     etc...
     // }
-    public boolean Pressed(boolean val) {
+    public boolean pressed(boolean val) {
         boolean output = false;
         if (!lastValue && val) {
             output = true;
