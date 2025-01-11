@@ -70,9 +70,13 @@ public class ClawArmTest2425 extends LinearOpMode {
 
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< arm stuff
             if (gamepad1.y) {
-                clawArm.changeTargetPosition(clawArmSpeed*timeCoef);
+                if (clawArm.getCurrentPosition()+clawArmSpeed*timeCoef>uprightPosition) {
+                    clawArm.changeTargetPosition(clawArmSpeed * timeCoef);
+                }
             } else if (gamepad1.b){
-                clawArm.changeTargetPosition(-1*clawArmSpeed*timeCoef);
+                if (clawArm.getCurrentPosition()+clawArmSpeed*timeCoef>zeroPosition) {
+                    clawArm.changeTargetPosition(-1 * clawArmSpeed * timeCoef);
+                }
             }
             clawArm.powerArm();
 
