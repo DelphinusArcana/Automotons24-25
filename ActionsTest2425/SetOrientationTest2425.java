@@ -20,12 +20,14 @@ public class SetOrientationTest2425 extends LinearOpMode {
     ButtonWatcher2425 dPadDown;
     private double targetAngle;
     private double tolerance;
+    private double speed;
     @Override
     public void runOpMode () {
         aButton = new ButtonWatcher2425();
         dPadUp = new ButtonWatcher2425();
         dPadDown = new ButtonWatcher2425();
         tolerance = 0;
+        speed = Math.PI/200;
         driveTrain = new DriveTrain2425(new DcMotor[]{
                 hardwareMap.get(DcMotor.class,"leftFrontDrive"),
                 hardwareMap.get(DcMotor.class,"leftRearDrive"),
@@ -45,8 +47,8 @@ public class SetOrientationTest2425 extends LinearOpMode {
         Action2425 action = new SetOrientation2425(driveTrain, 0, tolerance*Math.PI/500, positionFinder);
 
         while (opModeIsActive()) {
-            targetAngle += gamepad1.left_trigger/Math.PI;
-            targetAngle -= gamepad1.right_trigger/Math.PI;
+            targetAngle += gamepad1.left_trigger * speed;
+            targetAngle -= gamepad1.right_trigger * speed;
             if (gamepad1.dpad_up) {
                 tolerance += 1;
             } if (gamepad1.dpad_down) {
@@ -54,14 +56,12 @@ public class SetOrientationTest2425 extends LinearOpMode {
             }
             if (aButton.pressed(gamepad1.a)) {
                 action = new SetOrientation2425(driveTrain, targetAngle, tolerance*Math.PI/500, positionFinder);
-                action.doAction();
             }
+            action.doAction();
             telemetry.addData("Target Angle", targetAngle%(2*Math.PI));
             telemetry.addData("Tolerance (n * PI/500)", tolerance);
             telemetry.addData("Action is Complete", action.isComplete());
-
             telemetry.update();
         }
     }
-
 }

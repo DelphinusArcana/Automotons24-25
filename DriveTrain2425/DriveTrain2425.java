@@ -76,6 +76,7 @@ public class DriveTrain2425 {
         rotation *= RADIANS_PER_MOTOR_POS;
         return new Position(dist[0], dist[1], rotation);
     }
+    public  double[] getWheelPosition(){return wheelsPastPosition;}
     /** Sets the directions of each motor to what directions says it should be */
     public void updateDirections() {
         for (int i = 0; i < wheels.length; i++) {

@@ -16,10 +16,7 @@ public class SetArm2425 implements Action2425 {
      */
     @Override
     public boolean isComplete() {
-        if (Math.abs(arm.getCurrentPosition() - position) <= tolerance) {
-            return true;
-        }
-        return false;
+        return Math.abs(arm.getCurrentPosition() - position) <= tolerance;
     }
     /**
      * Tells the robot to work towards achieving the action

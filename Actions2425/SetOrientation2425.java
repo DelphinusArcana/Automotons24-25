@@ -27,8 +27,10 @@ public class SetOrientation2425 implements Action2425 {
     public boolean isComplete() {
         Position currentPosition = positionFinder.getPosition();
         double diff = currentPosition.angleDiff(new Position(0, 0, orientation));
-        if (Math.abs(diff) <= tolerance)
+        if (Math.abs(diff) <= tolerance) {
+            driveTrain.rotate(0,0);
             return true;
+        }
         return false;
     }
     /**
