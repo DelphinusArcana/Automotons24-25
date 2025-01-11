@@ -1,0 +1,65 @@
+package org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425;
+
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+
+import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.GoToPosition2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.Position;
+import org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425.PositionFinder2425;
+
+@TeleOp(name = "DriveTest2425", group = "Linear Opmode")
+public class DriveTest2425 extends LinearOpMode {
+    private DriveTrain2425 driveTrain;
+    private Position drivePosition;
+    private double[] wheelPosition;
+    private double minTranslatePower; //minimum move speed
+    private int moveSpeed; //coefficient that changes driveTrain translation values
+    private PositionFinder2425 positionFinder;
+
+    @Override
+    public void runOpMode () {
+        driveTrain = new DriveTrain2425(new DcMotor[]{
+                hardwareMap.get(DcMotor.class,"leftFrontDrive"),
+                hardwareMap.get(DcMotor.class,"leftRearDrive"),
+                hardwareMap.get(DcMotor.class,"rightRearDrive"),
+                hardwareMap.get(DcMotor.class,"rightFrontDrive")
+        }, //TODO: make something that can find/update the directions
+                new boolean[] {true,true,true,true}
+        );
+        drivePosition =  new Position(0,0,0);
+        positionFinder = new PositionFinder2425(driveTrain, drivePosition);
+
+        wheelPosition = driveTrain.getWheelPosition();
+        moveSpeed = 1;
+        minTranslatePower = 0.25;
+        telemetry.update();
+        // Wait for the game to start (driver presses PLAY)
+        waitForStart();
+
+
+        while (opModeIsActive()) {
+            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,drive train control
+            double leftX = gamepad1.left_stick_x;
+            double leftY = gamepad1.left_stick_y;
+            driveTrain.translate(calcTranslatePower(leftX),calcTranslatePower(leftY));
+
+            double leftTrigger = gamepad1.left_trigger;
+            double rightTrigger = gamepad1.right_trigger;
+            driveTrain.rotate(calcRotatePower(leftTrigger), calcRotatePower(rightTrigger));
+
+            wheelPosition = driveTrain.getWheelPosition();
+            positionFinder.updatePosition();
+
+            telemetry.addData("wheel positions", wheelPosition);
+            telemetry.addData("Drive Position", positionFinder.getPosition());
+            telemetry.update();
+        }
+    }
+    public double calcTranslatePower (double stickPos) {
+        return (stickPos*(1-minTranslatePower)+Math.signum(stickPos)*minTranslatePower)*moveSpeed;
+    }
+    public double calcRotatePower (double triggerPos) {
+        return triggerPos;
+    }
+}
