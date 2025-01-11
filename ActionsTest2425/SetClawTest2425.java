@@ -17,6 +17,9 @@ public class SetClawTest2425 extends LinearOpMode  {
     double saveElapsedMilli;
     @Override
     public void runOpMode () {
+
+        Claw = new Claw2425(0, 0, hardwareMap.get(Servo.class, "clawServo"));
+        
         ArrayList<SetClaw2425> actionList = new ArrayList<SetClaw2425>();
 
         actionList.add(new SetClaw2425(Claw, true));
@@ -26,7 +29,6 @@ public class SetClawTest2425 extends LinearOpMode  {
         actionList.add(new SetClaw2425(Claw, true));
         actionList.add(new SetClaw2425(Claw, false));
 
-        Claw = new Claw2425(0, 0, hardwareMap.get(Servo.class, "clawServo"));
         ElapsedTime runtime = new ElapsedTime();
         saveElapsedMilli = runtime.milliseconds();
 
