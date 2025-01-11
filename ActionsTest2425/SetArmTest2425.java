@@ -4,8 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
-@TeleOp(name = "ClawActionTest2425", group = "Linear OpMode")
-public class ClawActionTest2425 extends LinearOpMode  {
+@TeleOp(name = "SetArmTest2425", group = "Linear OpMode")
+public class SetArmTest2425 extends LinearOpMode {
+
 
     @Override
     public void runOpMode () {
