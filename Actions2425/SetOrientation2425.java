@@ -4,14 +4,14 @@ import org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425.DriveTrain24
 import org.firstinspires.ftc.teamcode.Automotons2425.Position;
 import org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425.PositionFinder2425;
 
-public class setOrientation2425 {
+public class SetOrientation2425 implements Action2425 {
     private DriveTrain2425 driveTrain;
     private double orientation;
     private double tolerance;
     private PositionFinder2425 positionFinder;
     private double maxPower;
     private double maxPowerError;
-    public setOrientation2425 (DriveTrain2425 driveTrain, double orientation, double tolerance, PositionFinder2425 positionFinder) {
+    public SetOrientation2425(DriveTrain2425 driveTrain, double orientation, double tolerance, PositionFinder2425 positionFinder) {
         this.driveTrain = driveTrain;
         this.orientation = orientation;
         this.tolerance = tolerance;
@@ -23,6 +23,7 @@ public class setOrientation2425 {
     /**
      * True if the action has been finished (possibly within reasonable error), false otherwise
      */
+    @Override
     public boolean isComplete() {
         Position currentPosition = positionFinder.getPosition();
         double diff = currentPosition.angleDiff(new Position(0, 0, orientation));
@@ -33,6 +34,7 @@ public class setOrientation2425 {
     /**
      * Tells the robot to work towards achieving the action
      */
+    @Override
     public void doAction() {
         Position currentPosition = positionFinder.getPosition();
         double diff = currentPosition.angleDiff(new Position(0, 0, orientation));

@@ -24,8 +24,8 @@ public class Lift2425 {
     private double maxPower;
     /** CONSTRUCTOR
      * Initializes motors
-     * motors.length == 4
-     * direction is positive if forward
+     * @param motors An array of motors for each wheel length 4. Indexes: 0 is front left motor, counting counterclockwise
+     * @param directions An array of boolean directions. True is forward.
      */
     public Lift2425 (DcMotor[] motors, boolean[] directions) {
         this.motors = motors;

@@ -14,6 +14,7 @@ public class SetLift2425 implements Action2425{
     /**
      * True if the action has been finished (possibly within reasonable error), false otherwise
      */
+    @Override
     public boolean isComplete() {
         if (Math.abs(lift.getAverageHeight() - height) <= tolerance) {
             return true;
@@ -23,6 +24,7 @@ public class SetLift2425 implements Action2425{
     /**
      * Tells the robot to work towards achieving the action
      */
+    @Override
     public void doAction() {
         lift.setTargetHeight(height);
         lift.powerMotors();
