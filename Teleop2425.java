@@ -25,6 +25,8 @@ public class Teleop2425 extends LinearOpMode {
     private int saveElapsedMilli; //used for equations like: elapesed time = total time - time since I set this variable
     private double minTranslatePower; //minimum move speed
     private double clawArmSpeed;
+    private ButtonWatcher2425 dpadUp2;
+    private ButtonWatcher2425 dpadDown2;
 
     @Override
     public void runOpMode(){
@@ -68,6 +70,7 @@ public class Teleop2425 extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
+
             //get time since loop was last looped
             int currentMilli = (int) runtime.milliseconds();
             int timeCoef = currentMilli-saveElapsedMilli;
@@ -106,6 +109,13 @@ public class Teleop2425 extends LinearOpMode {
                 rBumpPressed = true;
             } else if (!gamepad1.right_bumper) {
                 rBumpPressed = false;
+            }
+
+            if (dpadUp2.pressed(gamepad2.dpad_up)){
+                claw.shiftPositions((double) -1 /32);
+            }
+            if (dpadDown2.pressed(gamepad2.dpad_down)){
+                claw.shiftPositions((double) 1 /32);
             }
 
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< arm stuff
