@@ -62,7 +62,7 @@ public class SetLiftTest2425 extends LinearOpMode {
             desiredPosition += rightY * liftSpeed * timeCoef;
 
             //Change desired height
-            if (desiredPosition>liftMaxHeight) {
+            if (desiredPosition > liftMaxHeight) {
                 desiredPosition = liftMaxHeight;
             } else if (desiredPosition<liftMinimumHeight){
                 desiredPosition = liftMinimumHeight;

@@ -34,8 +34,8 @@ public class DriveTrain2425 {
         this.wheels = wheels;
         this.directions = directions;
         updateDirections();
+        wheelsPastPosition = new double[wheels.length];
         for (int i = 0; i < wheels.length; i++) {
-            wheelsPastPosition[i] = 0;
             wheelsPastPosition[i] = 0;
         }
     }
