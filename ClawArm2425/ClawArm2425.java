@@ -36,8 +36,8 @@ public class ClawArm2425 {
         this.motor = motor;
         //TODO: make sure this works
         motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        zeroPosition = motor.getCurrentPosition();
-        uprightPosition = 0;
+        zeroPosition = 1000000000; //= motor.getCurrentPosition();
+        uprightPosition = -10000000;
         targetPosition = zeroPosition;
         maxPowerError = 500;
         maxPower = 0.5;
@@ -49,6 +49,12 @@ public class ClawArm2425 {
      */
     public void setTargetPosition (double position) {
         targetPosition = position;
+        if (targetPosition < uprightPosition){
+            targetPosition = uprightPosition;
+        }
+        else if (targetPosition > zeroPosition){
+            targetPosition = zeroPosition;
+        }
     }
     public double getCurrentPosition () {
         return motor.getCurrentPosition() - zeroPosition;

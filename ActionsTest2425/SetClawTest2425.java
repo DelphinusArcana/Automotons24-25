@@ -43,7 +43,7 @@ public class SetClawTest2425 extends LinearOpMode  {
         while (opModeIsActive()) {
             actionList.get(0).doAction();
 
-            if (runtime.milliseconds()-saveElapsedMilli == 1000){
+            if (runtime.milliseconds()-saveElapsedMilli >= 1000){
                 telemetry.speak("1 second has passed");
                 if (actionList.get(0).isComplete()) {
                     saveElapsedMilli = runtime.milliseconds();
