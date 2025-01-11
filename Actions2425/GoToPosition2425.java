@@ -25,7 +25,10 @@ public class GoToPosition2425 implements Action2425{
     public boolean isComplete() {
         Position currentPosition = positionFinder.getPosition();
         double distance = currentPosition.distanceTo(desiredPosition);
-        return distance <= tolerance;
+        if (distance <= tolerance) {
+            driveTrain.translate(0,0);
+        }
+        return false;
     }
 
     /**

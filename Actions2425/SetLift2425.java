@@ -16,10 +16,7 @@ public class SetLift2425 implements Action2425{
      */
     @Override
     public boolean isComplete() {
-        if (Math.abs(lift.getAverageHeight() - height) <= tolerance) {
-            return true;
-        }
-        return false;
+        return Math.abs(lift.getAverageHeight() - height) <= tolerance;
     }
     /**
      * Tells the robot to work towards achieving the action

@@ -18,6 +18,7 @@ public class SetClaw2425 implements Action2425 {
     /**
      * True if the action has been finished (possibly within reasonable error), false otherwise
      */
+    //TODO: add a Wait action, or test how long it will take to close/open and incorporate it here
     @Override
     public boolean isComplete() {
         return true;
