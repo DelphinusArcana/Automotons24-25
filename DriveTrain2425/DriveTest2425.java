@@ -51,8 +51,14 @@ public class DriveTest2425 extends LinearOpMode {
             wheelPosition = driveTrain.getWheelPosition();
             positionFinder.updatePosition();
 
-            telemetry.addData("wheel positions", wheelPosition);
+            telemetry.addData("wheel positions", ":::::::::::::");
+            telemetry.addData("lfd",wheelPosition[0]);
+            telemetry.addData("lrd",wheelPosition[1]);
+            telemetry.addData("rrd",wheelPosition[2]);
+            telemetry.addData("rfd",wheelPosition[3]);
             telemetry.addData("Drive Position", positionFinder.getPosition());
+            telemetry.addData("moveSpeed",moveSpeed);
+            telemetry.addData("minTranslatePower",minTranslatePower);
             telemetry.update();
         }
     }
