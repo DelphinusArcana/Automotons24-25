@@ -47,12 +47,12 @@ public class GoToPositionTest2425 extends LinearOpMode  {
         actionList.add(new GoToPosition2425(driveTrain, new Position(60, 0, 0), tolerance, positionFinder));
         actionList.add(new GoToPosition2425(driveTrain, new Position(-60, 0, 0), tolerance, positionFinder));
         actionList.add(new GoToPosition2425(driveTrain, new Position(60, 0, 0), tolerance, positionFinder));
-        actionList.add(new GoToPosition2425(driveTrain, new Position(-60, 0, 0), tolerance, positionFinder));
-        actionList.add(new GoToPosition2425(driveTrain, new Position(60, 0, 0), tolerance, positionFinder));
-        actionList.add(new GoToPosition2425(driveTrain, new Position(-60, 0, 0), tolerance, positionFinder));
-        actionList.add(new GoToPosition2425(driveTrain, new Position(60, 0, 0), tolerance, positionFinder));
-        actionList.add(new GoToPosition2425(driveTrain, new Position(-60, 0, 0), tolerance, positionFinder));
-        actionList.add(new GoToPosition2425(driveTrain, new Position(60, 0, 0), tolerance, positionFinder));
+        actionList.add(new GoToPosition2425(driveTrain, new Position(0, -60, 0), tolerance, positionFinder));
+        actionList.add(new GoToPosition2425(driveTrain, new Position(0, 60, 0), tolerance, positionFinder));
+        actionList.add(new GoToPosition2425(driveTrain, new Position(0, -60, 0), tolerance, positionFinder));
+        actionList.add(new GoToPosition2425(driveTrain, new Position(0, 60, 0), tolerance, positionFinder));
+        actionList.add(new GoToPosition2425(driveTrain, new Position(0, -60, 0), tolerance, positionFinder));
+        actionList.add(new GoToPosition2425(driveTrain, new Position(0, 60, 0), tolerance, positionFinder));
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
