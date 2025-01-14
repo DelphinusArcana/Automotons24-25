@@ -25,7 +25,7 @@ public class DriveTest2425 extends LinearOpMode {
                 hardwareMap.get(DcMotor.class,"rightRearDrive"),
                 hardwareMap.get(DcMotor.class,"rightFrontDrive")
         }, //TODO: make something that can find/update the directions
-                new boolean[] {true,true,true,true}
+                new boolean[] {true,false,true,false}
         );
         drivePosition =  new Position(0,0,0);
         positionFinder = new PositionFinder2425(driveTrain, drivePosition);
@@ -33,6 +33,7 @@ public class DriveTest2425 extends LinearOpMode {
         wheelPosition = driveTrain.getWheelPosition();
         moveSpeed = 1;
         minTranslatePower = 0.25;
+        telemetry.addData("Status","Initialized");
         telemetry.update();
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
