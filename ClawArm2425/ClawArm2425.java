@@ -34,12 +34,13 @@ public class ClawArm2425 {
      */
     public ClawArm2425 (DcMotor motor) {
         this.motor = motor;
-        //TODO: make sure this works
+        zeroPosition = motor.getCurrentPosition();
+        motor.setTargetPosition(zeroPosition);
+        //TODO: make this our code not FTC's (FTC's is bad)
         motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        zeroPosition = 1000000000; //= motor.getCurrentPosition();
         uprightPosition = -10000000;
         targetPosition = zeroPosition;
-        maxPowerError = 500;
+        maxPowerError = 100;
         maxPower = 0.5;
         direction = true;
         updateDirection();
@@ -56,8 +57,11 @@ public class ClawArm2425 {
             targetPosition = zeroPosition;
         }
     }
+    public double getTargetPosition () {
+        return targetPosition;
+    }
     public double getCurrentPosition () {
-        return motor.getCurrentPosition() - zeroPosition;
+        return motor.getCurrentPosition();
     }
     /**
      * Changes the target height by specified amount

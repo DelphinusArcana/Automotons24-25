@@ -34,8 +34,9 @@ public class ClawArmTest2425 extends LinearOpMode {
         clawArm = new ClawArm2425(hardwareMap.get(DcMotor.class, "armMotor"));
         zeroPosition = hardwareMap.get(DcMotor.class, "armMotor").getCurrentPosition();
         //TODO: find openPos and closedPos
-        clawArmSpeed = 0.2;
-        maxPowerError = 500;
+        clawArmSpeed = 0.05;
+        maxPowerError = 100;
+        clawArm.setMaxPowerError(maxPowerError);
         maxPower = 0.5;
         uprightPosition = 0;
 
@@ -70,13 +71,11 @@ public class ClawArmTest2425 extends LinearOpMode {
 
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< arm stuff
             if (gamepad1.y) {
-                if (clawArm.getCurrentPosition()+clawArmSpeed*timeCoef>uprightPosition) {
-                    clawArm.changeTargetPosition(clawArmSpeed * timeCoef);
-                }
+                clawArm.changeTargetPosition(clawArmSpeed * timeCoef);
+                telemetry.addData("In","creasing");
             } else if (gamepad1.b){
-                if (clawArm.getCurrentPosition()+clawArmSpeed*timeCoef<zeroPosition) {
-                    clawArm.changeTargetPosition(-1 * clawArmSpeed * timeCoef);
-                }
+                clawArm.changeTargetPosition(-1 * clawArmSpeed * timeCoef);
+                telemetry.addData("De","creasing");
             }
             clawArm.powerArm();
 
@@ -112,6 +111,7 @@ public class ClawArmTest2425 extends LinearOpMode {
 
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< telemetry
             telemetry.addData("Current Position",clawArm.getCurrentPosition());
+            telemetry.addData("Target Position",clawArm.getTargetPosition());
             telemetry.addData("claw Arm Speed", clawArmSpeed);
             telemetry.addData("Max Power Error", maxPowerError);
             telemetry.addData("Max Power",maxPower);

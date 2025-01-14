@@ -140,8 +140,4 @@ public class Lift2425 {
         directions[motorIndex] = direction;
         updateDirections();
     }
-    /** Runs a bunch of test cases */
-    public static void main (String[] args) {
-        //TODO: make this
-    }
 }
