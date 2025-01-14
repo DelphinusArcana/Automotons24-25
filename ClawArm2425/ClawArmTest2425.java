@@ -111,6 +111,7 @@ public class ClawArmTest2425 extends LinearOpMode {
             }
 
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< telemetry
+            telemetry.addData("Current Position",clawArm.getCurrentPosition());
             telemetry.addData("claw Arm Speed", clawArmSpeed);
             telemetry.addData("Max Power Error", maxPowerError);
             telemetry.addData("Max Power",maxPower);
