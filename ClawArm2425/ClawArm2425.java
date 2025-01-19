@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.Automotons2425.ClawArm2425;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 //I'm wondering whether we'll need to be applying constant power to the motor just to keep the arm up. If so, it might look closer to the lift kit. If not, this will probably just use the DcMotor.setPosition() function.
 //TODO: make this
 public class ClawArm2425 {
@@ -35,12 +38,12 @@ public class ClawArm2425 {
     public ClawArm2425 (DcMotor motor) {
         this.motor = motor;
         zeroPosition = motor.getCurrentPosition();
-        motor.setTargetPosition(zeroPosition);
+        //motor.setTargetPosition(zeroPosition);
         //TODO: make this our code not FTC's (FTC's is bad)
-        motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         uprightPosition = -10000000;
         targetPosition = zeroPosition;
-        maxPowerError = 100;
+        maxPowerError = 10;
         maxPower = 0.5;
         direction = true;
         updateDirection();
@@ -73,11 +76,11 @@ public class ClawArm2425 {
     /**
      * Gives power to the motor to maintain or increase arm power.
      */
-    public void powerArm () {
+    public void powerArm (Telemetry telemetry) {
         //motor.setPower(maxPower);
         //motor.setTargetPosition((int) targetPosition);
 
-        double error = motor.getCurrentPosition() - targetPosition;
+        double error = targetPosition - motor.getCurrentPosition();
         double power = 0;
         if (error >= maxPowerError) {
             power = maxPower;
@@ -88,6 +91,8 @@ public class ClawArm2425 {
             power = maxPower * portionOfMaxDistance;
         }
         motor.setPower(power);
+        telemetry.addData("target position", targetPosition);
+        telemetry.addData("power",power);
     }
 
     /**

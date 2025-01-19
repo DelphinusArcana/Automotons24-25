@@ -54,7 +54,7 @@ public class Teleop2425 extends LinearOpMode {
         liftMinimumHeight = 0;
         moveSpeed = 1;
         minTranslatePower = 0.25;
-        clawArmSpeed = 0.2;
+        clawArmSpeed = 0.05;
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
 
@@ -124,7 +124,7 @@ public class Teleop2425 extends LinearOpMode {
             } else if (gamepad1.b){
                 clawArm.changeTargetPosition(-1*clawArmSpeed*timeCoef);
             }
-            clawArm.powerArm();
+            clawArm.powerArm(telemetry);
 
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< telemetry
             telemetry.update();

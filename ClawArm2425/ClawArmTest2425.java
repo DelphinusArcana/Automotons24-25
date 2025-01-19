@@ -35,7 +35,7 @@ public class ClawArmTest2425 extends LinearOpMode {
         zeroPosition = hardwareMap.get(DcMotor.class, "armMotor").getCurrentPosition();
         //TODO: find openPos and closedPos
         clawArmSpeed = 0.05;
-        maxPowerError = 100;
+        maxPowerError = 10;
         clawArm.setMaxPowerError(maxPowerError);
         maxPower = 0.5;
         uprightPosition = 0;
@@ -77,7 +77,7 @@ public class ClawArmTest2425 extends LinearOpMode {
                 clawArm.changeTargetPosition(-1 * clawArmSpeed * timeCoef);
                 telemetry.addData("De","creasing");
             }
-            clawArm.powerArm();
+            clawArm.powerArm(telemetry);
 
             if (dpadUp2.pressed(gamepad2.dpad_up)){
                 uprightPosition +=5;
