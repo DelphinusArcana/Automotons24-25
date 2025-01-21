@@ -174,6 +174,13 @@ public class DriveTrain2425 {
     public void translate (boolean doEmmettsThing ,double xVal, double yVal) {
         double[] powers = {0,0,0,0};
 
+        //scale down xVal and yVal to make sure that they add to 1
+        if (xVal+yVal !=0) {
+            double scaleFactor = 1.0 / (xVal + yVal);
+            xVal *= scaleFactor;
+            yVal *= scaleFactor;
+        }
+
         //x translation
         powers[0] = powers[0] + xVal;
         powers[1] = powers[1] - xVal;
