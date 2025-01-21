@@ -170,10 +170,35 @@ public class DriveTrain2425 {
         }
         return mainPower;
     }
-    /** Rotates the robot using the analog triggers on the controller, more depth means faster rotations
-     *@param lDepth amount trigger is pressed corresponding to speed of leftward rotation
-     *@param rDepth amount trigger is pressed corresponding to speed of rightward rotation
-     */
+    /* Emmett's translate idea thing*/
+    public void translate (boolean doEmmettsThing ,double xVal, double yVal) {
+        double[] powers = {0,0,0,0};
+
+        //x translation
+        powers[0] = powers[0] + xVal;
+        powers[1] = powers[1] - xVal;
+        powers[2] = powers[2] - xVal;
+        powers[3] = powers[3] + xVal;
+
+        //y translation
+        powers[0] = powers[0] + yVal;
+        powers[1] = powers[1] + yVal;
+        powers[2] = powers[2] + yVal;
+        powers[3] = powers[3] + yVal;
+
+        //set powers
+        wheels[0].setPower(powers[0]);
+        wheels[1].setPower(powers[1]);
+        wheels[2].setPower(powers[2]);
+        wheels[3].setPower(powers[3]);
+
+    }
+
+
+        /** Rotates the robot using the analog triggers on the controller, more depth means faster rotations
+         *@param lDepth amount trigger is pressed corresponding to speed of leftward rotation
+         *@param rDepth amount trigger is pressed corresponding to speed of rightward rotation
+         */
     public void rotate(double lDepth, double rDepth) {
         double lPower = lDepth - rDepth;
         wheels[0].setPower(-1 * lPower);
