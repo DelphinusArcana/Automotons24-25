@@ -52,10 +52,10 @@ public class DriveTrain2425 {
         }
         double[] dist = {0,0};
         dist[0] = INCHES_PER_MOTOR_POS*0.25*( // left-right distance with respect to robot
-                  (wheelsPastPosition[0] - wheelsCurrentPosition[0])
+                + (wheelsPastPosition[0] - wheelsCurrentPosition[0])
                 - (wheelsPastPosition[1] - wheelsCurrentPosition[1])
-                - (wheelsPastPosition[2] - wheelsCurrentPosition[2])
-                + (wheelsPastPosition[3] - wheelsCurrentPosition[3])
+                + (wheelsPastPosition[2] - wheelsCurrentPosition[2])
+                - (wheelsPastPosition[3] - wheelsCurrentPosition[3])
         );
         dist[1] = INCHES_PER_MOTOR_POS*0.25*( // front-back distance with respect to robot
                   (wheelsPastPosition[0] - wheelsCurrentPosition[0])
@@ -67,10 +67,10 @@ public class DriveTrain2425 {
     // Determine how far the robot has turned (in radians because degrees are fake) since the last time updatePosition() was called
         double rotation = 0;
         rotation = (
-                - (wheelsPastPosition[0] - wheelsCurrentPosition[0])
+                + (wheelsPastPosition[0] - wheelsCurrentPosition[0])
                 - (wheelsPastPosition[1] - wheelsCurrentPosition[1])
                 + (wheelsPastPosition[2] - wheelsCurrentPosition[2])
-                + (wheelsPastPosition[3] - wheelsCurrentPosition[3])
+                - (wheelsPastPosition[3] - wheelsCurrentPosition[3])
         );
         for (int i = 0; i < wheels.length; i++) {
             wheelsPastPosition[i] =  wheelsCurrentPosition[i];
