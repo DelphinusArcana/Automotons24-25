@@ -40,7 +40,6 @@ public class DriveTest2425 extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-
         while (opModeIsActive()) {
             if (leftBumper.pressed(gamepad1.left_bumper))
                 oppPowerCheck = !oppPowerCheck;
@@ -48,7 +47,8 @@ public class DriveTest2425 extends LinearOpMode {
             double leftX = gamepad1.left_stick_x;
             double leftY = gamepad1.left_stick_y * -1;
             //driveTrain.translate(calcTranslatePower(leftX),calcTranslatePower(leftY));
-            telemetry.addData("drive power", driveTrain.translate(leftX,leftY,oppPowerCheck));
+            //telemetry.addData("drive power", driveTrain.translate(true,leftX,leftY,telemetry));
+            driveTrain.translate(true, leftX, leftY, telemetry);
 
             double leftTrigger = gamepad1.left_trigger;
             double rightTrigger = gamepad1.right_trigger;
