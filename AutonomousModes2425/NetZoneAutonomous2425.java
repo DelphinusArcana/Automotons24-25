@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425.Position
 
 import java.util.ArrayList;
 
-@Autonomous(name="Autonomous2425")
+@Autonomous(name="NetZoneAutonomous2425")
 public class NetZoneAutonomous2425 extends LinearOpMode {
     private DriveTrain2425 driveTrain;
     private Lift2425 liftKit;

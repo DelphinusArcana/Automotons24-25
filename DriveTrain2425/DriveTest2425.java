@@ -1,10 +1,13 @@
 package org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425;
 
+import android.widget.Button;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.GoToPosition2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.ButtonWatcher2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.Position;
 import org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425.PositionFinder2425;
 
@@ -13,9 +16,8 @@ public class DriveTest2425 extends LinearOpMode {
     private DriveTrain2425 driveTrain;
     private Position drivePosition;
     private double[] wheelPosition;
-    private double minTranslatePower; //minimum move speed
-    private int moveSpeed; //coefficient that changes driveTrain translation values
     private PositionFinder2425 positionFinder;
+    private ButtonWatcher2425 leftBumper;
 
     @Override
     public void runOpMode () {
@@ -25,14 +27,14 @@ public class DriveTest2425 extends LinearOpMode {
                 hardwareMap.get(DcMotor.class,"rightRearDrive"),
                 hardwareMap.get(DcMotor.class,"rightFrontDrive")
         }, //TODO: make something that can find/update the directions
-                new boolean[] {true,false,true,false}
+                new boolean[] {false,true,false,true}
         );
         drivePosition =  new Position(0,0,0);
         positionFinder = new PositionFinder2425(driveTrain, drivePosition);
+        leftBumper = new ButtonWatcher2425();
+        boolean oppPowerCheck = true;
 
         wheelPosition = driveTrain.getWheelPosition();
-        moveSpeed = 1;
-        minTranslatePower = 0.25;
         telemetry.addData("Status","Initialized");
         telemetry.update();
         // Wait for the game to start (driver presses PLAY)
@@ -40,10 +42,13 @@ public class DriveTest2425 extends LinearOpMode {
 
 
         while (opModeIsActive()) {
+            if (leftBumper.pressed(gamepad1.left_bumper))
+                oppPowerCheck = !oppPowerCheck;
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,drive train control
             double leftX = gamepad1.left_stick_x;
-            double leftY = gamepad1.left_stick_y;
-            driveTrain.translate(calcTranslatePower(leftX),calcTranslatePower(leftY));
+            double leftY = gamepad1.left_stick_y * -1;
+            //driveTrain.translate(calcTranslatePower(leftX),calcTranslatePower(leftY));
+            telemetry.addData("drive power", driveTrain.translate(leftX,leftY,oppPowerCheck));
 
             double leftTrigger = gamepad1.left_trigger;
             double rightTrigger = gamepad1.right_trigger;
@@ -52,21 +57,22 @@ public class DriveTest2425 extends LinearOpMode {
             wheelPosition = driveTrain.getWheelPosition();
             positionFinder.updatePosition();
 
+            telemetry.addData("" + leftX,leftY);
             telemetry.addData("wheel positions", ":::::::::::::");
             telemetry.addData("lfd",wheelPosition[0]);
             telemetry.addData("lrd",wheelPosition[1]);
             telemetry.addData("rrd",wheelPosition[2]);
             telemetry.addData("rfd",wheelPosition[3]);
+            telemetry.addData("powers",driveTrain.getMotorPower(0) + " " + driveTrain.getMotorPower(1),6);
+            telemetry.addData(""+driveTrain.getMotorPower(2),driveTrain.getMotorPower(3));
             telemetry.addData("Drive Position", positionFinder.getPosition());
-            telemetry.addData("moveSpeed",moveSpeed);
-            telemetry.addData("minTranslatePower",minTranslatePower);
             telemetry.update();
         }
     }
-    public double calcTranslatePower (double stickPos) {
-        return (stickPos*(1-minTranslatePower)+Math.signum(stickPos)*minTranslatePower)*moveSpeed;
-    }
     public double calcRotatePower (double triggerPos) {
         return triggerPos;
+    }
+    public String shorten (double val, int len) {
+        return Position.shorten(val, len);
     }
 }

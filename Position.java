@@ -52,7 +52,7 @@ public class Position {
      * @param value the value to convert to a string
      * @param len the maximum length of the string
      * @return a string containing the first len characters of a number represented as a string*/
-    private String shorten (double value, int len) {
+    public static String shorten (double value, int len) {
         String valStr = "" + value;
         if (valStr.length() < len)
             return valStr;

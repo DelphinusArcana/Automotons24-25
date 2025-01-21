@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Automotons2425.Position;
 
 
@@ -26,7 +28,8 @@ public class DriveTrain2425 {
     // TODO: figure out if this works the same for left-right and front-back
     public static final double INCHES_PER_MOTOR_POS = 1.0 / 25.0;
     /** The approximate angle (in radians because degrees are fake) the robot moves for every unit of motor position*/
-    public static final double RADIANS_PER_MOTOR_POS = Math.PI / 1000.0;
+    public static final double RADIANS_PER_MOTOR_POS = 0.00305127491607; //1;//Math.PI / 1000.0;
+    public static final double minTranslatePower = 0.25;
     /** CONSTRUCTOR sets all instance variables
      * @param wheels the motors that control the wheels
      * */
@@ -36,7 +39,7 @@ public class DriveTrain2425 {
         updateDirections();
         wheelsPastPosition = new double[wheels.length];
         for (int i = 0; i < wheels.length; i++) {
-            wheelsPastPosition[i] = 0;
+            wheelsPastPosition[i] = wheels[i].getCurrentPosition();
         }
     }
     /** Determines how far forward the robot has moved (in inches) since the last time updatePosition() was called
@@ -76,7 +79,8 @@ public class DriveTrain2425 {
         rotation *= RADIANS_PER_MOTOR_POS;
         return new Position(dist[0], dist[1], rotation);
     }
-    public  double[] getWheelPosition(){return wheelsPastPosition;}
+    //TODO: this is a pretty dangerous structure
+    public  double[] getWheelPosition() {return wheelsPastPosition;}
     /** Sets the directions of each motor to what directions says it should be */
     public void updateDirections() {
         for (int i = 0; i < wheels.length; i++) {
@@ -123,6 +127,49 @@ public class DriveTrain2425 {
             wheels[3].setPower(oppPower);
         }
     }
+    /** like translate() but with feedback */
+    public double translate (double xVal, double yVal, boolean opp) {
+        double mainPower = calcTranslatePower(Math.hypot(xVal, yVal));
+        if (mainPower > 1) mainPower = 1;
+        //if (mainPower < -1) mainPower = -1;
+        if (xVal == 0.0 && yVal == 0.0) {
+            for (DcMotor wheel : wheels)
+                wheel.setPower(0.0);
+        } else if (xVal >= 0.0 && yVal >= 0.0) {
+            wheels[1].setPower(mainPower);
+            wheels[3].setPower(mainPower);
+            double oppPower = yVal - xVal;
+            wheels[0].setPower(oppPower);
+            wheels[2].setPower(oppPower);
+            if (opp)
+                return oppPower;
+        } else if (xVal <= 0.0 && yVal >= 0.0) {
+            wheels[0].setPower(mainPower);
+            wheels[2].setPower(mainPower);
+            double oppPower = yVal + xVal;
+            wheels[1].setPower(oppPower);
+            wheels[3].setPower(oppPower);
+            if (opp)
+                return oppPower;
+        } else if (xVal <= 0.0 && yVal <= 0.0) {
+            wheels[1].setPower(-1 * mainPower);
+            wheels[3].setPower(-1 * mainPower);
+            double oppPower = yVal - xVal;
+            wheels[0].setPower(oppPower);
+            wheels[2].setPower(oppPower);
+            if (opp)
+                return oppPower;
+        } else {
+            wheels[0].setPower(-1 * mainPower);
+            wheels[2].setPower(-1 * mainPower);
+            double oppPower = yVal + xVal;
+            wheels[1].setPower(oppPower);
+            wheels[3].setPower(oppPower);
+            if (opp)
+                return oppPower;
+        }
+        return mainPower;
+    }
     /** Rotates the robot using the analog triggers on the controller, more depth means faster rotations
      *@param lDepth amount trigger is pressed corresponding to speed of leftward rotation
      *@param rDepth amount trigger is pressed corresponding to speed of rightward rotation
@@ -146,5 +193,14 @@ public class DriveTrain2425 {
     public void setDirection (int motorIndex, boolean direction) {
         directions[motorIndex] = direction;
         updateDirections();
+    }
+    /** gets the power sent to a motor as specified by the index */
+    public double getMotorPower (int index) {
+        return wheels[index].getPower();
+    }
+    public double calcTranslatePower (double rawPower) {
+        if (rawPower > 1)
+            rawPower = 1;
+        return rawPower * (1-minTranslatePower) + Math.signum(rawPower) * minTranslatePower;
     }
 }
