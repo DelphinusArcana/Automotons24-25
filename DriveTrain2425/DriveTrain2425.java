@@ -174,17 +174,19 @@ public class DriveTrain2425 {
     public void translate (boolean doEmmettsThing ,double xVal, double yVal) {
         double[] powers = {0,0,0,0};
 
-        //scale down xVal and yVal to make sure that they add to 1
         if (Math.abs(xVal)+Math.abs(yVal) !=0) {
-            double scaleFactor = 1.0 / (Math.abs(xVal) + Math.abs(yVal));
-            xVal *= scaleFactor;
-            yVal *= scaleFactor;
-        }
-        //implimented Asher's thing
-        if (Math.abs(xVal)+Math.abs(yVal) <minTranslatePower){
-            double scaleFactor = minTranslatePower / (Math.abs(xVal) + Math.abs(yVal));
-            xVal *= scaleFactor;
-            yVal *= scaleFactor;
+            //scale down xVal and yVal to make sure that they add to 1
+            if ((Math.abs(xVal) + Math.abs(yVal) )>0.1) {
+                double scaleFactor = 1.0 / (Math.abs(xVal) + Math.abs(yVal));
+                xVal *= scaleFactor;
+                yVal *= scaleFactor;
+            }
+            //implimented Asher's thing
+            if (Math.abs(xVal) + Math.abs(yVal) < minTranslatePower) {
+                double scaleFactor = minTranslatePower / (Math.abs(xVal) + Math.abs(yVal));
+                xVal *= scaleFactor;
+                yVal *= scaleFactor;
+            }
         }
 
         //x translation
