@@ -22,6 +22,7 @@ public class NetZoneAutonomous2425 extends LinearOpMode {
     private ClawArm2425 clawArm;
     private Claw2425 claw;
     private PositionFinder2425 positionFinder;
+    private double oritentationTolerance;
     private double moveTolerance;
     private double armTolerance;
     private double armLowest;
@@ -58,6 +59,7 @@ public class NetZoneAutonomous2425 extends LinearOpMode {
         //TODO: find values
         //TODO: have these be static final constants inside of the classes
         moveTolerance = 1;
+        oritentationTolerance = Math.PI/24;
         armLowest = 0;
         armTolerance = Math.PI/12;
         raisedArmPos = Math.PI;
@@ -73,6 +75,7 @@ public class NetZoneAutonomous2425 extends LinearOpMode {
         toDoList.add(new SetClaw2425(claw, true)); // Opens the claw
         //bpos values are 1 tile +6 to avoid triangular map piece +1 so claw reaches
         toDoList.add(new GoToPosition2425(driveTrain,new Position(-24-1.5, 24+6+1, Math.PI/2), moveTolerance, positionFinder));
+        toDoList.add(new SetOrientation2425(driveTrain, Math.PI/2, oritentationTolerance, positionFinder));
         //TODO: have arm move to lowest position
         toDoList.add(new SetArm2425(clawArm, armLowest, armTolerance));
         //bpos increases by 2 so we can drive into the sample and make sure we have contact with it
@@ -86,6 +89,7 @@ public class NetZoneAutonomous2425 extends LinearOpMode {
         //might want to orient with wall using a calibrate position
         //bpos is 2 squares +2 so claws reach
         toDoList.add(new GoToPosition2425(driveTrain,new Position(-3*24+9, 2*24+2, Math.PI/2), moveTolerance, positionFinder));
+        toDoList.add(new SetOrientation2425(driveTrain, 3*Math.PI/4, oritentationTolerance, positionFinder));
         toDoList.add(new SetArm2425(clawArm, armInBasketPos, armTolerance));
         toDoList.add(new SetClaw2425(claw, true));
         toDoList.add(new SetArm2425(clawArm, raisedArmPos, armTolerance));
@@ -95,6 +99,7 @@ public class NetZoneAutonomous2425 extends LinearOpMode {
         toDoList.add(new SetClaw2425(claw, true)); // Opens the claw
         //bpos is increased by 11 from last section which is the distance from one sample to the next
         toDoList.add(new GoToPosition2425(driveTrain,new Position(-24-1.5, 24+6+1+11, Math.PI/2), moveTolerance, positionFinder));
+        toDoList.add(new SetOrientation2425(driveTrain, Math.PI/2, oritentationTolerance, positionFinder));
         //TODO: have arm move to lowest position
         toDoList.add(new SetArm2425(clawArm, armLowest, armTolerance));
         toDoList.add(new GoToPosition2425(driveTrain,new Position(-24-1.5, 24+1+6+2+11, Math.PI/2), moveTolerance, positionFinder));
@@ -105,6 +110,7 @@ public class NetZoneAutonomous2425 extends LinearOpMode {
         toDoList.add(new SetLift2425(liftKit, liftMax, liftTolerance));
         //might want to orient with wall using a calibrate position
         toDoList.add(new GoToPosition2425(driveTrain,new Position(-3*24+9, 2*24+2, Math.PI/2), moveTolerance, positionFinder));
+        toDoList.add(new SetOrientation2425(driveTrain, 3*Math.PI/4, oritentationTolerance, positionFinder));
         toDoList.add(new SetArm2425(clawArm, armInBasketPos, armTolerance));
         toDoList.add(new SetClaw2425(claw, true));
         toDoList.add(new SetArm2425(clawArm, raisedArmPos, armTolerance));
@@ -114,6 +120,7 @@ public class NetZoneAutonomous2425 extends LinearOpMode {
         toDoList.add(new SetClaw2425(claw, true)); // Opens the claw
         //bpos is again increased by 11 from last section
         toDoList.add(new GoToPosition2425(driveTrain,new Position(-24-1.5, 24+6+1+22, Math.PI/2), moveTolerance, positionFinder));
+        toDoList.add(new SetOrientation2425(driveTrain, Math.PI/2, oritentationTolerance, positionFinder));
         //TODO: have arm move to lowest position
         toDoList.add(new SetArm2425(clawArm, armLowest, armTolerance));
         toDoList.add(new GoToPosition2425(driveTrain,new Position(-24-1.5, 24+1+6+2+22, Math.PI/2), moveTolerance, positionFinder));
@@ -124,6 +131,7 @@ public class NetZoneAutonomous2425 extends LinearOpMode {
         toDoList.add(new SetLift2425(liftKit, liftMax, liftTolerance));
         //might want to orient with wall using a calibrate position
         toDoList.add(new GoToPosition2425(driveTrain,new Position(-3*24+9, 2*24+2, Math.PI/2), moveTolerance, positionFinder));
+        toDoList.add(new SetOrientation2425(driveTrain, 3*Math.PI/4, oritentationTolerance, positionFinder));
         toDoList.add(new SetArm2425(clawArm, armInBasketPos, armTolerance));
         toDoList.add(new SetClaw2425(claw, true));
         toDoList.add(new SetArm2425(clawArm, raisedArmPos, armTolerance));
