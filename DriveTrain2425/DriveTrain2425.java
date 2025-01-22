@@ -52,10 +52,10 @@ public class DriveTrain2425 {
         }
         double[] dist = {0,0};
         dist[0] = INCHES_PER_MOTOR_POS*0.25*( // left-right distance with respect to robot
-                  (wheelsPastPosition[0] - wheelsCurrentPosition[0])
+                + (wheelsPastPosition[0] - wheelsCurrentPosition[0])
                 - (wheelsPastPosition[1] - wheelsCurrentPosition[1])
-                - (wheelsPastPosition[2] - wheelsCurrentPosition[2])
-                + (wheelsPastPosition[3] - wheelsCurrentPosition[3])
+                + (wheelsPastPosition[2] - wheelsCurrentPosition[2])
+                - (wheelsPastPosition[3] - wheelsCurrentPosition[3])
         );
         dist[1] = INCHES_PER_MOTOR_POS*0.25*( // front-back distance with respect to robot
                   (wheelsPastPosition[0] - wheelsCurrentPosition[0])
@@ -67,10 +67,10 @@ public class DriveTrain2425 {
     // Determine how far the robot has turned (in radians because degrees are fake) since the last time updatePosition() was called
         double rotation = 0;
         rotation = (
-                - (wheelsPastPosition[0] - wheelsCurrentPosition[0])
+                + (wheelsPastPosition[0] - wheelsCurrentPosition[0])
                 - (wheelsPastPosition[1] - wheelsCurrentPosition[1])
                 + (wheelsPastPosition[2] - wheelsCurrentPosition[2])
-                + (wheelsPastPosition[3] - wheelsCurrentPosition[3])
+                - (wheelsPastPosition[3] - wheelsCurrentPosition[3])
         );
         for (int i = 0; i < wheels.length; i++) {
             wheelsPastPosition[i] =  wheelsCurrentPosition[i];
@@ -94,7 +94,7 @@ public class DriveTrain2425 {
      * @param xVal the amount to move in the x direction (left and right)
      * @param yVal the amount to move in the y direction (forward and backward)
      */
-    public void translate (double xVal, double yVal) {
+    /*public void translate (double xVal, double yVal) {
         double totalPower = Math.hypot(xVal, yVal);
         if (totalPower > 1) totalPower = 1;
         //if (totalPower < -1) totalPower = -1;
@@ -126,9 +126,9 @@ public class DriveTrain2425 {
             wheels[1].setPower(oppPower);
             wheels[3].setPower(oppPower);
         }
-    }
+    }*/
     /** like translate() but with feedback */
-    public double translate (double xVal, double yVal, boolean opp) {
+    /*public double translate (double xVal, double yVal, boolean opp) {
         double mainPower = calcTranslatePower(Math.hypot(xVal, yVal));
         if (mainPower > 1) mainPower = 1;
         //if (mainPower < -1) mainPower = -1;
@@ -169,27 +169,28 @@ public class DriveTrain2425 {
                 return oppPower;
         }
         return mainPower;
-    }
+    }*/
     /* Emmett's translate idea thing*/
-    public void translate (boolean doEmmettsThing ,double xVal, double yVal) {
+    public void translate (boolean doEmmettsThing ,double xVal, double yVal, Telemetry telemetry) {
         double[] powers = {0,0,0,0};
 
         //scale down xVal and yVal to make sure that they add to 1
-        if (Math.abs(xVal)+Math.abs(yVal) !=0) {
+        if (Math.abs(xVal)+Math.abs(yVal) > 1) {
             double scaleFactor = 1.0 / (Math.abs(xVal) + Math.abs(yVal));
             xVal *= scaleFactor;
             yVal *= scaleFactor;
         }
+        /*
         //implimented Asher's thing
-        if (Math.abs(xVal)+Math.abs(yVal) <minTranslatePower){
+        if (Math.abs(xVal)+Math.abs(yVal) < minTranslatePower){
             double scaleFactor = minTranslatePower / (Math.abs(xVal) + Math.abs(yVal));
             xVal *= scaleFactor;
             yVal *= scaleFactor;
-        }
+        }*/
 
         //x translation
-        powers[0] = powers[0] + xVal;
-        powers[1] = powers[1] - xVal;
+        powers[0] = powers[0] - xVal;
+        powers[1] = powers[1] + xVal;
         powers[2] = powers[2] - xVal;
         powers[3] = powers[3] + xVal;
 
@@ -239,6 +240,7 @@ public class DriveTrain2425 {
     public double calcTranslatePower (double rawPower) {
         if (rawPower > 1)
             rawPower = 1;
-        return rawPower * (1-minTranslatePower) + Math.signum(rawPower) * minTranslatePower;
+        return rawPower;
+        //return rawPower * (1-minTranslatePower) + Math.signum(rawPower) * minTranslatePower;
     }
 }

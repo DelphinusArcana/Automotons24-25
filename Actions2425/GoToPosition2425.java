@@ -49,10 +49,14 @@ public class GoToPosition2425 implements Action2425{
     @Override
     public void doAction() {
         Position currentPosition = positionFinder.getPosition();
-        double power = calculatePower(currentPosition.distanceTo(desiredPosition));
         double angleToTarget = currentPosition.angleTo(desiredPosition);
-        double angleBetween = angleToTarget - currentPosition.facingDirection;
-        driveTrain.translate(power * Math.sin(angleBetween), power * Math.cos(angleBetween));
+        SetOrientation2425 orientator = new SetOrientation2425(driveTrain, angleToTarget, Math.PI / 24, positionFinder);
+        if (orientator.isComplete()) {
+            double power = calculatePower(currentPosition.distanceTo(desiredPosition));
+            driveTrain.translate(0, power);
+        } else {
+            orientator.doAction();
+        }
     }
     private double calculatePower (double error) {
         if (error >= maxPowerError) {

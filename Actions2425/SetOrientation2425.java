@@ -11,6 +11,8 @@ public class SetOrientation2425 implements Action2425 {
     private PositionFinder2425 positionFinder;
     private double maxPower;
     private double maxPowerError;
+    /** Tolerance in radians
+     * */
     public SetOrientation2425(DriveTrain2425 driveTrain, double orientation, double tolerance, PositionFinder2425 positionFinder) {
         this.driveTrain = driveTrain;
         this.orientation = orientation;
