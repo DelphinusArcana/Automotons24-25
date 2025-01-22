@@ -21,13 +21,15 @@ public class Teleop2425 extends LinearOpMode {
     private double liftSpeed; //coefficient to adjust how much lift target moves each loop
     private int liftMaxHeight; //upperbound of liftkit position
     private int liftMinimumHeight; //lower bound of liftkit position- might be unneeded if equals 0
+    private boolean doMinMaxLimit; //true to restrict the liftkit movement with bounds. Should be true normally.
     private int moveSpeed; //coefficient that changes driveTrain translation values
     private int saveElapsedMilli; //used for equations like: elapesed time = total time - time since I set this variable
     private double minTranslatePower; //minimum move speed
     private double clawArmSpeed;
+    private double clawZeroPosition;
+
     private ButtonWatcher2425 dpadUp2;
     private ButtonWatcher2425 dpadDown2;
-
     @Override
     public void runOpMode(){
         //variable initialize -classes
@@ -43,15 +45,25 @@ public class Teleop2425 extends LinearOpMode {
                 hardwareMap.get(DcMotor.class, "leftLift"),
                 hardwareMap.get(DcMotor.class, "rightLift")
                 }, //TODO: make something that can find/update the directions
-                new boolean[] {true,true}
+                new boolean[] {false,false}
                 );
         clawArm = new ClawArm2425(hardwareMap.get(DcMotor.class, "armMotor"));
         //TODO: find openPos and closedPos
         claw = new Claw2425(0, 0, hardwareMap.get(Servo.class, "clawServo"));
+        clawZeroPosition = hardwareMap.get(DcMotor.class, "armMotor").getCurrentPosition();
         //variable initialize - variables
-        liftSpeed = 0.5;
-        liftMaxHeight = 100000;
-        liftMinimumHeight = 0;
+        liftSpeed = 0.8;
+        liftMaxHeight = 0;
+        liftMinimumHeight = -3600;
+        liftKit.setMaxPower(0.5);
+        liftKit.setMaxPowerError(70);
+        doMinMaxLimit = true;
+
+        clawArmSpeed = 0.05;
+        clawArm.setMaxPowerError(10);
+        clawArm.setMaxPower(0.5);
+        clawArm.setUprightPosition(10); //TODO: Figure out this number
+
         moveSpeed = 1;
         minTranslatePower = 0.25;
         clawArmSpeed = 0.05;
@@ -76,22 +88,19 @@ public class Teleop2425 extends LinearOpMode {
             int timeCoef = currentMilli-saveElapsedMilli;
             saveElapsedMilli = currentMilli;
 
-            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<liftkit controll
+            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<liftkit control
             //TODO: see if we want more precise control on claw arm or lift kit (maybe switch stick for buttons)
-            //change lift kit target
             double rightY = gamepad1.right_stick_y;
-
-            //might be added to liftkit class
-            if (liftKit.getAverageHeight() + (rightY * liftSpeed * timeCoef)>liftMaxHeight){
+            //change lift kit target
+            liftKit.changeTargetHeight(rightY * liftSpeed * timeCoef);
+            //might be added to liftkit class. Bounds the positions that can be desired.
+            if (liftKit.getTargetHeight() > liftMaxHeight && rightY > 0 && doMinMaxLimit) { //TODO: This could be wrong since the max is negative...
                 liftKit.setTargetHeight(liftMaxHeight);
             }
-            else if (liftKit.getAverageHeight() + (rightY * liftSpeed * timeCoef)<liftMinimumHeight){
+            if (liftKit.getTargetHeight() < liftMinimumHeight && rightY < 0 && doMinMaxLimit){
                 liftKit.setTargetHeight(liftMinimumHeight);
             }
-            else {
-                liftKit.changeTargetHeight(rightY * liftSpeed * timeCoef);
-            }
-            //lift kit calibration
+            //makes the motors turn
             liftKit.powerMotors();
 
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,drive train control
