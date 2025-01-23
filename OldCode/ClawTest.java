@@ -17,7 +17,6 @@ public class ClawTest extends LinearOpMode {
     public void runOpMode () {
         lClaw = hardwareMap.get(Servo.class, "leftClaw");
         rClaw = hardwareMap.get(Servo.class, "rightClaw");
-
         telemetry.addData("Status", "Initialized");
         telemetry.update();
         // Wait for the game to start (driver presses PLAY)

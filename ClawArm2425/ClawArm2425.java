@@ -53,12 +53,12 @@ public class ClawArm2425 {
      */
     public void setTargetPosition (double position) {
         targetPosition = position;
-        if (targetPosition < uprightPosition){
+        /*if (targetPosition < uprightPosition){
             targetPosition = uprightPosition;
         }
         else if (targetPosition > zeroPosition){
             targetPosition = zeroPosition;
-        }
+        }*/
     }
     public double getTargetPosition () {
         return targetPosition;
