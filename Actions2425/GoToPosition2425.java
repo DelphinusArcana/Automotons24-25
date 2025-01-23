@@ -26,7 +26,8 @@ public class GoToPosition2425 implements Action2425{
         Position currentPosition = positionFinder.getPosition();
         double distance = currentPosition.distanceTo(desiredPosition);
         if (distance <= tolerance) {
-            driveTrain.translate(0,0);
+            // TODO: make this work
+            //driveTrain.translate(0,0);
         }
         return false;
     }
@@ -53,7 +54,8 @@ public class GoToPosition2425 implements Action2425{
         SetOrientation2425 orientator = new SetOrientation2425(driveTrain, angleToTarget, Math.PI / 24, positionFinder);
         if (orientator.isComplete()) {
             double power = calculatePower(currentPosition.distanceTo(desiredPosition));
-            driveTrain.translate(0, power);
+            //TODO: fix this
+            //driveTrain.translate(0, power);
         } else {
             orientator.doAction();
         }

@@ -47,14 +47,18 @@ public class Teleop2425 extends LinearOpMode {
                 );
         clawArm = new ClawArm2425(hardwareMap.get(DcMotor.class, "armMotor"));
         //TODO: find openPos and closedPos
-        claw = new Claw2425(0, 0, hardwareMap.get(Servo.class, "clawServo"));
+        claw = new Claw2425(0.3515625, 0.7265625, hardwareMap.get(Servo.class, "clawServo"));
         //variable initialize - variables
-        liftSpeed = 0.5;
-        liftMaxHeight = 100000;
-        liftMinimumHeight = 0;
+        liftSpeed = 1;
+        liftMaxHeight = 0;
+        liftMinimumHeight = -3600;
         moveSpeed = 1;
         minTranslatePower = 0.25;
         clawArmSpeed = 0.05;
+        ButtonWatcher2425 leftTrigger2 = new ButtonWatcher2425();
+        dpadUp2 = new ButtonWatcher2425();
+        dpadDown2 = new ButtonWatcher2425();
+        boolean doMinMaxLimit = true;
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
 
@@ -81,23 +85,24 @@ public class Teleop2425 extends LinearOpMode {
             //change lift kit target
             double rightY = gamepad1.right_stick_y;
 
+            liftKit.changeTargetHeight(rightY * liftSpeed * timeCoef);
+            if (leftTrigger2.pressed(gamepad2.left_trigger >= 0.5)) {
+                doMinMaxLimit = !doMinMaxLimit;
+            }
             //might be added to liftkit class
-            if (liftKit.getAverageHeight() + (rightY * liftSpeed * timeCoef)>liftMaxHeight){
+            if (liftKit.getTargetHeight() > liftMaxHeight && rightY > 0 && doMinMaxLimit) {
                 liftKit.setTargetHeight(liftMaxHeight);
             }
-            else if (liftKit.getAverageHeight() + (rightY * liftSpeed * timeCoef)<liftMinimumHeight){
+            if (liftKit.getTargetHeight() < liftMinimumHeight && rightY < 0 && doMinMaxLimit){
                 liftKit.setTargetHeight(liftMinimumHeight);
-            }
-            else {
-                liftKit.changeTargetHeight(rightY * liftSpeed * timeCoef);
             }
             //lift kit calibration
             liftKit.powerMotors();
 
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,drive train control
             double leftX = gamepad1.left_stick_x;
-            double leftY = gamepad1.left_stick_y;
-            driveTrain.translate(true, calcTranslatePower(leftX),calcTranslatePower(leftY), telemetry);
+            double leftY = gamepad1.left_stick_y * -1;
+            driveTrain.translate(true, leftX, leftY, telemetry);
 
             double leftTrigger = gamepad1.left_trigger;
             double rightTrigger = gamepad1.right_trigger;

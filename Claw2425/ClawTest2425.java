@@ -26,7 +26,8 @@ public class ClawTest2425 extends LinearOpMode {
         boolean rBumpPressed = false;
         boolean clawClosed = false;
         boolean changingDiff = true;
-
+        dpadUp2 = new ButtonWatcher2425();
+        dpadDown2 = new ButtonWatcher2425();
         telemetry.addData("Status", "Initialized");
         telemetry.update();
         // Wait for the game to start (driver presses PLAY)
