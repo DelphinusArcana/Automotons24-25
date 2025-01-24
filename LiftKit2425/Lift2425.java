@@ -97,11 +97,12 @@ public class Lift2425 {
     public void updateMotorStartPosition (int motorIndex, int newStartposition) {
         startPositions[motorIndex] = newStartposition;
     }
-    /** Sets the start positions of each motor to its current position */
+    /** Sets the start positions of each motor to its current position. Sets the target height to the average current height. */
     public void zeroMotors() {
         for (int i = 0; i < motors.length; i++) {
             startPositions[i] = motors[i].getCurrentPosition();
         }
+        setTargetHeight(getAverageHeight());
     }
     /** Average distance from the motors’ starting position and current position */
     public int getAverageHeight () {
@@ -139,5 +140,13 @@ public class Lift2425 {
     public void setDirection (int motorIndex, boolean direction) {
         directions[motorIndex] = direction;
         updateDirections();
+    }
+    /** Gets the start position of a specified motor*/
+    public double getStartPosition (int index) {
+        return startPositions[index];
+    }
+    /** Changes the start position of a specified motor*/
+    public void increaseStartPos (int index, int increase) {
+        startPositions[index] += increase;
     }
 }

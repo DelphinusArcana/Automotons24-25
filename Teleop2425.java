@@ -58,7 +58,19 @@ public class Teleop2425 extends LinearOpMode {
         ButtonWatcher2425 leftTrigger2 = new ButtonWatcher2425();
         dpadUp2 = new ButtonWatcher2425();
         dpadDown2 = new ButtonWatcher2425();
+        ButtonWatcher2425 aButton2 = new ButtonWatcher2425();
+        ButtonWatcher2425 bButton2 = new ButtonWatcher2425();
         boolean doMinMaxLimit = true;
+        ButtonWatcher2425 leftX2Pos = new ButtonWatcher2425();
+        ButtonWatcher2425 leftX2Neg = new ButtonWatcher2425();
+        ButtonWatcher2425 leftY2Pos = new ButtonWatcher2425();
+        ButtonWatcher2425 leftY2Neg = new ButtonWatcher2425();
+        ButtonWatcher2425 rightX2Pos = new ButtonWatcher2425();
+        ButtonWatcher2425 rightX2Neg = new ButtonWatcher2425();
+        ButtonWatcher2425 rightY2Pos = new ButtonWatcher2425();
+        ButtonWatcher2425 rightY2Neg = new ButtonWatcher2425();
+        int liftCalSmall = 1;
+        int liftCalLarge = 10;
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
 
@@ -94,17 +106,13 @@ public class Teleop2425 extends LinearOpMode {
             if (liftKit.getTargetHeight() < liftMinimumHeight && rightY < 0 && doMinMaxLimit){
                 liftKit.setTargetHeight(liftMinimumHeight);
             }
-
-            if (leftTrigger2.pressed(gamepad2.left_trigger >= 0.5)) {
-                doMinMaxLimit = !doMinMaxLimit;
-            }
             //makes the lift kit motors turn
             liftKit.powerMotors();
             telemetry.addData("Lift height",liftKit.getAverageHeight());
             telemetry.addData("Lift Target",liftKit.getTargetHeight());
 
-            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,drive train control
-            double leftX = gamepad1.left_stick_x;
+            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< drive train control
+            double leftX = gamepad1.left_stick_x * -1;
             double leftY = gamepad1.left_stick_y * -1;
             driveTrain.translate(true, leftX, leftY, telemetry);
 
@@ -120,21 +128,64 @@ public class Teleop2425 extends LinearOpMode {
                 rBumpPressed = false;
             }
 
+            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< arm stuff
+            if (gamepad1.dpad_down) {
+                clawArm.changeTargetPosition(clawArmSpeed*timeCoef);
+            } else if (gamepad1.dpad_up){
+                clawArm.changeTargetPosition(-1*clawArmSpeed*timeCoef);
+            }
+            clawArm.powerArm(telemetry);
+
+
+
+            //<<<<<<<<<<<<<<<<<<<<<<<<<<< Calibration -- gamepad 2
+            // Claw Calibration
             if (dpadUp2.pressed(gamepad2.dpad_up)){
                 claw.shiftPositions((double) -1 /32);
             }
             if (dpadDown2.pressed(gamepad2.dpad_down)){
                 claw.shiftPositions((double) 1 /32);
             }
-
-            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< arm stuff
-            if (gamepad1.y) {
-                clawArm.changeTargetPosition(clawArmSpeed*timeCoef);
-            } else if (gamepad1.b){
-                clawArm.changeTargetPosition(-1*clawArmSpeed*timeCoef);
+            telemetry.addData("Claw Open Pos", claw.getOpenPosition());
+            telemetry.addData("Claw Closed Pos", claw.getClosedPosition());
+            // Lift Calibration
+            if (leftTrigger2.pressed(gamepad2.left_trigger >= 0.5)) { // Turn safeties on/off
+                doMinMaxLimit = !doMinMaxLimit;
             }
-            clawArm.powerArm(telemetry);
+            if (leftX2Neg.pressed(gamepad2.left_stick_x <= -0.9)) {
+                liftKit.increaseStartPos(0,-1 * liftCalSmall);
+            }
+            if (leftX2Pos.pressed(gamepad2.left_stick_x >= 0.9)) {
+                liftKit.increaseStartPos(0,liftCalSmall);
+            }
+            if (leftY2Neg.pressed(gamepad2.left_stick_y <= -0.9)) {
+                liftKit.increaseStartPos(0,-1 * liftCalLarge);
+            }
+            if (leftY2Pos.pressed(gamepad2.left_stick_y >= 0.9)) {
+                liftKit.increaseStartPos(0,liftCalLarge);
+            }
+            if (rightX2Neg.pressed(gamepad2.right_stick_x <= -0.9)) {
+                liftKit.increaseStartPos(1,-1 * liftCalSmall);
+            }
+            if (rightX2Pos.pressed(gamepad2.right_stick_x >= 0.9)) {
+                liftKit.increaseStartPos(1,liftCalSmall);
+            }
+            if (rightY2Neg.pressed(gamepad2.right_stick_y <= -0.9)) {
+                liftKit.increaseStartPos(1,-1 * liftCalLarge);
+            }
+            if (rightY2Pos.pressed(gamepad2.right_stick_y >= 0.9)) {
+                liftKit.increaseStartPos(1,liftCalLarge);
+            }
+            if (bButton2.pressed(gamepad2.b)) {
+                liftKit.zeroMotors();
+            }
 
+            telemetry.addData("Lift Left Start",liftKit.getStartPosition(0));
+            telemetry.addData("Lift Right Start",liftKit.getStartPosition(1));
+            // Arm Calibration
+            if (aButton2.pressed(gamepad2.a)) { // Swap claw arm direction
+                clawArmSpeed *= -1;
+            }
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< telemetry
             telemetry.update();
         }

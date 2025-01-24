@@ -28,6 +28,12 @@ public class Claw2425 {
     private void setClosedPosition (double position) {
         closedPosition = position;
     }
+    public double getClosedPosition() {
+        return closedPosition;
+    }
+    public double getOpenPosition() {
+        return openPosition;
+    }
     /** It opens or closes the claw based on current state. */
     public void toggleClaw () {
         if (isOpen)
