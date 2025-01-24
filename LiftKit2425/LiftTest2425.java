@@ -73,7 +73,7 @@ public class LiftTest2425 extends LinearOpMode {
             if (liftKit.getTargetHeight() > liftMaxHeight && rightY > 0 && doMinMaxLimit) {
                 liftKit.setTargetHeight(liftMaxHeight);
             }
-             if (liftKit.getTargetHeight() < liftMinimumHeight && rightY < 0 && doMinMaxLimit){
+            if (liftKit.getTargetHeight() < liftMinimumHeight && rightY < 0 && doMinMaxLimit){
                 liftKit.setTargetHeight(liftMinimumHeight);
             }
 

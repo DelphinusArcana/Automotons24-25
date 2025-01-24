@@ -37,13 +37,13 @@ public class Teleop2425 extends LinearOpMode {
                 hardwareMap.get(DcMotor.class,"rightRearDrive"),
                 hardwareMap.get(DcMotor.class,"rightFrontDrive")
                 }, //TODO: make something that can find/update the directions
-                new boolean[] {true,true,true,true}
+                new boolean[] {false,true,false,true}
         );
         liftKit = new Lift2425(new DcMotor[]{
                 hardwareMap.get(DcMotor.class, "leftLift"),
                 hardwareMap.get(DcMotor.class, "rightLift")
                 }, //TODO: make something that can find/update the directions
-                new boolean[] {true,true}
+                new boolean[] {false,false}
                 );
         clawArm = new ClawArm2425(hardwareMap.get(DcMotor.class, "armMotor"));
         //TODO: find openPos and closedPos
@@ -86,9 +86,7 @@ public class Teleop2425 extends LinearOpMode {
             double rightY = gamepad1.right_stick_y;
 
             liftKit.changeTargetHeight(rightY * liftSpeed * timeCoef);
-            if (leftTrigger2.pressed(gamepad2.left_trigger >= 0.5)) {
-                doMinMaxLimit = !doMinMaxLimit;
-            }
+            
             //might be added to liftkit class
             if (liftKit.getTargetHeight() > liftMaxHeight && rightY > 0 && doMinMaxLimit) {
                 liftKit.setTargetHeight(liftMaxHeight);
@@ -96,8 +94,14 @@ public class Teleop2425 extends LinearOpMode {
             if (liftKit.getTargetHeight() < liftMinimumHeight && rightY < 0 && doMinMaxLimit){
                 liftKit.setTargetHeight(liftMinimumHeight);
             }
+
+            if (leftTrigger2.pressed(gamepad2.left_trigger >= 0.5)) {
+                doMinMaxLimit = !doMinMaxLimit;
+            }
             //lift kit calibration
             liftKit.powerMotors();
+            telemetry.addData("Lift height",liftKit.getAverageHeight());
+            telemetry.addData("Lift Target",liftKit.getTargetHeight());
 
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,drive train control
             double leftX = gamepad1.left_stick_x;
