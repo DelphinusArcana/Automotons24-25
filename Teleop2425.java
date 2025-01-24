@@ -49,7 +49,7 @@ public class Teleop2425 extends LinearOpMode {
         //TODO: find openPos and closedPos
         claw = new Claw2425(0.3515625, 0.7265625, hardwareMap.get(Servo.class, "clawServo"));
         //variable initialize - variables
-        liftSpeed = 1;
+        liftSpeed = 0.8;
         liftMaxHeight = 0;
         liftMinimumHeight = -3600;
         moveSpeed = 1;
@@ -80,13 +80,13 @@ public class Teleop2425 extends LinearOpMode {
             int timeCoef = currentMilli-saveElapsedMilli;
             saveElapsedMilli = currentMilli;
 
-            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<liftkit controll
+            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<liftkit control
             //TODO: see if we want more precise control on claw arm or lift kit (maybe switch stick for buttons)
             //change lift kit target
             double rightY = gamepad1.right_stick_y;
 
             liftKit.changeTargetHeight(rightY * liftSpeed * timeCoef);
-            
+
             //might be added to liftkit class
             if (liftKit.getTargetHeight() > liftMaxHeight && rightY > 0 && doMinMaxLimit) {
                 liftKit.setTargetHeight(liftMaxHeight);
@@ -98,7 +98,7 @@ public class Teleop2425 extends LinearOpMode {
             if (leftTrigger2.pressed(gamepad2.left_trigger >= 0.5)) {
                 doMinMaxLimit = !doMinMaxLimit;
             }
-            //lift kit calibration
+            //makes the lift kit motors turn
             liftKit.powerMotors();
             telemetry.addData("Lift height",liftKit.getAverageHeight());
             telemetry.addData("Lift Target",liftKit.getTargetHeight());
