@@ -90,6 +90,8 @@ public class EvenMoreSuperBasicAutonomous extends LinearOpMode {
                 toDoList.get(0).doAction();
             liftKit.powerMotors();
             clawArm.powerArm(FakeTelemetry.fake);
+            telemetry.addData("Position",positionFinder.getPosition().toString());
+            telemetry.update();
         }
     }
 }

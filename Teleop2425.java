@@ -115,13 +115,14 @@ public class Teleop2425 extends LinearOpMode {
             telemetry.addData("Lift Target",liftKit.getTargetHeight());
 
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< drive train control
-            double leftX = gamepad1.left_stick_x * -1.4;
-            double leftY = gamepad1.left_stick_y * -1.4;
-            driveTrain.translate(leftX, leftY, telemetry);
+            double leftX = gamepad1.left_stick_x * -1.0;
+            double leftY = gamepad1.left_stick_y * -1.0;
+            driveTrain.translate(true, leftX, leftY, telemetry);
 
             double leftTrigger = gamepad1.left_trigger;
             double rightTrigger = gamepad1.right_trigger;
-            driveTrain.rotate(calcRotatePower(leftTrigger), calcRotatePower(rightTrigger));
+            if (Math.abs(leftTrigger) > 0.1 || Math.abs(rightTrigger) > 0.1)
+                driveTrain.rotate(calcRotatePower(leftTrigger), calcRotatePower(rightTrigger));
             telemetry.addData("Left Trigger", leftTrigger);
             telemetry.addData("Right Trigger", rightTrigger);
 
