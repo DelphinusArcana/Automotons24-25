@@ -62,7 +62,7 @@ public class NetZoneAutonomous2425 extends LinearOpMode {
         oritentationTolerance = Math.PI/24;
         armLowest = 0;
         armTolerance = 5;
-        raisedArmPos = Math.PI;
+        raisedArmPos = 500;
         liftMax = -3600;
         liftTolerance = 10;
         liftMin = 0;
