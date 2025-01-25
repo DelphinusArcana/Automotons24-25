@@ -39,13 +39,13 @@ public class SuperBasicAutonomus2425 extends LinearOpMode {
                 hardwareMap.get(DcMotor.class,"rightRearDrive"),
                 hardwareMap.get(DcMotor.class,"rightFrontDrive")
         },//TODO: make something that can find/update the directions
-                new boolean[] {true,true,true,true}
+                new boolean[] {false,true,false,true}
         );
         liftKit = new Lift2425(new DcMotor[]{
                 hardwareMap.get(DcMotor.class, "leftLift"),
                 hardwareMap.get(DcMotor.class, "rightLift"),
         }, //TODO: make something that can find/update the directions
-                new boolean[] {false,true}
+                new boolean[] {false,false}
         );
         //TODO: find actual center of the robot for equation -3*24+1/2 of robot width
         //starts against side with back wheel 1 tile +6 inches from center facing basket
@@ -55,7 +55,7 @@ public class SuperBasicAutonomus2425 extends LinearOpMode {
 
         clawArm = new ClawArm2425(hardwareMap.get(DcMotor.class, "armMotor"));
         //TODO: find openPos and closedPos
-        claw = new Claw2425(0, 0, hardwareMap.get(Servo.class, "clawServo"));
+        claw = new Claw2425(0.3515625, 0.7265625, hardwareMap.get(Servo.class, "clawServo"));
         //TODO: find values
         //TODO: have these be static final constants inside of the classes
         moveTolerance = 2;

@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.Automotons2425.Claw2425.Claw2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.ClawArm2425.ClawArm2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425.DriveTrain2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.LiftKit2425.Lift2425;
+import org.opencv.core.Mat;
 
 @TeleOp(name = "teleop2425", group = "Linear Opmode")
 public class Teleop2425 extends LinearOpMode {
@@ -54,7 +55,7 @@ public class Teleop2425 extends LinearOpMode {
         liftMinimumHeight = -3600;
         moveSpeed = 1;
         minTranslatePower = 0.25;
-        clawArmSpeed = 0.05;
+        clawArmSpeed = -0.05;
         ButtonWatcher2425 leftTrigger2 = new ButtonWatcher2425();
         dpadUp2 = new ButtonWatcher2425();
         dpadDown2 = new ButtonWatcher2425();
@@ -211,6 +212,9 @@ public class Teleop2425 extends LinearOpMode {
         return (stickPos*(1-minTranslatePower)+Math.signum(stickPos)*minTranslatePower)*moveSpeed;
     }
     public double calcRotatePower (double triggerPos) {
+        if (Math.abs(triggerPos) != 1) {
+            triggerPos /= 2;
+        }
         return triggerPos;
     }
 }
