@@ -50,7 +50,7 @@ public class NetZoneAutonomous2425 extends LinearOpMode {
         //TODO: find actual center of the robot for equation -3*24+1/2 of robot width
         //starts against side with back wheel 1 tile +6 inches from center facing basket
         //apos is -3 tiles +half the robot(against side)
-        Position currentPosition = new Position(-3*24+9, 24+6+1, Math.PI/2);
+        Position currentPosition = new Position(-3*24+9, 24+6+1, 0);
         positionFinder = new PositionFinder2425(driveTrain, currentPosition);
 
         clawArm = new ClawArm2425(hardwareMap.get(DcMotor.class, "armMotor"));
