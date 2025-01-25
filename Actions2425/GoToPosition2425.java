@@ -1,4 +1,6 @@
 package org.firstinspires.ftc.teamcode.Automotons2425.Actions2425;
+import org.firstinspires.ftc.robotcore.external.Func;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425.DriveTrain2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.Position;
 import org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425.PositionFinder2425;
@@ -16,7 +18,7 @@ public class GoToPosition2425 implements Action2425{
         this.positionFinder = positionFinder;
         // TODO: Fine tune/ test these values
         maxPower = 1;
-        maxPowerError = 2000;
+        maxPowerError = 200;
     }
     /**
      * True if the action has been finished (possibly within reasonable error), false otherwise
@@ -27,16 +29,17 @@ public class GoToPosition2425 implements Action2425{
         double distance = currentPosition.distanceTo(desiredPosition);
         if (distance <= tolerance) {
             // TODO: make this work
-            //driveTrain.translate(0,0);
+            driveTrain.translate(false, 0, 0,FakeTelemetry.fake);
+            return true;
         }
         return false;
     }
 
     /**
-     * sets new tollerance value
+     * sets new tolerance value
      * @param newTolerance
      */
-    public void setTolerance(double newTolerance){tolerance = newTolerance;}
+    public void setTolerance(double newTolerance) {tolerance = newTolerance;}
 
     /**
      * returns tolerance
@@ -54,8 +57,7 @@ public class GoToPosition2425 implements Action2425{
         SetOrientation2425 orientator = new SetOrientation2425(driveTrain, angleToTarget, Math.PI / 24, positionFinder);
         if (orientator.isComplete()) {
             double power = calculatePower(currentPosition.distanceTo(desiredPosition));
-            //TODO: fix this
-            //driveTrain.translate(0, power);
+            driveTrain.translate(true,0, power, FakeTelemetry.fake);
         } else {
             orientator.doAction();
         }

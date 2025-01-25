@@ -175,11 +175,11 @@ public class DriveTrain2425 {
         double[] powers = {0,0,0,0};
 
         //scale down xVal and yVal to make sure that they add to 1
-        if (Math.abs(xVal)+Math.abs(yVal) > 1) {
+        /*if (Math.abs(xVal)+Math.abs(yVal) > 1) {
             double scaleFactor = 1.0 / (Math.abs(xVal) + Math.abs(yVal));
             xVal *= scaleFactor;
             yVal *= scaleFactor;
-        }
+        }*/
         /*
         //implimented Asher's thing
         if (Math.abs(xVal)+Math.abs(yVal) < minTranslatePower){
