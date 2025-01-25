@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.Action2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.FakeTelemetry;
 import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.GoToPosition2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.SetArm2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.SetClaw2425;
@@ -54,7 +55,7 @@ public class EvenMoreSuperBasicAutonomous extends LinearOpMode {
         //TODO: find actual center of the robot for equation -3*24+1/2 of robot width
         //starts against side with back wheel 1 tile +6 inches from center facing basket
         //apos is -3 tiles +half the robot(against side)
-        Position currentPosition = new Position(-3*24+9, 24, Math.PI/2);
+        Position currentPosition = new Position(-3*24+9, -24, Math.PI/2);
         positionFinder = new PositionFinder2425(driveTrain, currentPosition);
 
         clawArm = new ClawArm2425(hardwareMap.get(DcMotor.class, "armMotor"));
@@ -75,7 +76,7 @@ public class EvenMoreSuperBasicAutonomous extends LinearOpMode {
 
         ArrayList<Action2425> toDoList = new ArrayList<>();
         //Go to observation zone
-        toDoList.add(new GoToPosition2425(driveTrain,new Position(-3*24+9, 72, Math.PI/2), moveTolerance, positionFinder));
+        toDoList.add(new GoToPosition2425(driveTrain,new Position(-3*24+9, -72, Math.PI/2), moveTolerance, positionFinder));
 
 
 
@@ -87,6 +88,8 @@ public class EvenMoreSuperBasicAutonomous extends LinearOpMode {
                 toDoList.remove(0);
             else
                 toDoList.get(0).doAction();
+            liftKit.powerMotors();
+            clawArm.powerArm(FakeTelemetry.fake);
         }
     }
 }

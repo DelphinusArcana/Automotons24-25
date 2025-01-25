@@ -157,6 +157,8 @@ public class NetZoneAutonomous2425 extends LinearOpMode {
                 toDoList.remove(0);
             else
                 toDoList.get(0).doAction();
+            liftKit.powerMotors();
+            clawArm.powerArm(FakeTelemetry.fake);
         }
     }
 }
