@@ -171,6 +171,12 @@ public class DriveTrain2425 {
         return mainPower;
     }*/
     /* Emmett's translate idea thing*/
+    public void translate (double xVal, double yVal, Telemetry telemetry) {
+        for (DcMotor motor : wheels) {
+            motor.setPower(yVal);
+        }
+        telemetry.addData("YVal",yVal);
+    }
     public void translate (boolean doEmmettsThing ,double xVal, double yVal, Telemetry telemetry) {
         double[] powers = {0,0,0,0};
 
