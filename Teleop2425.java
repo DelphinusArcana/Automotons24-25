@@ -71,6 +71,8 @@ public class Teleop2425 extends LinearOpMode {
         ButtonWatcher2425 rightY2Neg = new ButtonWatcher2425();
         int liftCalSmall = 1;
         int liftCalLarge = 10;
+        ButtonWatcher2425 rightTrigger2 = new ButtonWatcher2425();
+        boolean liftAtHighPower = false;
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
 
@@ -176,14 +178,24 @@ public class Teleop2425 extends LinearOpMode {
             if (rightY2Pos.pressed(gamepad2.right_stick_y >= 0.9)) {
                 liftKit.increaseStartPos(1,liftCalLarge);
             }
-            if (bButton2.pressed(gamepad2.b)) {
+            if (bButton2.pressed(gamepad2.triangle)) {
                 liftKit.zeroMotors();
             }
-
+            if (rightTrigger2.pressed(gamepad2.right_trigger >= 0.5)) {
+                liftAtHighPower = !liftAtHighPower;
+                if (liftAtHighPower) {
+                    liftKit.setMaxPowerError(100);
+                    liftKit.setMaxPower(1.0);
+                } else {
+                    liftKit.setMaxPower(0.7);
+                    liftKit.setMaxPowerError(70);
+                }
+            }
+            telemetry.addData("Lift at high power",liftAtHighPower);
             telemetry.addData("Lift Left Start",liftKit.getStartPosition(0));
             telemetry.addData("Lift Right Start",liftKit.getStartPosition(1));
             // Arm Calibration
-            if (aButton2.pressed(gamepad2.a)) { // Swap claw arm direction
+            if (aButton2.pressed(gamepad2.cross)) { // Swap claw arm direction
                 clawArmSpeed *= -1;
             }
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< telemetry
