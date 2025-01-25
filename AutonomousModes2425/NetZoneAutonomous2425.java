@@ -62,9 +62,10 @@ public class NetZoneAutonomous2425 extends LinearOpMode {
         //TODO: have these be static final constants inside of the classes
         moveTolerance = 2;
         oritentationTolerance = Math.PI/24;
-        armLowest = 0;
+        armLowest = 139;
         armTolerance = 5;
-        raisedArmPos = Math.PI;
+        double semiArmPos = 100;
+        raisedArmPos = 62;
         liftMax = -3600;
         liftTolerance = 10;
         liftMin = 0;
@@ -73,11 +74,18 @@ public class NetZoneAutonomous2425 extends LinearOpMode {
         ArrayList<Action2425> toDoList = new ArrayList<>();
         telemetry.addData("Starting", "To-do list");
         telemetry.update();
+        //start with a sample
+        toDoList.add(new SetLift2425(liftKit, liftMax, liftTolerance));
+        toDoList.add(new SetArm2425(clawArm,armLowest,armTolerance)); // Lowers the claw arm
+        toDoList.add(new SetClaw2425(claw, false));
+
+
         //first sample
         toDoList.add(new SetArm2425(clawArm,armLowest,armTolerance)); // Lowers the claw arm
         toDoList.add(new SetClaw2425(claw, true)); // Opens the claw
         toDoList.add(new SetLift2425(liftKit, liftMin, liftTolerance));
         //bpos values are 1 tile +6 to avoid triangular map piece +1 so claw reaches
+        toDoList.add(new GoToPosition2425(driveTrain,new Position(-3*24+9, 24+6+1, Math.PI/2), moveTolerance, positionFinder));
         toDoList.add(new GoToPosition2425(driveTrain,new Position(-24-1.5, 24+6+1, Math.PI/2), moveTolerance, positionFinder));
         toDoList.add(new SetOrientation2425(driveTrain, Math.PI/2, oritentationTolerance, positionFinder));
         //TODO: have arm move to lowest position
