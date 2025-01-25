@@ -69,7 +69,7 @@ public class NetZoneAutonomous2425 extends LinearOpMode {
         liftMax = -3600;
         liftTolerance = 10;
         liftMin = 0;
-        armInBasketPos = Math.PI/2;
+        armInBasketPos = 100;
 
         ArrayList<Action2425> toDoList = new ArrayList<>();
         telemetry.addData("Starting", "To-do list");

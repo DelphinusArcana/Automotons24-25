@@ -5,7 +5,11 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.*;
+import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.Action2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.GoToPosition2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.SetArm2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.SetClaw2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.SetLift2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.Claw2425.Claw2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.ClawArm2425.ClawArm2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425.DriveTrain2425;
@@ -15,8 +19,8 @@ import org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425.Position
 
 import java.util.ArrayList;
 
-@Autonomous(name="SuperBasicAutonomus")
-public class SuperBasicAutonomus2425 extends LinearOpMode {
+@Autonomous(name="ObservationZoneAuto")
+public class EvenMoreSuperBasicAutonomous extends LinearOpMode {
     private DriveTrain2425 driveTrain;
     private Lift2425 liftKit;
     private ClawArm2425 clawArm;
@@ -50,7 +54,7 @@ public class SuperBasicAutonomus2425 extends LinearOpMode {
         //TODO: find actual center of the robot for equation -3*24+1/2 of robot width
         //starts against side with back wheel 1 tile +6 inches from center facing basket
         //apos is -3 tiles +half the robot(against side)
-        Position currentPosition = new Position(-3*24+9, 2*24-10, Math.PI/2);
+        Position currentPosition = new Position(-3*24+9, 24, Math.PI/2);
         positionFinder = new PositionFinder2425(driveTrain, currentPosition);
 
         clawArm = new ClawArm2425(hardwareMap.get(DcMotor.class, "armMotor"));
@@ -67,18 +71,11 @@ public class SuperBasicAutonomus2425 extends LinearOpMode {
         liftMax = -3600;
         liftTolerance = 10;
         liftMin = 0;
-        armInBasketPos = 100;
+        armInBasketPos = Math.PI/2;
 
         ArrayList<Action2425> toDoList = new ArrayList<>();
-        //start with a sample
-        toDoList.add(new GoToPosition2425(driveTrain,new Position(-3*24+9, 2*24+2, Math.PI/2), moveTolerance, positionFinder));
-        toDoList.add(new SetLift2425(liftKit, liftMax, liftTolerance));
-        toDoList.add(new SetArm2425(clawArm,armLowest,armTolerance)); // Lowers the claw arm
-        toDoList.add(new SetClaw2425(claw, false));
-        //reset for teleop
-        toDoList.add(new SetArm2425(clawArm, raisedArmPos,armTolerance)); // Lowers the claw arm
-        toDoList.add(new SetLift2425(liftKit, liftMin, liftTolerance));
-        toDoList.add(new SetArm2425(clawArm, 0,armTolerance)); // Lowers the claw arm
+        //Go to observation zone
+        toDoList.add(new GoToPosition2425(driveTrain,new Position(-3*24+9, 72, Math.PI/2), moveTolerance, positionFinder));
 
 
 
@@ -93,4 +90,3 @@ public class SuperBasicAutonomus2425 extends LinearOpMode {
         }
     }
 }
-
