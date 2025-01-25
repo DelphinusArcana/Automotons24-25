@@ -53,6 +53,7 @@ public class GoToPosition2425 implements Action2425{
     @Override
     public void doAction() {
         Position currentPosition = positionFinder.getPosition();
+        /*
         double angleToTarget = currentPosition.angleTo(desiredPosition);
         SetOrientation2425 orientator = new SetOrientation2425(driveTrain, angleToTarget, Math.PI / 24, positionFinder);
         if (orientator.isComplete()) {
@@ -61,6 +62,10 @@ public class GoToPosition2425 implements Action2425{
         } else {
             orientator.doAction();
         }
+        */
+        double power = calculatePower(currentPosition.distanceTo(desiredPosition));
+        driveTrain.translate(true,0, power, FakeTelemetry.fake);
+
     }
     private double calculatePower (double error) {
         if (error >= maxPowerError) {
