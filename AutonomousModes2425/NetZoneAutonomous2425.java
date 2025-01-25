@@ -60,9 +60,10 @@ public class NetZoneAutonomous2425 extends LinearOpMode {
         //TODO: have these be static final constants inside of the classes
         moveTolerance = 2;
         oritentationTolerance = Math.PI/24;
-        armLowest = 0;
+        armLowest = 139;
         armTolerance = 5;
-        raisedArmPos = 500;
+        double semiArmPos = 100;
+        raisedArmPos = 62;
         liftMax = -3600;
         liftTolerance = 10;
         liftMin = 0;
