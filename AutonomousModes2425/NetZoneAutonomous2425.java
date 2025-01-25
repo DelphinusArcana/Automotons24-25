@@ -33,6 +33,8 @@ public class NetZoneAutonomous2425 extends LinearOpMode {
     private double armInBasketPos;
     @Override
     public void runOpMode() {
+        telemetry.addData("Start","ing");
+        telemetry.update();
         driveTrain = new DriveTrain2425(new DcMotor[]{
                 hardwareMap.get(DcMotor.class,"leftFrontDrive"),
                 hardwareMap.get(DcMotor.class,"leftRearDrive"),
@@ -55,7 +57,7 @@ public class NetZoneAutonomous2425 extends LinearOpMode {
 
         clawArm = new ClawArm2425(hardwareMap.get(DcMotor.class, "armMotor"));
         //TODO: find openPos and closedPos
-        claw = new Claw2425(0, 0, hardwareMap.get(Servo.class, "clawServo"));
+        claw = new Claw2425(0.3515625, 0.7265625, hardwareMap.get(Servo.class, "clawServo"));
         //TODO: find values
         //TODO: have these be static final constants inside of the classes
         moveTolerance = 2;
@@ -69,7 +71,8 @@ public class NetZoneAutonomous2425 extends LinearOpMode {
         armInBasketPos = Math.PI/2;
 
         ArrayList<Action2425> toDoList = new ArrayList<>();
-
+        telemetry.addData("Starting", "To-do list");
+        telemetry.update();
         //first sample
         toDoList.add(new SetArm2425(clawArm,armLowest,armTolerance)); // Lowers the claw arm
         toDoList.add(new SetClaw2425(claw, true)); // Opens the claw
@@ -138,6 +141,7 @@ public class NetZoneAutonomous2425 extends LinearOpMode {
 
         toDoList.add(new SetLift2425(liftKit, liftMin, liftTolerance));
         telemetry.addData("status","initialized");
+        telemetry.update();
         waitForStart();
 
         while(opModeIsActive()) {
