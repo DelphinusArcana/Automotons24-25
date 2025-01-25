@@ -50,7 +50,7 @@ public class NetZoneAutonomous2425 extends LinearOpMode {
         //TODO: find actual center of the robot for equation -3*24+1/2 of robot width
         //starts against side with back wheel 1 tile +6 inches from center facing basket
         //apos is -3 tiles +half the robot(against side)
-        Position currentPosition = new Position(-3*24+9, 24+6+1, 0);
+        Position currentPosition = new Position(-3*24+9, 2*24+2, Math.PI/2);
         positionFinder = new PositionFinder2425(driveTrain, currentPosition);
 
         clawArm = new ClawArm2425(hardwareMap.get(DcMotor.class, "armMotor"));
@@ -69,12 +69,18 @@ public class NetZoneAutonomous2425 extends LinearOpMode {
         armInBasketPos = Math.PI/2;
 
         ArrayList<Action2425> toDoList = new ArrayList<>();
+        //start with a sample
+        toDoList.add(new SetLift2425(liftKit, liftMax, liftTolerance));
+        toDoList.add(new SetArm2425(clawArm,armLowest,armTolerance)); // Lowers the claw arm
+        toDoList.add(new SetClaw2425(claw, false));
+
 
         //first sample
         toDoList.add(new SetArm2425(clawArm,armLowest,armTolerance)); // Lowers the claw arm
         toDoList.add(new SetClaw2425(claw, true)); // Opens the claw
         toDoList.add(new SetLift2425(liftKit, liftMin, liftTolerance));
         //bpos values are 1 tile +6 to avoid triangular map piece +1 so claw reaches
+        toDoList.add(new GoToPosition2425(driveTrain,new Position(-3*24+9, 24+6+1, Math.PI/2), moveTolerance, positionFinder));
         toDoList.add(new GoToPosition2425(driveTrain,new Position(-24-1.5, 24+6+1, Math.PI/2), moveTolerance, positionFinder));
         toDoList.add(new SetOrientation2425(driveTrain, Math.PI/2, oritentationTolerance, positionFinder));
         //TODO: have arm move to lowest position
