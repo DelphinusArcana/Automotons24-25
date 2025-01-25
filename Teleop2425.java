@@ -188,7 +188,7 @@ public class Teleop2425 extends LinearOpMode {
                     liftKit.setMaxPower(1.0);
                 } else {
                     liftKit.setMaxPower(0.7);
-                    liftKit.setMaxPowerError(70);
+                    liftKit.setMaxPowerError(40);
                 }
             }
             telemetry.addData("Lift at high power",liftAtHighPower);
