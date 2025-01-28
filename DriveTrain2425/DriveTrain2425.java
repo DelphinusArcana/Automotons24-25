@@ -213,7 +213,60 @@ public class DriveTrain2425 {
         wheels[3].setPower(powers[3]);
 
     }
+    public void translateAndRotate (double lDepth, double rDepth, double xVal, double yVal, Telemetry telemetry) {
+        double[] powers = {0,0,0,0};
 
+        //scale down xVal and yVal to make sure that they add to 1
+        /*if (Math.abs(xVal)+Math.abs(yVal) > 1) {
+            double scaleFactor = 1.0 / (Math.abs(xVal) + Math.abs(yVal));
+            xVal *= scaleFactor;
+            yVal *= scaleFactor;
+        }*/
+        /*
+        //implimented Asher's thing
+        if (Math.abs(xVal)+Math.abs(yVal) < minTranslatePower){
+            double scaleFactor = minTranslatePower / (Math.abs(xVal) + Math.abs(yVal));
+            xVal *= scaleFactor;
+            yVal *= scaleFactor;
+        }*/
+
+        //x translation
+        powers[0] = powers[0] - xVal;
+        powers[1] = powers[1] + xVal;
+        powers[2] = powers[2] - xVal;
+        powers[3] = powers[3] + xVal;
+
+        //y translation
+        powers[0] = powers[0] + yVal;
+        powers[1] = powers[1] + yVal;
+        powers[2] = powers[2] + yVal;
+        powers[3] = powers[3] + yVal;
+
+        double lPower = lDepth - rDepth;
+        //rotation
+        powers[0]+=-1 * lPower;
+        powers[1]+=-1 * lPower;
+        powers[2]+=lPower;
+        powers[3]+=lPower;
+
+        double biggestPower = 0;
+        for(int i = 0; i<4; i++){
+            if(Math.abs(powers[i])>biggestPower){
+                biggestPower = Math.abs(powers[i]);
+            }
+        }
+        double powerScaleFactor = 1/biggestPower;
+        for(int i = 0; i<4; i++){
+            powers[i] = powers[i]/powerScaleFactor;
+        }
+
+        //set powers
+        wheels[0].setPower(powers[0]);
+        wheels[1].setPower(powers[1]);
+        wheels[2].setPower(powers[2]);
+        wheels[3].setPower(powers[3]);
+
+    }
 
         /** Rotates the robot using the analog triggers on the controller, more depth means faster rotations
          *@param lDepth amount trigger is pressed corresponding to speed of leftward rotation
