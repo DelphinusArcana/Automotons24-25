@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Automotons2425.Position;
@@ -248,5 +249,15 @@ public class DriveTrain2425 {
             rawPower = 1;
         return rawPower;
         //return rawPower * (1-minTranslatePower) + Math.signum(rawPower) * minTranslatePower;
+    }
+    public static DriveTrain2425 defaultDrive(HardwareMap hardwareMap) {
+        return new DriveTrain2425(new DcMotor[]{
+                hardwareMap.get(DcMotor.class,"leftFrontDrive"),
+                hardwareMap.get(DcMotor.class,"leftRearDrive"),
+                hardwareMap.get(DcMotor.class,"rightRearDrive"),
+                hardwareMap.get(DcMotor.class,"rightFrontDrive")
+        },
+                new boolean[] {false,true,false,true}
+        );
     }
 }
