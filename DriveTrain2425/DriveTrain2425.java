@@ -256,9 +256,11 @@ public class DriveTrain2425 {
                 biggestPower = Math.abs(powers[i]);
             }
         }
-        double powerScaleFactor = 1/biggestPower;
-        for(int i = 0; i<4; i++){
-            powers[i] = powers[i]/powerScaleFactor;
+        if (biggestPower>1) {
+            double powerScaleFactor = 1 / biggestPower;
+            for (int i = 0; i < 4; i++) {
+                powers[i] = powers[i] / powerScaleFactor;
+            }
         }
 
         //set powers
