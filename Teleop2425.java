@@ -32,23 +32,10 @@ public class Teleop2425 extends LinearOpMode {
     @Override
     public void runOpMode(){
         //variable initialize -classes
-        driveTrain = new DriveTrain2425(new DcMotor[]{
-                hardwareMap.get(DcMotor.class,"leftFrontDrive"),
-                hardwareMap.get(DcMotor.class,"leftRearDrive"),
-                hardwareMap.get(DcMotor.class,"rightRearDrive"),
-                hardwareMap.get(DcMotor.class,"rightFrontDrive")
-                }, //TODO: make something that can find/update the directions
-                new boolean[] {false,true,false,true}
-        );
-        liftKit = new Lift2425(new DcMotor[]{
-                hardwareMap.get(DcMotor.class, "leftLift"),
-                hardwareMap.get(DcMotor.class, "rightLift")
-                }, //TODO: make something that can find/update the directions
-                new boolean[] {false,false}
-                );
-        clawArm = new ClawArm2425(hardwareMap.get(DcMotor.class, "armMotor"));
-        //TODO: find openPos and closedPos
-        claw = new Claw2425(0.3515625, 0.7265625, hardwareMap.get(Servo.class, "clawServo"));
+        driveTrain = DriveTrain2425.defaultDrive(hardwareMap);
+        liftKit = Lift2425.defaultLift(hardwareMap);
+        clawArm = ClawArm2425.defaultArm(hardwareMap);
+        claw = Claw2425.defaultClaw(hardwareMap);
         //variable initialize - variables
         liftSpeed = 0.8;
         liftMaxHeight = 0;
