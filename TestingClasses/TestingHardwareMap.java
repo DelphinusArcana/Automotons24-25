@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import java.util.ArrayList;
 // TODO: write unit tests for the unit testing classes
+/** A class that holds various motors and servos for the robot. Similar to something that wraps the hardwareMap, but doesn't actually do that. Works similar to the hardwareMap. */
 public class TestingHardwareMap {
     ArrayList<MotorWrapper> motors;
     ArrayList<ServoWrapper> servos;

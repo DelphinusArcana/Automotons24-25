@@ -6,7 +6,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoController;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
+/** Holds non-functional implementations of DcMotor and Servo*/
 public class FakeHardware {
+    /** a non-functional implementation of DcMotor*/
     public static final DcMotor fakeMotor = new DcMotor() {
         @Override
         public MotorConfigurationType getMotorType() {
@@ -128,6 +130,7 @@ public class FakeHardware {
 
         }
     };
+    /** a non-functional implementation of Servo */
     public static final Servo fakeServo = new Servo() {
         @Override
         public ServoController getController() {

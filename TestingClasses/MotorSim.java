@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.Automotons2425.TestingClasses;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-
+/** A virtual motor */
 public class MotorSim extends MotorWrapper {
     private int currentPosition;
     public MotorSim (int startPosition, String name) {
@@ -18,6 +18,6 @@ public class MotorSim extends MotorWrapper {
     }
     @Override
     public void printInfo (Telemetry telemetry) {
-        telemetry.addData("Motor" + getName(), "pow:" + power + " direction:" + isForward + " position:" + currentPosition);
+        telemetry.addData("MotorSim " + getName(), "pow:" + power + " direction:" + isForward + " position:" + currentPosition);
     }
 }
