@@ -47,7 +47,7 @@ public class Teleop2425 extends LinearOpMode {
                 hardwareMap.get(DcMotor.class, "rightLift")
                 }, //TODO: make something that can find/update the directions
                 new boolean[] {false,false}
-                );
+        );
         clawArm = new ClawArm2425(hardwareMap.get(DcMotor.class, "armMotor"));
         //TODO: find openPos and closedPos
         claw = new Claw2425(0.3515625, 0.7265625, hardwareMap.get(Servo.class, "clawServo"));
@@ -100,14 +100,6 @@ public class Teleop2425 extends LinearOpMode {
             liftKit.changeTargetHeight(rightY * liftSpeed * timeCoef);
             //might be added to liftkit class. Bounds the positions that can be desired.
             if (liftKit.getTargetHeight() > liftMaxHeight && rightY > 0 && doMinMaxLimit) { //TODO: This could be wrong since the max is negative...
-            double rightY = gamepad1.right_stick_y;
-
-            liftKit.changeTargetHeight(rightY * liftSpeed * timeCoef);
-            if (leftTrigger2.pressed(gamepad2.left_trigger >= 0.5)) {
-                doMinMaxLimit = !doMinMaxLimit;
-            }
-            //might be added to liftkit class
-            if (liftKit.getTargetHeight() > liftMaxHeight && rightY > 0 && doMinMaxLimit) {
                 liftKit.setTargetHeight(liftMaxHeight);
             }
             if (liftKit.getTargetHeight() < liftMinimumHeight && rightY < 0 && doMinMaxLimit){
