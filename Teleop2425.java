@@ -28,6 +28,10 @@ public class Teleop2425 extends LinearOpMode {
     private double clawArmSpeed;
     private ButtonWatcher2425 dpadUp2;
     private ButtonWatcher2425 dpadDown2;
+    private double raisedArmPos;
+    private double liftMax;
+    private double liftMin;
+    private double armInBasketPos;
 
     @Override
     public void runOpMode(){
@@ -43,6 +47,10 @@ public class Teleop2425 extends LinearOpMode {
         moveSpeed = 1;
         minTranslatePower = 0.25;
         clawArmSpeed = -0.05;
+        raisedArmPos = 62;
+        liftMax = -3600;
+        liftMin = 0;
+        armInBasketPos = 100;
         ButtonWatcher2425 leftTrigger2 = new ButtonWatcher2425();
         dpadUp2 = new ButtonWatcher2425();
         dpadDown2 = new ButtonWatcher2425();
@@ -128,8 +136,19 @@ public class Teleop2425 extends LinearOpMode {
                 clawArm.changeTargetPosition(-1*clawArmSpeed*timeCoef);
             }
             clawArm.powerArm(telemetry);
-
-
+            //<<<<<<<<<<<<<<<<<<<<<<<<<presets
+            if(gamepad1.a){
+               clawArm.setTargetPosition(armInBasketPos);
+            }
+            if(gamepad1.b){
+                clawArm.setTargetPosition(raisedArmPos);
+            }
+            if(gamepad1.y){
+                liftKit.setTargetHeight(liftMaxHeight);
+            }
+            if(gamepad1.x){
+                liftKit.setTargetHeight(liftMinimumHeight);
+            }
 
             //<<<<<<<<<<<<<<<<<<<<<<<<<<< Calibration -- gamepad 2
             // Claw Calibration
