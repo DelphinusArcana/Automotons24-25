@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.Automotons2425.Claw2425;
 
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.teamcode.Automotons2425.ClawArm2425.ClawArm2425;
 
 public class Claw2425 {
     /** The target open position of the servo */
@@ -18,7 +21,7 @@ public class Claw2425 {
         this.claw = claw;
         this.openPosition = openPos;
         this.closedPosition = closedPos;
-        open();
+        close();
     }
     /** Sets openPosition */
     private void setOpenPosition (double position) {
@@ -27,6 +30,12 @@ public class Claw2425 {
     /** Sets closedPosition */
     private void setClosedPosition (double position) {
         closedPosition = position;
+    }
+    public double getClosedPosition() {
+        return closedPosition;
+    }
+    public double getOpenPosition() {
+        return openPosition;
     }
     /** It opens or closes the claw based on current state. */
     public void toggleClaw () {
@@ -57,5 +66,8 @@ public class Claw2425 {
             open();
         else
             close();
+    }
+    public static Claw2425 defaultClaw (HardwareMap hardwareMap) {
+        return new Claw2425(0.3515625, 0.7265625, hardwareMap.get(Servo.class, "clawServo"));
     }
 }

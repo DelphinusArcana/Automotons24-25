@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.Automotons2425.Claw2425.Claw2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.ClawArm2425.ClawArm2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425.DriveTrain2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.LiftKit2425.Lift2425;
+import org.opencv.core.Mat;
 
 @TeleOp(name = "teleop2425", group = "Linear Opmode")
 public class Teleop2425 extends LinearOpMode {
@@ -21,57 +22,45 @@ public class Teleop2425 extends LinearOpMode {
     private double liftSpeed; //coefficient to adjust how much lift target moves each loop
     private int liftMaxHeight; //upperbound of liftkit position
     private int liftMinimumHeight; //lower bound of liftkit position- might be unneeded if equals 0
-    private boolean doMinMaxLimit; //true to restrict the liftkit movement with bounds. Should be true normally.
     private int moveSpeed; //coefficient that changes driveTrain translation values
     private int saveElapsedMilli; //used for equations like: elapesed time = total time - time since I set this variable
     private double minTranslatePower; //minimum move speed
     private double clawArmSpeed;
-    private double clawZeroPosition;
-
     private ButtonWatcher2425 dpadUp2;
     private ButtonWatcher2425 dpadDown2;
 
     @Override
     public void runOpMode(){
         //variable initialize -classes
-        driveTrain = new DriveTrain2425(new DcMotor[]{
-                hardwareMap.get(DcMotor.class,"leftFrontDrive"),
-                hardwareMap.get(DcMotor.class,"leftRearDrive"),
-                hardwareMap.get(DcMotor.class,"rightRearDrive"),
-                hardwareMap.get(DcMotor.class,"rightFrontDrive")
-                }, //TODO: make something that can find/update the directions
-                new boolean[] {true,true,true,true}
-        );
-        liftKit = new Lift2425(new DcMotor[]{
-                hardwareMap.get(DcMotor.class, "leftLift"),
-                hardwareMap.get(DcMotor.class, "rightLift")
-                }, //TODO: make something that can find/update the directions
-                new boolean[] {false,false}
-        );
-        clawArm = new ClawArm2425(hardwareMap.get(DcMotor.class, "armMotor"));
-        //TODO: find openPos and closedPos
-        claw = new Claw2425(0.3515625, 0.7265625, hardwareMap.get(Servo.class, "clawServo"));
-        clawZeroPosition = hardwareMap.get(DcMotor.class, "armMotor").getCurrentPosition();
+        driveTrain = DriveTrain2425.defaultDrive(hardwareMap);
+        liftKit = Lift2425.defaultLift(hardwareMap);
+        clawArm = ClawArm2425.defaultArm(hardwareMap);
+        claw = Claw2425.defaultClaw(hardwareMap);
         //variable initialize - variables
         liftSpeed = 0.8;
         liftMaxHeight = 0;
         liftMinimumHeight = -3600;
-        liftKit.setMaxPower(0.5);
-        liftKit.setMaxPowerError(70);
-        doMinMaxLimit = true;
-
-        clawArmSpeed = 0.05;
-        clawArm.setMaxPowerError(10);
-        clawArm.setMaxPower(0.5);
-        clawArm.setUprightPosition(10); //TODO: Figure out this number
-
         moveSpeed = 1;
         minTranslatePower = 0.25;
-        clawArmSpeed = 0.05;
+        clawArmSpeed = -0.05;
         ButtonWatcher2425 leftTrigger2 = new ButtonWatcher2425();
         dpadUp2 = new ButtonWatcher2425();
         dpadDown2 = new ButtonWatcher2425();
+        ButtonWatcher2425 aButton2 = new ButtonWatcher2425();
+        ButtonWatcher2425 bButton2 = new ButtonWatcher2425();
         boolean doMinMaxLimit = true;
+        ButtonWatcher2425 leftX2Pos = new ButtonWatcher2425();
+        ButtonWatcher2425 leftX2Neg = new ButtonWatcher2425();
+        ButtonWatcher2425 leftY2Pos = new ButtonWatcher2425();
+        ButtonWatcher2425 leftY2Neg = new ButtonWatcher2425();
+        ButtonWatcher2425 rightX2Pos = new ButtonWatcher2425();
+        ButtonWatcher2425 rightX2Neg = new ButtonWatcher2425();
+        ButtonWatcher2425 rightY2Pos = new ButtonWatcher2425();
+        ButtonWatcher2425 rightY2Neg = new ButtonWatcher2425();
+        int liftCalSmall = 1;
+        int liftCalLarge = 10;
+        ButtonWatcher2425 rightTrigger2 = new ButtonWatcher2425();
+        boolean liftAtHighPower = false;
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
 
@@ -95,27 +84,34 @@ public class Teleop2425 extends LinearOpMode {
 
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<liftkit control
             //TODO: see if we want more precise control on claw arm or lift kit (maybe switch stick for buttons)
-            double rightY = gamepad1.right_stick_y;
             //change lift kit target
+            double rightY = gamepad1.right_stick_y;
+
             liftKit.changeTargetHeight(rightY * liftSpeed * timeCoef);
-            //might be added to liftkit class. Bounds the positions that can be desired.
-            if (liftKit.getTargetHeight() > liftMaxHeight && rightY > 0 && doMinMaxLimit) { //TODO: This could be wrong since the max is negative...
+
+            //might be added to liftkit class
+            if (liftKit.getTargetHeight() > liftMaxHeight && rightY > 0 && doMinMaxLimit) {
                 liftKit.setTargetHeight(liftMaxHeight);
             }
             if (liftKit.getTargetHeight() < liftMinimumHeight && rightY < 0 && doMinMaxLimit){
                 liftKit.setTargetHeight(liftMinimumHeight);
             }
-            //makes the motors turn
+            //makes the lift kit motors turn
             liftKit.powerMotors();
+            telemetry.addData("Lift height",liftKit.getAverageHeight());
+            telemetry.addData("Lift Target",liftKit.getTargetHeight());
 
-            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,drive train control
-            double leftX = gamepad1.left_stick_x;
-            double leftY = gamepad1.left_stick_y * -1;
+            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< drive train control
+            double leftX = gamepad1.left_stick_x * -1.0;
+            double leftY = gamepad1.left_stick_y * -1.0;
             driveTrain.translate(true, leftX, leftY, telemetry);
 
             double leftTrigger = gamepad1.left_trigger;
             double rightTrigger = gamepad1.right_trigger;
-            driveTrain.rotate(calcRotatePower(leftTrigger), calcRotatePower(rightTrigger));
+            if (Math.abs(leftTrigger) > 0.1 || Math.abs(rightTrigger) > 0.1)
+                driveTrain.rotate(calcRotatePower(leftTrigger), calcRotatePower(rightTrigger));
+            telemetry.addData("Left Trigger", leftTrigger);
+            telemetry.addData("Right Trigger", rightTrigger);
 
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< claw stuff
             if (gamepad1.right_bumper && !rBumpPressed) {
@@ -125,21 +121,77 @@ public class Teleop2425 extends LinearOpMode {
                 rBumpPressed = false;
             }
 
+            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< arm stuff
+            if (gamepad1.dpad_down) {
+                clawArm.changeTargetPosition(clawArmSpeed*timeCoef);
+            } else if (gamepad1.dpad_up){
+                clawArm.changeTargetPosition(-1*clawArmSpeed*timeCoef);
+            }
+            clawArm.powerArm(telemetry);
+
+
+
+            //<<<<<<<<<<<<<<<<<<<<<<<<<<< Calibration -- gamepad 2
+            // Claw Calibration
             if (dpadUp2.pressed(gamepad2.dpad_up)){
                 claw.shiftPositions((double) -1 /32);
             }
             if (dpadDown2.pressed(gamepad2.dpad_down)){
                 claw.shiftPositions((double) 1 /32);
             }
-
-            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< arm stuff
-            if (gamepad1.y) {
-                clawArm.changeTargetPosition(clawArmSpeed*timeCoef);
-            } else if (gamepad1.b){
-                clawArm.changeTargetPosition(-1*clawArmSpeed*timeCoef);
+            telemetry.addData("Claw Open Pos", claw.getOpenPosition());
+            telemetry.addData("Claw Closed Pos", claw.getClosedPosition());
+            // Lift Calibration
+            if (leftTrigger2.pressed(gamepad2.left_trigger >= 0.5)) { // Turn safeties on/off
+                doMinMaxLimit = !doMinMaxLimit;
             }
-            clawArm.powerArm(telemetry);
+            if (leftX2Neg.pressed(gamepad2.left_stick_x <= -0.9)) {
+                liftKit.increaseStartPos(0,-1 * liftCalSmall);
+            }
+            if (leftX2Pos.pressed(gamepad2.left_stick_x >= 0.9)) {
+                liftKit.increaseStartPos(0,liftCalSmall);
+            }
+            if (leftY2Neg.pressed(gamepad2.left_stick_y <= -0.9)) {
+                liftKit.increaseStartPos(0,-1 * liftCalLarge);
+            }
+            if (leftY2Pos.pressed(gamepad2.left_stick_y >= 0.9)) {
+                liftKit.increaseStartPos(0,liftCalLarge);
+            }
+            if (rightX2Neg.pressed(gamepad2.right_stick_x <= -0.9)) {
+                liftKit.increaseStartPos(1,-1 * liftCalSmall);
+            }
+            if (rightX2Pos.pressed(gamepad2.right_stick_x >= 0.9)) {
+                liftKit.increaseStartPos(1,liftCalSmall);
+            }
+            if (rightY2Neg.pressed(gamepad2.right_stick_y <= -0.9)) {
+                liftKit.increaseStartPos(1,-1 * liftCalLarge);
+            }
+            if (rightY2Pos.pressed(gamepad2.right_stick_y >= 0.9)) {
+                liftKit.increaseStartPos(1,liftCalLarge);
+            }
+            if (bButton2.pressed(gamepad2.triangle)) {
+                liftKit.zeroMotors();
+            }
+            if (rightTrigger2.pressed(gamepad2.right_trigger >= 0.5)) {
+                liftAtHighPower = !liftAtHighPower;
+                if (liftAtHighPower) {
+                    liftKit.setMaxPowerError(100);
+                    liftKit.setMaxPower(1.0);
+                } else {
+                    liftKit.setMaxPower(0.7);
+                    liftKit.setMaxPowerError(40);
+                }
+            }
+            telemetry.addData("Left x",leftX);
+            telemetry.addData("Left y",leftY);
 
+            telemetry.addData("Lift at high power",liftAtHighPower);
+            telemetry.addData("Lift Left Start",liftKit.getStartPosition(0));
+            telemetry.addData("Lift Right Start",liftKit.getStartPosition(1));
+            // Arm Calibration
+            if (aButton2.pressed(gamepad2.cross)) { // Swap claw arm direction
+                clawArmSpeed *= -1;
+            }
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< telemetry
             telemetry.update();
         }
@@ -148,6 +200,9 @@ public class Teleop2425 extends LinearOpMode {
         return (stickPos*(1-minTranslatePower)+Math.signum(stickPos)*minTranslatePower)*moveSpeed;
     }
     public double calcRotatePower (double triggerPos) {
+        if (Math.abs(triggerPos) != 1) {
+            triggerPos /= 2;
+        }
         return triggerPos;
     }
 }

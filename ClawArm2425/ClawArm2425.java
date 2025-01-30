@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Automotons2425.ClawArm2425;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -153,5 +154,8 @@ public class ClawArm2425 {
     public void setDirection (boolean direction) {
         this.direction = direction;
         updateDirection();
+    }
+    public static ClawArm2425 defaultArm (HardwareMap hardwareMap) {
+        return new ClawArm2425(hardwareMap.get(DcMotor.class, "armMotor"));
     }
 }

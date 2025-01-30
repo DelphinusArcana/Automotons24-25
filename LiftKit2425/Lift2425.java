@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Automotons2425.LiftKit2425;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /** PLEASE NOTE: if you are using this class, you MUST call powerMotors() each time through your code (such as the while(opModeIsActive()) loop in a TeleOp)*/
 public class Lift2425 {
@@ -37,8 +38,8 @@ public class Lift2425 {
             startPositions[i] = motors[i].getCurrentPosition();
         }
         //TODO: get these
-        maxPowerError = 70;
-        maxPower = 0.5;
+        maxPowerError = 40;
+        maxPower = 0.7;
     }
     /** Sets the directions of each motor to what directions says it should be */
     public void updateDirections() {
@@ -97,11 +98,12 @@ public class Lift2425 {
     public void updateMotorStartPosition (int motorIndex, int newStartposition) {
         startPositions[motorIndex] = newStartposition;
     }
-    /** Sets the start positions of each motor to its current position */
+    /** Sets the start positions of each motor to its current position. Sets the target height to the average current height. */
     public void zeroMotors() {
         for (int i = 0; i < motors.length; i++) {
             startPositions[i] = motors[i].getCurrentPosition();
         }
+        setTargetHeight(getAverageHeight());
     }
     /** Average distance from the motors’ starting position and current position */
     public int getAverageHeight () {
@@ -139,5 +141,21 @@ public class Lift2425 {
     public void setDirection (int motorIndex, boolean direction) {
         directions[motorIndex] = direction;
         updateDirections();
+    }
+    /** Gets the start position of a specified motor*/
+    public double getStartPosition (int index) {
+        return startPositions[index];
+    }
+    /** Changes the start position of a specified motor*/
+    public void increaseStartPos (int index, int increase) {
+        startPositions[index] += increase;
+    }
+    public static Lift2425 defaultLift(HardwareMap hardwareMap) {
+        return new Lift2425(new DcMotor[]{
+                hardwareMap.get(DcMotor.class, "leftLift"),
+                hardwareMap.get(DcMotor.class, "rightLift")
+        },
+                new boolean[] {false,false}
+        );
     }
 }
