@@ -6,6 +6,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoController;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.FakeTelemetry;
+
 /** Holds non-functional implementations of DcMotor and Servo*/
 public class FakeHardware {
     /** a non-functional implementation of DcMotor*/
@@ -197,4 +200,5 @@ public class FakeHardware {
 
         }
     };
+    public static final Telemetry fakeTelemetry = FakeTelemetry.fake;
 }
