@@ -312,7 +312,7 @@ public class DriveTrain2425 {
                 hardwareMap.get(DcMotor.class,"rightRearDrive"),
                 hardwareMap.get(DcMotor.class,"rightFrontDrive")
         },
-                new boolean[] {false,true,false,true}
+                new boolean[] {true,true,false,false}
         );
     }
 }
