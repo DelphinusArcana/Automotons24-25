@@ -21,4 +21,8 @@ public class MoveForwardAuto extends AbstractAutonomous {
     public Position getStartPosition() {
         return new Position(0,0,0);
     }
+    @Override
+    public void extraRunningStuff() {
+        telemetry.addData("Position",positionFinder.getPosition());
+    }
 }

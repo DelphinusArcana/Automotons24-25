@@ -27,6 +27,9 @@ public class ServoWrapper {
         this.position = position;
         servo.setPosition(position);
     }
+    public double getPosition() {
+        return position;
+    }
     /** Returns this's name
      * @return this's name*/
     public String getName () {

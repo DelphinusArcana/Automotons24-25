@@ -38,6 +38,7 @@ public abstract class AbstractAutonomous extends LinearOpMode {
                 toDoList.remove(0);
             else
                 toDoList.get(0).doAction();
+            extraRunningStuff();
             liftKit.powerMotors();
             clawArm.powerArm(FakeTelemetry.fake);
             positionFinder.updatePosition();
@@ -46,4 +47,5 @@ public abstract class AbstractAutonomous extends LinearOpMode {
     }
     public abstract ArrayList<Action2425> makeToDoList();
     public abstract Position getStartPosition();
+    public abstract void extraRunningStuff();
 }
