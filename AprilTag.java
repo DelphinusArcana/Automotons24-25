@@ -1,4 +1,7 @@
 package org.firstinspires.ftc.teamcode.Automotons2425;
+
+import java.util.ArrayList;
+
 /** Stores the data for an april tag in the world*/
 public class AprilTag {
     /** The position of the april tag */
@@ -62,5 +65,16 @@ public class AprilTag {
      * @return the id of this tag*/
     public int getId () {
         return id;
+    }
+    /** Red's side of the field is +a, blue's side is -a, and the "audience" side is -b*/
+    public static ArrayList<AprilTag> getDefaultArena2425 () {
+        ArrayList<AprilTag> toReturn = new ArrayList<>();
+        toReturn.add(new AprilTag(11, -2 * 24, -3 * 24, Math.PI / 2));
+        toReturn.add(new AprilTag(12, -3 * 24, 0, 0));
+        toReturn.add(new AprilTag(13, -2 * 24, 3 * 24, 3 * Math.PI / 2));
+        toReturn.add(new AprilTag(14, 2 * 24, 3 * 24, 3 * Math.PI / 2));
+        toReturn.add(new AprilTag(15, 3 * 24, 0, Math.PI));
+        toReturn.add(new AprilTag(16, 2 * 24, -3 * 24, Math.PI / 2));
+        return toReturn;
     }
 }
