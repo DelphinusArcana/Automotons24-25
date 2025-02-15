@@ -187,13 +187,15 @@ public class DriveTrain2425 {
             xVal *= scaleFactor;
             yVal *= scaleFactor;
         }*/
-        /*
+
         //implimented Asher's thing
         if (Math.abs(xVal)+Math.abs(yVal) < minTranslatePower){
             double scaleFactor = minTranslatePower / (Math.abs(xVal) + Math.abs(yVal));
             xVal *= scaleFactor;
             yVal *= scaleFactor;
-        }*/
+        }
+
+
 
         //x translation
         powers[0] = powers[0] - xVal;
