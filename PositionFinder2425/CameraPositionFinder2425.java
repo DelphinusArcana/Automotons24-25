@@ -40,6 +40,27 @@ public class CameraPositionFinder2425 extends PositionFinder2425{
     private AprilTag findAprilTag(int tagID){
         for(aprilTags:)
     }
+
+    /**
+     * go through the arraylist of tag detections and return the first one of each id in an arraylist
+     * @return
+     */
+    private ArrayList<TagDetection> filterDetections(ArrayList<TagDetection> tagsSeen) {
+        ArrayList<TagDetection> uniqueTags = new ArrayList<TagDetection>();
+        for (TagDetection tag : tagsSeen) {
+            boolean isAlreadySeen = false;
+            for (TagDetection seenTag : uniqueTags) {
+                if (tag.id == seenTag.id) {
+                    isAlreadySeen = true;
+                }
+            }
+            if (!isAlreadySeen) {
+                uniqueTags.append(tag);
+            }
+        }
+        return uniqueTags;
+    }
+
     public void useCameraPositon(ArrayList<TagDetection> seenTags){
         currentPosition = cameraCalc(seenTags);
     }
