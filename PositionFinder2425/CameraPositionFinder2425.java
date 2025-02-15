@@ -7,7 +7,6 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import java.util.List;
 
 public class CameraPositionFinder2425 extends PositionFinder2425{
-    //todo: add a camera class to constructor
     public CameraPositionFinder2425(DriveTrain2425 driveTrain, Position position) {
         super(driveTrain, position);
     }
@@ -17,7 +16,6 @@ public class CameraPositionFinder2425 extends PositionFinder2425{
         Position callThisWhateverYouWantAnton = new Position(0, 0, 0);
         return callThisWhateverYouWantAnton;
     }
-    //todo: this needs to take arguments but we don't have the data type for that argument
     public void useCameraPositon(List<AprilTagDetection> seenTags){
         currentPosition = cameraCalc(seenTags);
     }
