@@ -28,6 +28,6 @@ public class getCameraPosition implements Action2425 {
         if(false){
 
         }
-        positionFinder.useCameraPositon();
+        //positionFinder.useCameraPositon();
     }
 }
