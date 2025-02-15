@@ -55,7 +55,7 @@ public class CameraPositionFinder2425 extends PositionFinder2425{
                 }
             }
             if (!isAlreadySeen) {
-                uniqueTags.append(tag);
+                uniqueTags.add(tag);
             }
         }
         return uniqueTags;
