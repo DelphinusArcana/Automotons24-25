@@ -26,6 +26,7 @@ public class Teleop2425 extends LinearOpMode {
     private double clawArmSpeed;
     private ButtonWatcher2425 dpadUp2;
     private ButtonWatcher2425 dpadDown2;
+    private ButtonWatcher2425 liftKitUp;
     private double raisedArmPos;
     private double liftMax;
     private double liftMin;
@@ -55,6 +56,7 @@ public class Teleop2425 extends LinearOpMode {
         dpadDown2 = new ButtonWatcher2425();
         ButtonWatcher2425 aButton2 = new ButtonWatcher2425();
         ButtonWatcher2425 bButton2 = new ButtonWatcher2425();
+        ButtonWatcher2425 liftKitUp = new ButtonWatcher2425();
         boolean doMinMaxLimit = true;
         ButtonWatcher2425 leftX2Pos = new ButtonWatcher2425();
         ButtonWatcher2425 leftX2Neg = new ButtonWatcher2425();
@@ -151,6 +153,9 @@ public class Teleop2425 extends LinearOpMode {
             if(gamepad1.b){
                 clawArm.setTargetPosition(raisedArmPos);
             }
+            if (liftKitUp.pressed(liftKit.getCurrentPosition(0)<liftMax*2/3) && !(gamepad1.a||gamepad1.b||gamepad1.dpad_down||gamepad1.dpad_up)) {
+                clawArm.setTargetPosition(raisedArmPos);
+            }
             if(gamepad1.y){
                 liftKit.setTargetHeight(liftMaxHeight);
             }
@@ -196,7 +201,7 @@ public class Teleop2425 extends LinearOpMode {
             if (rightY2Pos.pressed(gamepad2.right_stick_y >= 0.9)) {
                 liftKit.increaseStartPos(1,liftCalLarge);
             }
-            if (bButton2.pressed(gamepad2.triangle)) {
+            if (liftKitUp.pressed(gamepad2.triangle)) {
                 liftKit.zeroMotors();
             }
             if (rightTrigger2.pressed(gamepad2.right_trigger >= 0.5)) {
