@@ -1,15 +1,12 @@
 package org.firstinspires.ftc.teamcode.Automotons2425;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.Automotons2425.Claw2425.Claw2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.Claw2425.SpinClaw2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.ClawArm2425.ClawArm2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425.DriveTrain2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.LiftKit2425.Lift2425;
-import org.opencv.core.Mat;
 
 @TeleOp(name = "a1Teleop2425", group = "Linear Opmode")
 public class Teleop2425 extends LinearOpMode {
@@ -17,7 +14,8 @@ public class Teleop2425 extends LinearOpMode {
     private DriveTrain2425 driveTrain;
     private Lift2425 liftKit;
     private ClawArm2425 clawArm;
-    private Claw2425 claw;
+    private SpinClaw2425 spinClaw;
+    //private Claw2425 claw;
     //variable declaration - variable
     private double liftSpeed; //coefficient to adjust how much lift target moves each loop
     private int liftMaxHeight; //upperbound of liftkit position
@@ -39,7 +37,8 @@ public class Teleop2425 extends LinearOpMode {
         driveTrain = DriveTrain2425.defaultDrive(hardwareMap);
         liftKit = Lift2425.defaultLift(hardwareMap);
         clawArm = ClawArm2425.defaultArm(hardwareMap);
-        claw = Claw2425.defaultClaw(hardwareMap);
+        spinClaw = SpinClaw2425.defaultSpinClaw(hardwareMap);
+        //claw = Claw2425.defaultClaw(hardwareMap);
         //variable initialize - variables
         liftSpeed = 0.8;
         liftMaxHeight = 0;
@@ -121,13 +120,22 @@ public class Teleop2425 extends LinearOpMode {
             telemetry.addData("Left Trigger", leftTrigger);
             telemetry.addData("Right Trigger", rightTrigger);
 
+            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< spinning claw
+            if (gamepad1.right_bumper) {
+                spinClaw.pull();
+            } else if (gamepad1.left_bumper) {
+                spinClaw.push();
+            } else {
+                spinClaw.stop();
+            }
+/*
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< claw stuff
             if (gamepad1.right_bumper && !rBumpPressed) {
                 claw.toggleClaw();
                 rBumpPressed = true;
             } else if (!gamepad1.right_bumper) {
                 rBumpPressed = false;
-            }
+            }*/
 
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< arm stuff
             if (gamepad1.dpad_down) {
@@ -151,7 +159,7 @@ public class Teleop2425 extends LinearOpMode {
             }
 
             //<<<<<<<<<<<<<<<<<<<<<<<<<<< Calibration -- gamepad 2
-            // Claw Calibration
+            /*// Claw Calibration
             if (dpadUp2.pressed(gamepad2.dpad_up)){
                 claw.shiftPositions((double) -1 /32);
             }
@@ -159,7 +167,7 @@ public class Teleop2425 extends LinearOpMode {
                 claw.shiftPositions((double) 1 /32);
             }
             telemetry.addData("Claw Open Pos", claw.getOpenPosition());
-            telemetry.addData("Claw Closed Pos", claw.getClosedPosition());
+            telemetry.addData("Claw Closed Pos", claw.getClosedPosition());*/
             // Lift Calibration
             if (leftTrigger2.pressed(gamepad2.left_trigger >= 0.5)) { // Turn safeties on/off
                 doMinMaxLimit = !doMinMaxLimit;

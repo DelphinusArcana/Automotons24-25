@@ -42,12 +42,16 @@ public class DropOneInAutonomus2425 extends AbstractAutonomous{
         toDoList.add(new SetArm2425(clawArm, raisedArmPos,armTolerance)); // Lowers the claw arm
         toDoList.add(new SetLift2425(liftKit, liftMin, liftTolerance));
         toDoList.add(new SetArm2425(clawArm, 0,armTolerance)); // Lowers the claw arm
-        return null;
+        return toDoList;
     }
 
     @Override
     public Position getStartPosition() {
 
         return new Position(-3*24+9, 2*24-10, Math.PI/2);
+    }
+    @Override
+    public void extraRunningStuff () {
+
     }
 }
