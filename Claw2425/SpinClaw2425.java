@@ -22,9 +22,8 @@ public class SpinClaw2425 {
     public void push () {
         crServo.setPower(-1 * power);
     }
-    public double getPower() {
-        return power;
-    }
+    public int getDirection() {return (int) Math.signum(power);}
+    public double getPower() {return power;}
     public void setPower(double newPower) {
         power=newPower;
     }

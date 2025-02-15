@@ -27,6 +27,8 @@ public class Teleop2425 extends LinearOpMode {
     private ButtonWatcher2425 dpadUp2;
     private ButtonWatcher2425 dpadDown2;
     private ButtonWatcher2425 liftKitUp;
+    private ButtonWatcher2425 lBumper;
+    private ButtonWatcher2425 rBumper;
     private double raisedArmPos;
     private double liftMax;
     private double liftMin;
@@ -56,6 +58,8 @@ public class Teleop2425 extends LinearOpMode {
         dpadDown2 = new ButtonWatcher2425();
         ButtonWatcher2425 aButton2 = new ButtonWatcher2425();
         ButtonWatcher2425 bButton2 = new ButtonWatcher2425();
+        ButtonWatcher2425 lBumper = new ButtonWatcher2425();
+        ButtonWatcher2425 rBumper = new ButtonWatcher2425();
         ButtonWatcher2425 liftKitUp = new ButtonWatcher2425();
         boolean doMinMaxLimit = true;
         ButtonWatcher2425 leftX2Pos = new ButtonWatcher2425();
@@ -128,12 +132,19 @@ public class Teleop2425 extends LinearOpMode {
             driveTrain.translateAndRotate(leftTrigger,rightTrigger,leftX,leftY,telemetry);
 
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< spinning claw
-            if (gamepad1.right_bumper) {
-                spinClaw.pull();
-            } else if (gamepad1.left_bumper) {
-                spinClaw.push();
-            } else {
-                spinClaw.stop();
+            if (rBumper.pressed(gamepad1.right_bumper)) {
+                if (spinClaw.getDirection()==1) {
+                    spinClaw.stop();
+                } else {
+                    spinClaw.pull();
+                }
+            }
+            if (lBumper.pressed(gamepad1.left_bumper)) {
+                if (spinClaw.getDirection()==-1) {
+                    spinClaw.stop();
+                } else {
+                    spinClaw.push();
+                }
             }
 /*
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< claw stuff
