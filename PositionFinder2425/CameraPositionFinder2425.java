@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425;
 
+import org.firstinspires.ftc.teamcode.Automotons2425.Camera2425.Camera2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425.DriveTrain2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.Position;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
@@ -7,8 +8,10 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import java.util.List;
 
 public class CameraPositionFinder2425 extends PositionFinder2425{
-    public CameraPositionFinder2425(DriveTrain2425 driveTrain, Position position) {
+    private Camera2425 camera;
+    public CameraPositionFinder2425(DriveTrain2425 driveTrain, Position position, Camera2425 camera) {
         super(driveTrain, position);
+        this.camera = camera;
     }
     //todo: Anton, this is where you will add your calculation code
     //todo: add camera info in the paramaters
@@ -18,5 +21,8 @@ public class CameraPositionFinder2425 extends PositionFinder2425{
     }
     public void useCameraPositon(List<AprilTagDetection> seenTags){
         currentPosition = cameraCalc(seenTags);
+    }
+    public void startSweep () {
+
     }
 }

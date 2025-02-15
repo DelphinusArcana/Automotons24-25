@@ -4,8 +4,8 @@ import org.firstinspires.ftc.teamcode.Automotons2425.Position;
 
 /* Based entirely on */
 public class PositionFinder2425 {
-    DriveTrain2425 driveTrain;
-    Position currentPosition;
+    protected DriveTrain2425 driveTrain;
+    protected Position currentPosition;
 
     public PositionFinder2425 (DriveTrain2425 driveTrain, Position position) {
         this.driveTrain = driveTrain;
