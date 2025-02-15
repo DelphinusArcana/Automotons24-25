@@ -46,7 +46,7 @@ public class CameraPositionFinder2425 extends PositionFinder2425{
         return null;
     }
     private AprilTag findAprilTag(int tagID){
-        for(AprilTag tag: aprilTags){
+        for(AprilTag tag: aprilTags) {
             if(tag.getId() == tagID){
                 return tag;
             }
@@ -58,7 +58,7 @@ public class CameraPositionFinder2425 extends PositionFinder2425{
     /**
      * go through the arraylist of tag detections and return the first one of each id in an arraylist
      * @return
-     /
+     */
     private ArrayList<TagDetection> filterDetections(ArrayList<TagDetection> tagsSeen) {
         ArrayList<TagDetection> uniqueTags = new ArrayList<TagDetection>();
         for (TagDetection tag : tagsSeen) {
