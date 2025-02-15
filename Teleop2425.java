@@ -113,14 +113,19 @@ public class Teleop2425 extends LinearOpMode {
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< drive train control
             double leftX = gamepad1.left_stick_x * -1.0;
             double leftY = gamepad1.left_stick_y * -1.0;
+            /*
             driveTrain.translate(true, leftX, leftY, telemetry);
+             */
 
             double leftTrigger = gamepad1.left_trigger;
             double rightTrigger = gamepad1.right_trigger;
+            /*
             if (Math.abs(leftTrigger) > 0.1 || Math.abs(rightTrigger) > 0.1)
                 driveTrain.rotate(calcRotatePower(leftTrigger), calcRotatePower(rightTrigger));
             telemetry.addData("Left Trigger", leftTrigger);
             telemetry.addData("Right Trigger", rightTrigger);
+            */
+            driveTrain.translateAndRotate(leftTrigger,rightTrigger,leftX,leftY,telemetry);
 
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< spinning claw
             if (gamepad1.right_bumper) {
