@@ -26,7 +26,7 @@ public class CameraPositionFinder2425 extends PositionFinder2425{
         aprilTags = AprilTag.getDefaultArena2425();
     }
     private Position cameraCalc(ArrayList<TagDetection> seenTags) {
-        ArrayList<TagDetection> uniqueTags = filterDetections(seenTags);
+        /*ArrayList<TagDetection> uniqueTags = filterDetections(seenTags);
         Position toReturn = new Position(0,0,0);
         if(uniqueTags.size()>1){
             TagDetection uniqueTag1 = uniqueTags.get(0);
@@ -41,9 +41,9 @@ public class CameraPositionFinder2425 extends PositionFinder2425{
 
 
 
-        }
+        }*/
 
-        //return ;
+        return null;
     }
     private AprilTag findAprilTag(int tagID){
         for(AprilTag tag: aprilTags){
@@ -58,7 +58,7 @@ public class CameraPositionFinder2425 extends PositionFinder2425{
     /**
      * go through the arraylist of tag detections and return the first one of each id in an arraylist
      * @return
-     */
+     /
     private ArrayList<TagDetection> filterDetections(ArrayList<TagDetection> tagsSeen) {
         ArrayList<TagDetection> uniqueTags = new ArrayList<TagDetection>();
         for (TagDetection tag : tagsSeen) {
