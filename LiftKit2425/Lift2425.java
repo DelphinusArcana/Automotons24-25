@@ -155,7 +155,7 @@ public class Lift2425 {
                 hardwareMap.get(DcMotor.class, "leftLift"),
                 hardwareMap.get(DcMotor.class, "rightLift")
         },
-                new boolean[] {true,true}
+                new boolean[] {false,false}
         );
     }
 }

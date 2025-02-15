@@ -158,9 +158,9 @@ public class Teleop2425 extends LinearOpMode {
             if(gamepad1.b){
                 clawArm.setTargetPosition(raisedArmPos);
             }
-            if (liftKitUp.pressed(liftKit.getCurrentPosition(0)<liftMax*2/3) && !(gamepad1.a||gamepad1.b||gamepad1.dpad_down||gamepad1.dpad_up)) {
+            /*if (liftKitUp.pressed(liftKit.getCurrentPosition(0)<liftMax*2/3) && !(gamepad1.a||gamepad1.b||gamepad1.dpad_down||gamepad1.dpad_up)) {
                 clawArm.setTargetPosition(raisedArmPos);
-            }
+            }*/
             if(gamepad1.y){
                 liftKit.setTargetHeight(liftMaxHeight);
             }
@@ -223,6 +223,7 @@ public class Teleop2425 extends LinearOpMode {
             telemetry.addData("Left y",leftY);
 
             telemetry.addData("Lift at high power",liftAtHighPower);
+            telemetry.addData("Do min max lift", doMinMaxLimit);
             telemetry.addData("Lift Left Start",liftKit.getStartPosition(0));
             telemetry.addData("Lift Right Start",liftKit.getStartPosition(1));
             // Arm Calibration

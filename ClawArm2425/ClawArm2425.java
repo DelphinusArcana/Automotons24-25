@@ -45,7 +45,7 @@ public class ClawArm2425 {
         uprightPosition = -10000000;
         targetPosition = zeroPosition;
         maxPowerError = 10;
-        maxPower = 0.5;
+        maxPower = 0.7;
         direction = true;
         updateDirection();
     }
