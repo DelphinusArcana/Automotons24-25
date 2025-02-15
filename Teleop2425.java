@@ -226,6 +226,7 @@ public class Teleop2425 extends LinearOpMode {
             telemetry.addData("Do min max lift", doMinMaxLimit);
             telemetry.addData("Lift Left Start",liftKit.getStartPosition(0));
             telemetry.addData("Lift Right Start",liftKit.getStartPosition(1));
+            telemetry.addData("Claw Current Position",clawArm.getCurrentPosition());
             // Arm Calibration
             if (aButton2.pressed(gamepad2.cross)) { // Swap claw arm direction
                 clawArmSpeed *= -1;

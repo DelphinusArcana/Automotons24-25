@@ -42,7 +42,8 @@ public class GetCameraPosition2425 implements Action2425 {
         }
         //checks if cameraServo has scanned all 240 or so degrees
         if(camera.servoPosition >endCameraPos-endCameraPosError){
-            positionFinder.useCameraPositon(camera.getSeen());
+            //TODO: this
+            //positionFinder.useCameraPositon(camera.getSeen());
             isComplete = true;
             //resets camera position
             camera.setServoPosition(cameraStartPos);
