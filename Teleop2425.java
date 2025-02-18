@@ -43,7 +43,7 @@ public class Teleop2425 extends LinearOpMode {
         spinClaw = SpinClaw2425.defaultSpinClaw(hardwareMap);
         //claw = Claw2425.defaultClaw(hardwareMap);
         //variable initialize - variables
-        liftSpeed = 0.8;
+        liftSpeed = 1.0;
         liftMaxHeight = 0;
         liftMinimumHeight = -3600;
         moveSpeed = 1;
@@ -74,6 +74,9 @@ public class Teleop2425 extends LinearOpMode {
         int liftCalLarge = 10;
         ButtonWatcher2425 rightTrigger2 = new ButtonWatcher2425();
         boolean liftAtHighPower = false;
+        boolean clawPushing = false;
+        boolean clawPulling = false;
+
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
 
@@ -115,14 +118,14 @@ public class Teleop2425 extends LinearOpMode {
             telemetry.addData("Lift Target",liftKit.getTargetHeight());
 
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< drive train control
-            double leftX = gamepad1.left_stick_x * -1.0;
-            double leftY = gamepad1.left_stick_y * -1.0;
+            double leftX = gamepad1.left_stick_x * -0.7;
+            double leftY = gamepad1.left_stick_y * -0.7;
             /*
             driveTrain.translate(true, leftX, leftY, telemetry);
              */
 
-            double leftTrigger = gamepad1.left_trigger;
-            double rightTrigger = gamepad1.right_trigger;
+            double leftTrigger = gamepad1.left_trigger * 0.7;
+            double rightTrigger = gamepad1.right_trigger * 0.7;
             /*
             if (Math.abs(leftTrigger) > 0.1 || Math.abs(rightTrigger) > 0.1)
                 driveTrain.rotate(calcRotatePower(leftTrigger), calcRotatePower(rightTrigger));
@@ -133,6 +136,21 @@ public class Teleop2425 extends LinearOpMode {
 
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< spinning claw
             if (rBumper.pressed(gamepad1.right_bumper)) {
+                clawPulling = !clawPulling;
+                clawPushing = false;
+            }
+            if (lBumper.pressed(gamepad1.left_bumper)) {
+                clawPushing = !clawPushing;
+                clawPulling = false;
+            }
+            if (clawPulling) {
+                spinClaw.pull();
+            } else if (clawPushing) {
+                spinClaw.push();
+            } else {
+                spinClaw.stop();
+            }
+            /*if (rBumper.pressed(gamepad1.right_bumper)) {
                 if (spinClaw.getDirection()==1) {
                     spinClaw.stop();
                 } else {
@@ -145,7 +163,7 @@ public class Teleop2425 extends LinearOpMode {
                 } else {
                     spinClaw.push();
                 }
-            }
+            }*/
 /*
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< claw stuff
             if (gamepad1.right_bumper && !rBumpPressed) {
