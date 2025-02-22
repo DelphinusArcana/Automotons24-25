@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.Automotons2425.Claw2425.SpinClaw2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.ClawArm2425.ClawArm2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425.DriveTrain2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.LiftKit2425.Lift2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425.PositionFinder2425;
 
 @TeleOp(name = "A1Teleop2425", group = "Linear Opmode")
 public class Teleop2425 extends LinearOpMode {
@@ -16,6 +17,7 @@ public class Teleop2425 extends LinearOpMode {
     private Lift2425 liftKit;
     private ClawArm2425 clawArm;
     private SpinClaw2425 spinClaw;
+    private PositionFinder2425 positionFinder;
     //private Claw2425 claw;
     //variable declaration - variable
     private double liftSpeed; //coefficient to adjust how much lift target moves each loop
@@ -42,6 +44,7 @@ public class Teleop2425 extends LinearOpMode {
         liftKit = Lift2425.defaultLift(hardwareMap);
         clawArm = ClawArm2425.defaultArm(hardwareMap);
         spinClaw = SpinClaw2425.defaultSpinClaw(hardwareMap);
+        positionFinder = new PositionFinder2425(driveTrain, new Position(0, 0, 0));
         //claw = Claw2425.defaultClaw(hardwareMap);
         //variable initialize - variables
         liftSpeed = 1.0;
@@ -256,6 +259,7 @@ public class Teleop2425 extends LinearOpMode {
                     liftKit.setMaxPowerError(40);
                 }
             }
+            positionFinder.updatePosition();
             telemetry.addData("Left x",leftX);
             telemetry.addData("Left y",leftY);
 
@@ -265,6 +269,7 @@ public class Teleop2425 extends LinearOpMode {
             telemetry.addData("Lift Right Start",liftKit.getStartPosition(1));
             telemetry.addData("Arm Current Position",clawArm.getCurrentPosition());
             telemetry.addData("Arm Current Position",armMotor.getCurrentPosition());
+            telemetry.addData("Position", positionFinder.getPosition());
             // Arm Calibration
             if (aButton2.pressed(gamepad2.cross)) { // Swap claw arm direction
                 clawArmSpeed *= -1;
