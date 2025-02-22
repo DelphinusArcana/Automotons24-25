@@ -11,7 +11,8 @@ import org.firstinspires.ftc.teamcode.Automotons2425.Claw2425.Claw2425;
 
 import java.util.ArrayList;
 
-
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+@Disabled
 @Autonomous(name = "SetClawTest2425")
 public class SetClawTest2425 extends LinearOpMode  {
     Claw2425 Claw;

@@ -15,7 +15,8 @@ import org.firstinspires.ftc.teamcode.Automotons2425.ClawArm2425.ClawArm2425;
 
 import java.util.ArrayList;
 
-
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+@Disabled
 @TeleOp(name = "SetArmTest2425", group = "Linear OpMode")
 public class SetArmTest2425 extends LinearOpMode {
     ClawArm2425 clawArm;

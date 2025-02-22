@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Automotons2425;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Automotons2425.Claw2425.SpinClaw2425;
@@ -76,6 +77,7 @@ public class Teleop2425 extends LinearOpMode {
         boolean liftAtHighPower = false;
         boolean clawPushing = false;
         boolean clawPulling = false;
+        DcMotor armMotor = hardwareMap.get(DcMotor.class, "armMotor");
 
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
@@ -255,7 +257,8 @@ public class Teleop2425 extends LinearOpMode {
             telemetry.addData("Do min max lift", doMinMaxLimit);
             telemetry.addData("Lift Left Start",liftKit.getStartPosition(0));
             telemetry.addData("Lift Right Start",liftKit.getStartPosition(1));
-            telemetry.addData("Claw Current Position",clawArm.getCurrentPosition());
+            telemetry.addData("Arm Current Position",clawArm.getCurrentPosition());
+            telemetry.addData("Arm Current Position",armMotor.getCurrentPosition());
             // Arm Calibration
             if (aButton2.pressed(gamepad2.cross)) { // Swap claw arm direction
                 clawArmSpeed *= -1;

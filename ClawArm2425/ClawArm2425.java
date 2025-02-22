@@ -44,7 +44,7 @@ public class ClawArm2425 {
         //motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         uprightPosition = -10000000;
         targetPosition = zeroPosition;
-        maxPowerError = 8;
+        maxPowerError = 5;
         maxPower = 0.5;
         direction = true;
         updateDirection();
