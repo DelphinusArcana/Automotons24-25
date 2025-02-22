@@ -45,6 +45,10 @@ public abstract class AbstractAutonomous extends LinearOpMode {
             liftKit.powerMotors();
             clawArm.powerArm(FakeTelemetry.fake);
             positionFinder.updatePosition();
+            telemetry.addData("Position", positionFinder.getPosition());
+            telemetry.addData("Arm Current Position",clawArm.getCurrentPosition());
+            telemetry.addData("Current Lift Height", liftKit.getAverageHeight());
+            telemetry.addData("Target Lift Height", liftKit.getTargetHeight());
             telemetry.update();
         }
     }
