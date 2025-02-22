@@ -10,7 +10,8 @@ import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.GoToPosition242
 import org.firstinspires.ftc.teamcode.Automotons2425.ButtonWatcher2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.Position;
 import org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425.PositionFinder2425;
-
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+@Disabled
 @TeleOp(name = "DriveTest2425", group = "Linear Opmode")
 public class DriveTest2425 extends LinearOpMode {
     private DriveTrain2425 driveTrain;

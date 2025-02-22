@@ -5,7 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Automotons2425.ButtonWatcher2425;
-
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+@Disabled
 @TeleOp(name = "ClawArmTest2425", group = "Linear Opmode")
 public class ClawArmTest2425 extends LinearOpMode {
     //variable declaration

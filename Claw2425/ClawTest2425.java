@@ -6,7 +6,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Automotons2425.ButtonWatcher2425;
 
-
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+@Disabled
 @TeleOp(name="ClawTest2425", group="Linear Opmode")
 public class ClawTest2425 extends LinearOpMode {
     private double openPos = 0.703125;

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Automotons2425;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Automotons2425.Claw2425.SpinClaw2425;
@@ -43,7 +44,7 @@ public class Teleop2425 extends LinearOpMode {
         spinClaw = SpinClaw2425.defaultSpinClaw(hardwareMap);
         //claw = Claw2425.defaultClaw(hardwareMap);
         //variable initialize - variables
-        liftSpeed = 0.8;
+        liftSpeed = 1.0;
         liftMaxHeight = 0;
         liftMinimumHeight = -3600;
         moveSpeed = 1;
@@ -74,6 +75,10 @@ public class Teleop2425 extends LinearOpMode {
         int liftCalLarge = 10;
         ButtonWatcher2425 rightTrigger2 = new ButtonWatcher2425();
         boolean liftAtHighPower = false;
+        boolean clawPushing = false;
+        boolean clawPulling = false;
+        DcMotor armMotor = hardwareMap.get(DcMotor.class, "armMotor");
+
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
 
@@ -115,14 +120,14 @@ public class Teleop2425 extends LinearOpMode {
             telemetry.addData("Lift Target",liftKit.getTargetHeight());
 
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< drive train control
-            double leftX = gamepad1.left_stick_x * -1.0;
-            double leftY = gamepad1.left_stick_y * -1.0;
+            double leftX = gamepad1.left_stick_x * -0.7;
+            double leftY = gamepad1.left_stick_y * -0.7;
             /*
             driveTrain.translate(true, leftX, leftY, telemetry);
              */
 
-            double leftTrigger = gamepad1.left_trigger;
-            double rightTrigger = gamepad1.right_trigger;
+            double leftTrigger = gamepad1.left_trigger * 0.7;
+            double rightTrigger = gamepad1.right_trigger * 0.7;
             /*
             if (Math.abs(leftTrigger) > 0.1 || Math.abs(rightTrigger) > 0.1)
                 driveTrain.rotate(calcRotatePower(leftTrigger), calcRotatePower(rightTrigger));
@@ -139,6 +144,21 @@ public class Teleop2425 extends LinearOpMode {
 
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< spinning claw
             if (rBumper.pressed(gamepad1.right_bumper)) {
+                clawPulling = !clawPulling;
+                clawPushing = false;
+            }
+            if (lBumper.pressed(gamepad1.left_bumper)) {
+                clawPushing = !clawPushing;
+                clawPulling = false;
+            }
+            if (clawPulling) {
+                spinClaw.pull();
+            } else if (clawPushing) {
+                spinClaw.push();
+            } else {
+                spinClaw.stop();
+            }
+            /*if (rBumper.pressed(gamepad1.right_bumper)) {
                 if (spinClaw.getDirection()==1) {
                     spinClaw.stop();
                 } else {
@@ -151,7 +171,7 @@ public class Teleop2425 extends LinearOpMode {
                 } else {
                     spinClaw.push();
                 }
-            }
+            }*/
 /*
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< claw stuff
             if (gamepad1.right_bumper && !rBumpPressed) {
@@ -243,7 +263,8 @@ public class Teleop2425 extends LinearOpMode {
             telemetry.addData("Do min max lift", doMinMaxLimit);
             telemetry.addData("Lift Left Start",liftKit.getStartPosition(0));
             telemetry.addData("Lift Right Start",liftKit.getStartPosition(1));
-            telemetry.addData("Claw Current Position",clawArm.getCurrentPosition());
+            telemetry.addData("Arm Current Position",clawArm.getCurrentPosition());
+            telemetry.addData("Arm Current Position",armMotor.getCurrentPosition());
             // Arm Calibration
             if (aButton2.pressed(gamepad2.cross)) { // Swap claw arm direction
                 clawArmSpeed *= -1;

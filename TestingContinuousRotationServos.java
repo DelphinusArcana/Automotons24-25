@@ -12,7 +12,8 @@ import org.firstinspires.ftc.teamcode.Automotons2425.ClawArm2425.ClawArm2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425.DriveTrain2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.LiftKit2425.Lift2425;
 import org.opencv.core.Mat;
-
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+@Disabled
 @TeleOp(name = "Testing Continuous Rotation", group = "Linear Opmode")
 public class TestingContinuousRotationServos extends LinearOpMode {
     private CRServo tcr;

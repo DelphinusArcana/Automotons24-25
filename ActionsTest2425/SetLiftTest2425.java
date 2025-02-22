@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Automotons2425.ButtonWatcher2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.LiftKit2425.*;
 import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.*;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+@Disabled
 @TeleOp(name = "SetLiftTest2425", group = "Linear OpMode")
 public class SetLiftTest2425 extends LinearOpMode {
     Lift2425 liftKit;

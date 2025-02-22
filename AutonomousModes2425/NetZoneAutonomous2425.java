@@ -14,7 +14,8 @@ import org.firstinspires.ftc.teamcode.Automotons2425.Position;
 import org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425.PositionFinder2425;
 
 import java.util.ArrayList;
-
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+@Disabled
 @Autonomous(name="NetZoneAutonomous2425")
 public class NetZoneAutonomous2425 extends LinearOpMode {
     private DriveTrain2425 driveTrain;

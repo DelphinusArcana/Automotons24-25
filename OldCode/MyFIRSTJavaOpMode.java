@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /** The TeleOp we used in the 2023-2024 season*/
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+@Disabled
 @TeleOp(name="Template: 2024 Brie 4", group="Linear Opmode")
 public class MyFIRSTJavaOpMode extends LinearOpMode {
     // motor directions

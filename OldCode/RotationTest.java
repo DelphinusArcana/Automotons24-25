@@ -59,7 +59,8 @@ import java.util.concurrent.TimeUnit;
  */
 
 // It seems to think 12 real inches is 13 inches -- probably because the tags are a little larger than 2"
-
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+@Disabled
 @Autonomous(name = "RotationTest")
 public class RotationTest extends LinearOpMode
 {

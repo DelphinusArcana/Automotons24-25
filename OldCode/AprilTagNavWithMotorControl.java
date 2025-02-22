@@ -21,7 +21,8 @@ import java.util.concurrent.TimeUnit;
 // It seems to think 12 real inches is 13 inches -- probably because the tags are a little larger than 2"
 // The play area is about 94" across.
 // The tags are 3.5" in from the edges
-
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+@Disabled
 @Autonomous(name = "MotorControl")
 public class AprilTagNavWithMotorControl extends LinearOpMode
 {

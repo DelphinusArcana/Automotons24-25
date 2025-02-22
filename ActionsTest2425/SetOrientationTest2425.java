@@ -10,7 +10,8 @@ import org.firstinspires.ftc.teamcode.Automotons2425.ButtonWatcher2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425.DriveTrain2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.Position;
 import org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425.PositionFinder2425;
-
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+@Disabled
 @TeleOp(name = "SetOrientationTest2425", group = "Linear OpMode")
 public class SetOrientationTest2425 extends LinearOpMode {
     DriveTrain2425 driveTrain;
