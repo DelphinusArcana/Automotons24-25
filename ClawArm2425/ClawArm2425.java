@@ -64,7 +64,7 @@ public class ClawArm2425 {
      */
     public void setTargetPosition (double position) {
         double changeInTargetPosition = position-targetPosition;
-        timeSinceInput = -1*Math.abs(changeInTargetPosition)*updateTimeMoveLimitCoeficient;
+        timeSinceInput -= Math.abs(changeInTargetPosition)*updateTimeMoveLimitCoeficient;
         targetPosition = position;
 
         /*if (targetPosition < uprightPosition){
@@ -100,10 +100,13 @@ public class ClawArm2425 {
             int offset = currentPosition - prevMotorPosition;
             targetPosition += offset;
         }
-        timeSinceInput += elapsedMili;
+
         if (timeSinceInput>0){
             int offset = currentPosition - prevMotorPosition;
             targetPosition += offset;
+        }
+        else{
+            timeSinceInput += elapsedMili;
         }
 
 
