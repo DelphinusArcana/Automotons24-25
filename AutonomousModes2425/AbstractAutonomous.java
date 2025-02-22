@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.Action2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.FakeTelemetry;
 import org.firstinspires.ftc.teamcode.Automotons2425.Claw2425.Claw2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.Claw2425.SpinClaw2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.ClawArm2425.ClawArm2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425.DriveTrain2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.LiftKit2425.Lift2425;
@@ -19,6 +20,7 @@ public abstract class AbstractAutonomous extends LinearOpMode {
     protected Lift2425 liftKit;
     protected ClawArm2425 clawArm;
     protected Claw2425 claw;
+    protected SpinClaw2425 spinClaw;
     protected PositionFinder2425 positionFinder;
     protected ArrayList<Action2425> toDoList;
     @Override
@@ -27,6 +29,7 @@ public abstract class AbstractAutonomous extends LinearOpMode {
         liftKit = Lift2425.defaultLift(hardwareMap);
         clawArm = ClawArm2425.defaultArm(hardwareMap);
         claw = Claw2425.defaultClaw(hardwareMap);
+        spinClaw = SpinClaw2425.defaultSpinClaw(hardwareMap);
         positionFinder = new PositionFinder2425(driveTrain, getStartPosition());
         toDoList = makeToDoList();
         telemetry.addData("status","initialized");
