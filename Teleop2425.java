@@ -129,6 +129,12 @@ public class Teleop2425 extends LinearOpMode {
             telemetry.addData("Left Trigger", leftTrigger);
             telemetry.addData("Right Trigger", rightTrigger);
             */
+
+            //scales the driving power quadratically. TODO: Get a config for turning this on and off?
+            leftX=Math.pow(leftX,2)*Math.signum(leftX);
+            leftY=Math.pow(leftY,2)*Math.signum(leftY);
+
+
             driveTrain.translateAndRotate(leftTrigger,rightTrigger,leftX,leftY,telemetry);
 
             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< spinning claw

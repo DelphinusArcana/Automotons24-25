@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Automotons2425.Actions2425;
+/*package org.firstinspires.ftc.teamcode.Automotons2425.Actions2425;
 
 import org.firstinspires.ftc.teamcode.Automotons2425.AprilTag;
 import org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425.CameraPositionFinder2425;
@@ -12,7 +12,7 @@ public class GetCameraPosition2425 implements Action2425 {
     double cameraStartPos;
     boolean doSetupCamera;
     FakeCameraClass2425 camera;
-    //anythin involving camera is just placement
+    //anything involving camera is just placement
     public GetCameraPosition2425(CameraPositionFinder2425 cPositionFinder, FakeCameraClass2425 cameraArg){
         positionFinder = cPositionFinder;
         camera = cameraArg;
@@ -53,3 +53,4 @@ public class GetCameraPosition2425 implements Action2425 {
         }
     }
 }
+*/
