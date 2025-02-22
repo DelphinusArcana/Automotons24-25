@@ -12,7 +12,8 @@ import org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425.DriveTrain24
 import org.firstinspires.ftc.teamcode.Automotons2425.LiftKit2425.Lift2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.TestingClasses.MotorWrapper;
 import org.opencv.core.Mat;
-
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+@Disabled
 @TeleOp(name = "MotorWrapperTest", group = "Linear Opmode")
 public class MotorWrapperTest extends LinearOpMode {
     //variable declaration - classes
