@@ -82,10 +82,11 @@ public class ClawArm2425 {
         //motor.setPower(maxPower);
         //motor.setTargetPosition((int) targetPosition);
         int currentPosition = motor.getCurrentPosition();
-        if (Math.abs(currentPosition - prevMotorPosition) > 10) {
+        if (Math.abs(currentPosition - prevMotorPosition) > 3) {
             int offset = currentPosition - prevMotorPosition;
             targetPosition += offset;
         }
+        prevMotorPosition = currentPosition;
 
         double error = targetPosition - motor.getCurrentPosition();
         double power = 0;
