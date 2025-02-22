@@ -190,6 +190,11 @@ public class Teleop2425 extends LinearOpMode {
             } else if (gamepad1.dpad_up){
                 clawArm.changeTargetPosition(-1*clawArmSpeed*timeCoef);
             }
+            if (gamepad2.dpad_down) {
+                clawArm.changeTargetPosition(clawArmSpeed*timeCoef);
+            } else if (gamepad2.dpad_up){
+                clawArm.changeTargetPosition(-1*clawArmSpeed*timeCoef);
+            }
             clawArm.powerArm(telemetry);
             //<<<<<<<<<<<<<<<<<<<<<<<<<presets
             /*if(gamepad1.a){
@@ -269,6 +274,7 @@ public class Teleop2425 extends LinearOpMode {
             telemetry.addData("Lift Right Start",liftKit.getStartPosition(1));
             telemetry.addData("Arm Current Position",clawArm.getCurrentPosition());
             telemetry.addData("Arm Current Position",armMotor.getCurrentPosition());
+            telemetry.addData("Arm desired position",clawArm.getTargetPosition());
             telemetry.addData("Position", positionFinder.getPosition());
             // Arm Calibration
             if (aButton2.pressed(gamepad2.cross)) { // Swap claw arm direction

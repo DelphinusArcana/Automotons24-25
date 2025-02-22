@@ -31,9 +31,9 @@ public class ClawArm2425 {
     private int maxPowerError;
     /** The maximum power to send to the motors */
     private double maxPower;
-    private double timeSinceInput;
+   // private double timeSinceInput;
     private boolean direction;
-    private double updateTimeMoveLimitCoeficient;
+   // private double updateTimeMoveLimitCoeficient;
     int previousMili;
     private int prevMotorPosition;
     private ElapsedTime elapsedTime;
@@ -55,7 +55,7 @@ public class ClawArm2425 {
         previousMili = 0;
         elapsedTime = new ElapsedTime();
         //todo find this
-        updateTimeMoveLimitCoeficient = 10;
+        //updateTimeMoveLimitCoeficient = 10;
         direction = true;
         updateDirection();
     }
@@ -63,10 +63,13 @@ public class ClawArm2425 {
      * Mutator method to set the arm’s target position
      */
     public void setTargetPosition (double position) {
+        /*
         double changeInTargetPosition = position-targetPosition;
-        timeSinceInput -= Math.abs(changeInTargetPosition)*updateTimeMoveLimitCoeficient;
-        targetPosition = position;
 
+        timeSinceInput -= Math.abs(changeInTargetPosition)*updateTimeMoveLimitCoeficient;
+        */
+
+        targetPosition = position;
         /*if (targetPosition < uprightPosition){
             targetPosition = uprightPosition;
         }
@@ -96,11 +99,12 @@ public class ClawArm2425 {
         previousMili = (int) elapsedTime.milliseconds();
         //motor.setTargetPosition((int) targetPosition);
         int currentPosition = motor.getCurrentPosition();
-        if (Math.abs(currentPosition - prevMotorPosition) > 10) {
+        if (Math.abs(currentPosition - prevMotorPosition) > 3) {
             int offset = currentPosition - prevMotorPosition;
             targetPosition += offset;
         }
-
+        prevMotorPosition = currentPosition;
+        /*
         if (timeSinceInput>0){
             int offset = currentPosition - prevMotorPosition;
             targetPosition += offset;
@@ -108,6 +112,8 @@ public class ClawArm2425 {
         else{
             timeSinceInput += elapsedMili;
         }
+
+         */
 
 
         double error = targetPosition - motor.getCurrentPosition();
