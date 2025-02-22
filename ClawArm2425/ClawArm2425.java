@@ -5,8 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-//I'm wondering whether we'll need to be applying constant power to the motor just to keep the arm up. If so, it might look closer to the lift kit. If not, this will probably just use the DcMotor.setPosition() function.
-//TODO: make this
+
 public class ClawArm2425 {
     /**
      * The height at which the arm is completely lowered
@@ -32,6 +31,7 @@ public class ClawArm2425 {
     /** The maximum power to send to the motors */
     private double maxPower;
     private boolean direction;
+    private int prevMotorPosition;
     /**
      * CONSTRUCTOR
      Sets all instance variables
@@ -44,6 +44,7 @@ public class ClawArm2425 {
         //motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         uprightPosition = -10000000;
         targetPosition = zeroPosition;
+        prevMotorPosition = zeroPosition;
         maxPowerError = 5;
         maxPower = 0.5;
         direction = true;
@@ -80,6 +81,11 @@ public class ClawArm2425 {
     public void powerArm (Telemetry telemetry) {
         //motor.setPower(maxPower);
         //motor.setTargetPosition((int) targetPosition);
+        int currentPosition = motor.getCurrentPosition();
+        if (Math.abs(currentPosition - prevMotorPosition) > 10) {
+            int offset = currentPosition - prevMotorPosition;
+            targetPosition += offset;
+        }
 
         double error = targetPosition - motor.getCurrentPosition();
         double power = 0;

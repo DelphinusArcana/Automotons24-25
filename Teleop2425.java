@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.Automotons2425.ClawArm2425.ClawArm2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425.DriveTrain2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.LiftKit2425.Lift2425;
 
-@TeleOp(name = "a1Teleop2425", group = "Linear Opmode")
+@TeleOp(name = "A1Teleop2425", group = "Linear Opmode")
 public class Teleop2425 extends LinearOpMode {
     //variable declaration - classes
     private DriveTrain2425 driveTrain;
