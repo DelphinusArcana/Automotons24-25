@@ -271,7 +271,6 @@ public class Teleop2425 extends LinearOpMode {
             telemetry.addData("Arm Current Position",clawArm.getCurrentPosition());
             telemetry.addData("Arm Current Position",armMotor.getCurrentPosition());
             telemetry.addData("Arm desired position",clawArm.getTargetPosition());
-            // Arm Calibration
             if (aButton2.pressed(gamepad2.cross)) { // Swap claw arm direction
                 clawArmSpeed *= -1;
             }

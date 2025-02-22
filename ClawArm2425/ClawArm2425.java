@@ -95,8 +95,8 @@ public class ClawArm2425 {
      */
     public void powerArm (Telemetry telemetry) {
         //motor.setPower(maxPower);
-        int elapsedMili = (int) elapsedTime.milliseconds()-previousMili;
-        previousMili = (int) elapsedTime.milliseconds();
+        //int elapsedMili = (int) elapsedTime.milliseconds()-previousMili;
+        //previousMili = (int) elapsedTime.milliseconds();
         //motor.setTargetPosition((int) targetPosition);
         int currentPosition = motor.getCurrentPosition();
         if (Math.abs(currentPosition - prevMotorPosition) > 3) {

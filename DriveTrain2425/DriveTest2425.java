@@ -22,14 +22,7 @@ public class DriveTest2425 extends LinearOpMode {
 
     @Override
     public void runOpMode () {
-        driveTrain = new DriveTrain2425(new DcMotor[]{
-                hardwareMap.get(DcMotor.class,"leftFrontDrive"),
-                hardwareMap.get(DcMotor.class,"leftRearDrive"),
-                hardwareMap.get(DcMotor.class,"rightRearDrive"),
-                hardwareMap.get(DcMotor.class,"rightFrontDrive")
-        }, //TODO: make something that can find/update the directions
-                new boolean[] {false,true,false,true}
-        );
+        driveTrain = DriveTrain2425.defaultDrive(hardwareMap);
         drivePosition =  new Position(0,0,0);
         positionFinder = new PositionFinder2425(driveTrain, drivePosition);
         leftBumper = new ButtonWatcher2425();
