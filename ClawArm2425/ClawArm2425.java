@@ -4,9 +4,9 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
-//I'm wondering whether we'll need to be applying constant power to the motor just to keep the arm up. If so, it might look closer to the lift kit. If not, this will probably just use the DcMotor.setPosition() function.
-//TODO: make this
+
 public class ClawArm2425 {
     /**
      * The height at which the arm is completely lowered
@@ -31,7 +31,12 @@ public class ClawArm2425 {
     private int maxPowerError;
     /** The maximum power to send to the motors */
     private double maxPower;
+    private double timeSinceInput;
     private boolean direction;
+    private double updateTimeMoveLimitCoeficient;
+    int previousMili;
+    private int prevMotorPosition;
+    private ElapsedTime elapsedTime;
     /**
      * CONSTRUCTOR
      Sets all instance variables
@@ -44,8 +49,13 @@ public class ClawArm2425 {
         //motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         uprightPosition = -10000000;
         targetPosition = zeroPosition;
+        prevMotorPosition = zeroPosition;
         maxPowerError = 5;
         maxPower = 0.5;
+        previousMili = 0;
+        elapsedTime = new ElapsedTime();
+        //todo find this
+        updateTimeMoveLimitCoeficient = 10;
         direction = true;
         updateDirection();
     }
@@ -53,7 +63,10 @@ public class ClawArm2425 {
      * Mutator method to set the arm’s target position
      */
     public void setTargetPosition (double position) {
+        double changeInTargetPosition = position-targetPosition;
+        timeSinceInput -= Math.abs(changeInTargetPosition)*updateTimeMoveLimitCoeficient;
         targetPosition = position;
+
         /*if (targetPosition < uprightPosition){
             targetPosition = uprightPosition;
         }
@@ -79,7 +92,23 @@ public class ClawArm2425 {
      */
     public void powerArm (Telemetry telemetry) {
         //motor.setPower(maxPower);
+        int elapsedMili = (int) elapsedTime.milliseconds()-previousMili;
+        previousMili = (int) elapsedTime.milliseconds();
         //motor.setTargetPosition((int) targetPosition);
+        int currentPosition = motor.getCurrentPosition();
+        if (Math.abs(currentPosition - prevMotorPosition) > 10) {
+            int offset = currentPosition - prevMotorPosition;
+            targetPosition += offset;
+        }
+
+        if (timeSinceInput>0){
+            int offset = currentPosition - prevMotorPosition;
+            targetPosition += offset;
+        }
+        else{
+            timeSinceInput += elapsedMili;
+        }
+
 
         double error = targetPosition - motor.getCurrentPosition();
         double power = 0;

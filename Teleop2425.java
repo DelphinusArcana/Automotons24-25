@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.Automotons2425.ClawArm2425.ClawArm2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425.DriveTrain2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.LiftKit2425.Lift2425;
 
-@TeleOp(name = "a1Teleop2425", group = "Linear Opmode")
+@TeleOp(name = "A1Teleop2425", group = "Linear Opmode")
 public class Teleop2425 extends LinearOpMode {
     //variable declaration - classes
     private DriveTrain2425 driveTrain;
@@ -189,21 +189,21 @@ public class Teleop2425 extends LinearOpMode {
             }
             clawArm.powerArm(telemetry);
             //<<<<<<<<<<<<<<<<<<<<<<<<<presets
-            if(gamepad1.a){
+            /*if(gamepad1.a){
                clawArm.setTargetPosition(armInBasketPos);
             }
             if(gamepad1.b){
                 clawArm.setTargetPosition(raisedArmPos);
-            }
+            }*/
             /*if (liftKitUp.pressed(liftKit.getCurrentPosition(0)<liftMax*2/3) && !(gamepad1.a||gamepad1.b||gamepad1.dpad_down||gamepad1.dpad_up)) {
                 clawArm.setTargetPosition(raisedArmPos);
             }*/
-            if(gamepad1.y){
+            /*if(gamepad1.y){
                 liftKit.setTargetHeight(liftMaxHeight);
             }
             if(gamepad1.x){
                 liftKit.setTargetHeight(liftMinimumHeight);
-            }
+            }*/
 
             //<<<<<<<<<<<<<<<<<<<<<<<<<<< Calibration -- gamepad 2
             /*// Claw Calibration

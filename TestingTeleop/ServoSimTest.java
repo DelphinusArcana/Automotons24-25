@@ -7,7 +7,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Automotons2425.ButtonWatcher2425;
 import org.firstinspires.ftc.teamcode.Automotons2425.TestingClasses.ServoSim;
 import org.opencv.core.Mat;
-
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+@Disabled
 @TeleOp(name = "ServoSimTest", group = "Linear Opmode")
 public class ServoSimTest extends LinearOpMode {
     //variable declaration - classes
