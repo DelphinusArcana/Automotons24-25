@@ -29,3 +29,7 @@ android {
 dependencies {
     implementation project(':FtcRobotController')
 }
+test {
+    useJUnitPlatform()
+    systemProperty 'junit.jupiter.extensions.autodetection.enabled', 'true'
+}
