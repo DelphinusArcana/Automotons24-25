@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Automotons2425.ActionsTest2425;
+package org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.ActionsTest2425;
 
 import android.widget.Button;
 
@@ -7,11 +7,11 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.SetArm2425;
-import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.SetClaw2425;
-import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.SetLift2425;
-import org.firstinspires.ftc.teamcode.Automotons2425.ButtonWatcher2425;
-import org.firstinspires.ftc.teamcode.Automotons2425.ClawArm2425.ClawArm2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.SetArm2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.SetClaw2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.SetLift2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.ButtonWatcher2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.ClawArm2425.ClawArm2425;
 
 import java.util.ArrayList;
 

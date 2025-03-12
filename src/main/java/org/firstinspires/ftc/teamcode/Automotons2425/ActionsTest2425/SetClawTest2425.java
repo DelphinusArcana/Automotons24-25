@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Automotons2425.ActionsTest2425;
+package org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.ActionsTest2425;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.SetClaw2425;
-import org.firstinspires.ftc.teamcode.Automotons2425.Claw2425.Claw2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.SetClaw2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Claw2425.Claw2425;
 
 import java.util.ArrayList;
 

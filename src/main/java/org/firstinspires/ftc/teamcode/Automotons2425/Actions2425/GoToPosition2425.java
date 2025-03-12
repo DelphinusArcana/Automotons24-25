@@ -1,9 +1,9 @@
-package org.firstinspires.ftc.teamcode.Automotons2425.Actions2425;
+package org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Actions2425;
 import org.firstinspires.ftc.robotcore.external.Func;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425.DriveTrain2425;
-import org.firstinspires.ftc.teamcode.Automotons2425.Position;
-import org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425.PositionFinder2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425.DriveTrain2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Position;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425.PositionFinder2425;
 public class GoToPosition2425 implements Action2425{
     private DriveTrain2425 driveTrain;
     private Position desiredPosition;

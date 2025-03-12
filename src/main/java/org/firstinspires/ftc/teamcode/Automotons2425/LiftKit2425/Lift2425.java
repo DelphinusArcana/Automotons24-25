@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Automotons2425.LiftKit2425;
+package org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.LiftKit2425;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;

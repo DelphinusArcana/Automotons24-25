@@ -1,6 +1,6 @@
-package org.firstinspires.ftc.teamcode.Automotons2425.Actions2425;
+package org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Actions2425;
 
-import org.firstinspires.ftc.teamcode.Automotons2425.Claw2425.Claw2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Claw2425.Claw2425;
 
 public class SetClaw2425 implements Action2425 {
     private Claw2425 claw;

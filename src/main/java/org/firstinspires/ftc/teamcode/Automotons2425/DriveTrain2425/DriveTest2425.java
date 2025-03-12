@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425;
+package org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425;
 
 import android.widget.Button;
 
@@ -6,10 +6,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.GoToPosition2425;
-import org.firstinspires.ftc.teamcode.Automotons2425.ButtonWatcher2425;
-import org.firstinspires.ftc.teamcode.Automotons2425.Position;
-import org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425.PositionFinder2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.GoToPosition2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.ButtonWatcher2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Position;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425.PositionFinder2425;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 @Disabled
 @TeleOp(name = "DriveTest2425", group = "Linear Opmode")

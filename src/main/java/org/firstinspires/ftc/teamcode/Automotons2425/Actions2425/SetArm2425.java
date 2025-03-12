@@ -1,8 +1,8 @@
-package org.firstinspires.ftc.teamcode.Automotons2425.Actions2425;
+package org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Actions2425;
 
 import org.firstinspires.ftc.robotcore.external.Func;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Automotons2425.ClawArm2425.ClawArm2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.ClawArm2425.ClawArm2425;
 
 public class SetArm2425 implements Action2425 {
     private ClawArm2425 arm;

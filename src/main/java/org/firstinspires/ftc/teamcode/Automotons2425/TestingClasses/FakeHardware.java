@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Automotons2425.TestingClasses;
+package org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.TestingClasses;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.ServoController;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.FakeTelemetry;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.FakeTelemetry;
 
 /** Holds non-functional implementations of DcMotor and Servo*/
 public class FakeHardware {

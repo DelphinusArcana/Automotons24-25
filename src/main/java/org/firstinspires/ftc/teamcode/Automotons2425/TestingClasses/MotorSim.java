@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Automotons2425.TestingClasses;
+package org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.TestingClasses;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 /** A virtual motor */

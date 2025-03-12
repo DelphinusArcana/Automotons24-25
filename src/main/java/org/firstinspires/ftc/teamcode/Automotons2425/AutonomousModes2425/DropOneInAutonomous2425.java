@@ -1,12 +1,12 @@
-package org.firstinspires.ftc.teamcode.Automotons2425.AutonomousModes2425;
+package org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.AutonomousModes2425;
 
-import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.Action2425;
-import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.GoToPosition2425;
-import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.SetArm2425;
-import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.SetClaw2425;
-import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.SetSpinClaw2425;
-import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.SetLift2425;
-import org.firstinspires.ftc.teamcode.Automotons2425.Position;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.Action2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.GoToPosition2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.SetArm2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.SetClaw2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.SetSpinClaw2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.SetLift2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Position;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import java.util.ArrayList;

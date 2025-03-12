@@ -1,6 +1,6 @@
-package org.firstinspires.ftc.teamcode.Automotons2425.Actions2425;
+package org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Actions2425;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import org.firstinspires.ftc.teamcode.Automotons2425.Claw2425.SpinClaw2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Claw2425.SpinClaw2425;
 
 public class SetSpinClaw2425 implements Action2425 {
     private SpinClaw2425 spinClaw;

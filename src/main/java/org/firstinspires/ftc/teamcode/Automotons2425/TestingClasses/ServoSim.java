@@ -1,8 +1,8 @@
-package org.firstinspires.ftc.teamcode.Automotons2425.TestingClasses;
+package org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.TestingClasses;
 
 import org.firstinspires.ftc.robotcore.external.Func;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.FakeTelemetry;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Actions2425.FakeTelemetry;
 /** A virtual servo */
 public class ServoSim extends ServoWrapper {
     private static FakeTelemetry fakeTelemetry;

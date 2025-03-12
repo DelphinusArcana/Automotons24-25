@@ -1,8 +1,8 @@
-package org.firstinspires.ftc.teamcode.Automotons2425.Actions2425;
+package org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Actions2425;
 
-import org.firstinspires.ftc.teamcode.Automotons2425.AprilTag;
-import org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425.CameraPositionFinder2425;
-import org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425.PositionFinder2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.AprilTag;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425.CameraPositionFinder2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425.PositionFinder2425;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;

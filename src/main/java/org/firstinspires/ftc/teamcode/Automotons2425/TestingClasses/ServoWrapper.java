@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Automotons2425.TestingClasses;
+package org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.TestingClasses;
 
 import com.qualcomm.robotcore.hardware.Servo;
 

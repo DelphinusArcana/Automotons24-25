@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Automotons2425;
+package org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -7,10 +7,10 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.Automotons2425.Claw2425.Claw2425;
-import org.firstinspires.ftc.teamcode.Automotons2425.ClawArm2425.ClawArm2425;
-import org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425.DriveTrain2425;
-import org.firstinspires.ftc.teamcode.Automotons2425.LiftKit2425.Lift2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Claw2425.Claw2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.ClawArm2425.ClawArm2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425.DriveTrain2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.LiftKit2425.Lift2425;
 import org.opencv.core.Mat;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 @Disabled

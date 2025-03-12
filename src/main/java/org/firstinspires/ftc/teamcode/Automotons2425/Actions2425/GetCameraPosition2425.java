@@ -1,7 +1,7 @@
-package org.firstinspires.ftc.teamcode.Automotons2425.Actions2425;
+package org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Actions2425;
 
-import org.firstinspires.ftc.teamcode.Automotons2425.AprilTag;
-import org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425.CameraPositionFinder2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.AprilTag;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425.CameraPositionFinder2425;
 
 /*public class GetCameraPosition2425 implements Action2425 {
     CameraPositionFinder2425 positionFinder;

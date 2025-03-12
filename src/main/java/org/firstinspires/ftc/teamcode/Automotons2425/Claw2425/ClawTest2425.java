@@ -1,10 +1,10 @@
-package org.firstinspires.ftc.teamcode.Automotons2425.Claw2425;
+package org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Claw2425;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.Automotons2425.ButtonWatcher2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.ButtonWatcher2425;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 @Disabled

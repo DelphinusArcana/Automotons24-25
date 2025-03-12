@@ -1,11 +1,11 @@
-package org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425;
+package org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.Automotons2425.AprilTag;
-import org.firstinspires.ftc.teamcode.Automotons2425.Camera2425.Camera2425;
-import org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425.DriveTrain2425;
-import org.firstinspires.ftc.teamcode.Automotons2425.Position;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.AprilTag;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Camera2425.Camera2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425.DriveTrain2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Position;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 import java.util.ArrayList;

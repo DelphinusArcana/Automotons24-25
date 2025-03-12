@@ -1,11 +1,11 @@
-package org.firstinspires.ftc.teamcode.Automotons2425.TestingTeleop;
+package org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.TestingTeleop;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.Automotons2425.ButtonWatcher2425;
-import org.firstinspires.ftc.teamcode.Automotons2425.TestingClasses.ServoSim;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.ButtonWatcher2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.TestingClasses.ServoSim;
 import org.opencv.core.Mat;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 @Disabled

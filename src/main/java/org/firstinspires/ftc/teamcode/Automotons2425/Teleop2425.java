@@ -1,14 +1,14 @@
-package org.firstinspires.ftc.teamcode.Automotons2425;
+package org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.Automotons2425.Claw2425.SpinClaw2425;
-import org.firstinspires.ftc.teamcode.Automotons2425.ClawArm2425.ClawArm2425;
-import org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425.DriveTrain2425;
-import org.firstinspires.ftc.teamcode.Automotons2425.LiftKit2425.Lift2425;
-import org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425.PositionFinder2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.Claw2425.SpinClaw2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.ClawArm2425.ClawArm2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.DriveTrain2425.DriveTrain2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.LiftKit2425.Lift2425;
+import org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425.PositionFinder2425.PositionFinder2425;
 
 @TeleOp(name = "A1Teleop2425", group = "Linear Opmode")
 public class Teleop2425 extends LinearOpMode {

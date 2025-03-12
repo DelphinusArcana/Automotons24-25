@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Automotons2425;
+package org.firstinspires.ftc.teamcode.Automotons2425.src.main.java.org.firstinspires.ftc.teamcode.Automotons2425;
 
 public class ButtonWatcher2425 {
     private boolean lastValue;
