@@ -1,12 +1,22 @@
-/*
+
 package org.firstinspires.ftc.teamcode.Automotons2425.src.test.java;
+import     org.firstinspires.ftc.teamcode.Automotons2425.ClawArm2425.ClawArm2425;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+//import org.junit.Assert.assertFalse;
+//import org.junit.Assert.assertTrue;
+import org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 
 public class ClawArmTest2425 {
+    ClawArm2425 clawArm;
+    @Before
+    public void initialize(){
+
+    }
+    @Test
+    public void hopeThisWorks(){
+        org.junit.Assert.assertTrue(true);
+    }
+
 }
-*/
